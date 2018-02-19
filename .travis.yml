@@ -4,11 +4,8 @@ install: ant deps
 
 jdk:
   - oraclejdk8
-install: true
 
-script:
-  - ./mvn clean install
-  - bash <(curl -s https://codecov.io/bash)
+install: true
 
 cache:
   directories:
