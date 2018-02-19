@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project default="run" name="Simple calculatior">
+<project default="compile" name="Simple calculatior">
 
     <target name="run" depends="compile">
 
