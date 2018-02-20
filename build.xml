@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project default="compile" name="Simple calculatior">
+<project name="Simple-calculatior" default="compile">
 
-    <target name="run" depends="compile">
+    <path id="classpath.test">
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
+        <pathelement location="out/compile"/>
+    </path>
 
-        <java classname="app.Main">
-            <classpath path="out" />
-        </java>
+    <target name="clean">
+        <delete dir="out" />
+    </target>
+
+    <target depends="clean" name="compile">
+        <mkdir dir="out" />
+        <mkdir dir="out/compile" />
+        <javac srcdir="src/module_example" destdir="out/compile" includeantruntime="false" />
+        <javac srcdir="src/app" destdir="out/compile" includeantruntime="false" />
+
+        <javac srcdir="src/tests" destdir="out/compile" includeantruntime="false">
+            <classpath refid="classpath.test"/>
+        </javac>
+
+        <copy file="src/app/app.fxml" tofile="out/compile/app/app.fxml" />
 
     </target>
 
-    <target name="compile">
-        <javac srcdir="./src" destdir="out" />
+    <target depends="compile" name="pack">
+        <mkdir dir="out/pack" />
+        <jar destfile="out/pack/IVS-VUT-BIT-2018.jar" basedir="out/compile">
+            <manifest>
+                <attribute name="Main-Class" value="app.Main"/>
+            </manifest>
+        </jar>
     </target>
+
+    <target name="run">
+        <java jar="out/pack/IVS-VUT-BIT-2018.jar" fork="true" />
+    </target>
+
+    <target name="unit-tests">
+        <junit haltonfailure="true" printsummary="true">
+            <classpath>
+                <path refid="classpath.test" />
+                <pathelement location="out" />
+            </classpath>
+
+            <formatter type="brief" usefile="false" />
+
+            <test name="tests.Class_exampleTest" />
+        </junit>
+    </target>
+    <target name="all" depends="compile, unit-tests, pack, run" />
+
+
 
 
 </project>

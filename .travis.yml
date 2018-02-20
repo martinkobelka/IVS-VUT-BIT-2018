@@ -1,11 +1,12 @@
 language: java
 
-install: ant deps
-
 jdk:
   - oraclejdk8
 
 install: true
+
+script:
+  - ant all
 
 cache:
   directories:
