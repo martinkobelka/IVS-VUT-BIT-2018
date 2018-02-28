@@ -1,6 +1,8 @@
 package tests;
 
+import org.junit.After;
 import org.junit.Before;
+import my_math.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,6 +19,13 @@ public class My_math_interfaceTest {
          *
          */
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        /**
+         * Clear informations
+         */
     }
 
     /**

@@ -1,5 +1,10 @@
 package my_math;
 
+
+/**
+ * This interface is instructions for implementator of math library
+ * There should be private functions for every math operation too.
+ */
 public interface My_math_interface {
 
     /**
@@ -12,7 +17,15 @@ public interface My_math_interface {
      *
      * @throws MathException Where operands or result of operation is not correct
      */
-    public double operate(double[] operands, Operation operation) throws MathException;
+    double run_operate(double[] operands, Operation operation) throws MathException;
+
+    /**
+     * Return a constant value
+     * @param constant Type of contant
+     * @return Constant value
+     */
+    double return_constant(Type_of_constant constant);
+
 
 
 }
