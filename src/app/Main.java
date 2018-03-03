@@ -8,15 +8,20 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     /**
-     * Title of applcation windows
+     * Title of application window
      */
-    private static final String TITLE = "Moje super kalkulačka";
+    private static final String TITLE = "Pokročilá věděcká kalkulačka";
+
+    private static final int WIDTH = 880;
+    private static final int HEIGHT = 700;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("app.fxml"));
         primaryStage.setTitle(Main.TITLE);
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
+        primaryStage.setMinWidth(WIDTH);
+        primaryStage.setMinHeight(HEIGHT);
         primaryStage.show();
     }
 
