@@ -3,6 +3,7 @@ package tests;
 import org.junit.After;
 import org.junit.Before;
 import my_math.*;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,25 +11,20 @@ import static org.junit.Assert.*;
 public class My_math_interfaceTest {
 
     private My_math_interface my_math;
-    private Operation operation;
+    private int operation_count;
+    private double accuracy;
 
-    @Before
+    @BeforeClass
     public void setUp() throws Exception {
         my_math = new My_math();
-
+        operation_count = 0;
+        accuracy = 0.00001;
     }
 
     @After
     public void tearDown() throws Exception {
-        /**
-         * Clear informations
-         */
-    }
 
-    /**
-     *
-     * There will be test for another operation and its arguments
-     */
+    }
 
     @Test
     public void contant_pi() throws Exception {
@@ -40,51 +36,111 @@ public class My_math_interfaceTest {
         assertEquals(Math.E, my_math.return_constant(Type_of_constant.EULER_NUMBER));
     }
 
+    /*----------------------ADD-Tests---------------------------------*/
     @Test
     public void add() throws Exception {
-        double[] operands = {5, 2};
-        operation = Operation.ADD;
-        assertEquals(10, my_math.run_operate(operands, operation));
-        operands = {2, -2};
-        assertEquals(0, my_math.run_operate(operands, operation));
-        operands = {-10, -15};
-        assertEquals(-25, my_math.run_operate(operands, operation));
-    }
-
-    @Test(expected = MathException.class)
-    public void add_over_limit() throws Exception {
-        double[] operands = {Double.MAX_VALUE, 1};
-        operation = Operation.ADD;
-        my_math.run_operate(operands, operation);
-    }
-
-    @Test(expected = MathException.class)
-    public void add_under_limit() throws Exception {
-        double[] operands = {Double.MIN_VALUE, -1};
-        operation = Operation.ADD;
-        my_math.run_operate(operands, operation);
+        operation_count++;
+        double[] operands = {5.4, 4.6};
+        assertEquals(10, my_math.run_operate(operands, Operation.ADD), accuracy);
+        operands = new double[]{2, -2};
+        assertEquals(0, my_math.run_operate(operands, Operation.ADD), accuracy);
+        operands = new double[]{-10, -15};
+        assertEquals(-25, my_math.run_operate(operands, Operation.ADD), accuracy);
     }
 
     @Test
-    public void substract() throws Exception {
-        double[] operands = {10, 10};
-        operation = Operation.SUBTRACT;
-        assertEquals(0, my_math.run_operate(operands, operation));
-
+    public void add_failure() throws Exception {
+        double[] operands = {40, 120};
+        assertFalse(0 == my_math.run_operate(operands, Operation.ADD));
     }
 
     @Test(expected = MathException.class)
-    public void substract_over_limit() throws Exception {
-        double[] operands = {Double.MAX_VALUE, -1};
-        operation = Operation.SUBTRACT;
-        my_math.run_operate(operands, operation);
+    public void add_3_arguments_failure() throws Exception {
+        double[] operands = {40, 120, 100};
+        my_math.run_operate(operands, Operation.ADD);
+    }
+
+    /*-----------------------Substract-tests-----------------------*/
+    @Test
+    public void subtract() throws Exception {
+        operation_count++;
+        double[] operands = {10.23, 10.14};
+        assertEquals(0.09, my_math.run_operate(operands, Operation.SUBTRACT), accuracy);
+        operands = new double[]{-20, -40};
+        assertEquals(20, my_math.run_operate(operands, Operation.SUBTRACT), accuracy);
+        operands = new double[]{-15.15, -15.15};
+        assertEquals(0, my_math.run_operate(operands, Operation.SUBTRACT), accuracy);
+    }
+
+    @Test
+    public void subtract_failure() throws Exception {
+        double[] operands = {100, 60};
+        assertFalse(4 == my_math.run_operate(operands, Operation.SUBTRACT));
     }
 
     @Test(expected = MathException.class)
-    public void substract_under_limit() throws Exception {
-        double[] operands = {Double.MIN_VALUE, 1};
-        operation = Operation.SUBTRACT;
-        my_math.run_operate(operands, operation);
+    public void subtract_3_arguments_failure() throws Exception {
+        double[] operands = {40, 120, 100};
+        my_math.run_operate(operands, Operation.SUBTRACT);
     }
 
+    /*-----------------------Multiply-tests-------------------------*/
+    @Test
+    public void multiply() throws Exception {
+        operation_count++;
+        double[] operands = {1.3, 100};
+        assertEquals(103, my_math.run_operate(operands, Operation.MULTIPLY), accuracy);
+        operands = new double[]{0, 15.324};
+        assertEquals(0, my_math.run_operate(operands, Operation.MULTIPLY), accuracy);
+        operands = new double[]{-12, 12};
+        assertEquals(-144, my_math.run_operate(operands, Operation.MULTIPLY), accuracy);
+        operands = new double[]{-5, -4};
+        assertEquals(20, my_math.run_operate(operands, Operation.MULTIPLY), accuracy);
+    }
+
+    @Test
+    public void multiply_failure() throws Exception {
+        double[] operands = {3, 5};
+        assertFalse(-15 == my_math.run_operate(operands, Operation.MULTIPLY));
+    }
+
+    @Test(expected = MathException.class)
+    public void multiply_3_arguments_failure() throws Exception {
+        double[] operands = {40, 120, 100};
+        my_math.run_operate(operands, Operation.MULTIPLY);
+    }
+
+    /*-------------------------Divide-tests-------------------------*/
+    @Test(expected = MathException.class)
+    public void divide_by_zero() throws Exception {
+        operation_count++;
+        double[] operands = {10, 0};
+        my_math.run_operate(operands, Operation.DIVIDE);
+    }
+
+    @Test
+    public void divide() throws Exception {
+        double[] operands = {10.123, 10.123};
+        assertEquals(1, my_math.run_operate(operands, Operation.DIVIDE), accuracy);
+        operands = new double[]{-20.5, 10};
+        assertEquals(-2.05, my_math.run_operate(operands, Operation.DIVIDE), accuracy);
+        operands = new double[]{-60, -12};
+        assertEquals(5, my_math.run_operate(operands, Operation.DIVIDE), accuracy);
+        operands = new double[]{10.1, -2.5};
+        assertEquals(-4.04, my_math.run_operate(operands, Operation.DIVIDE), accuracy);
+        operands = new double[]{0, 23.22};
+        assertEquals(0, my_math.run_operate(operands, Operation.DIVIDE), accuracy);
+    }
+
+    @Test
+    public void divide_failure() throws Exception {
+        double[] operands = {169, 13};
+        assertFalse(1.3 == my_math.run_operate(operands, Operation.DIVIDE));
+    }
+
+    @Test(expected = MathException.class)
+    public void divide_3_arguments_failure() throws Exception {
+        double[] operands = {40, 120, 100};
+        my_math.run_operate(operands, Operation.DIVIDE);
+    }
 }
