@@ -1,10 +1,7 @@
 package tests;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.*;
 import my_math.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import static org.junit.Assert.*;
 
@@ -109,7 +106,6 @@ public class My_math_interfaceTest {
         double[] operands = {40, 120, 100};
         my_math.run_operate(operands, Operation.MULTIPLY);
     }
-
     /*-------------------------Divide-tests-------------------------*/
     @Test(expected = MathException.class)
     public void divide_by_zero() throws Exception {
@@ -143,4 +139,93 @@ public class My_math_interfaceTest {
         double[] operands = {40, 120, 100};
         my_math.run_operate(operands, Operation.DIVIDE);
     }
+
+    /*--------------------------Sin-tests--------------------------*/
+    @Test
+    public void sin() throws Exception {
+        operation_count++;
+        double[] operands = {0.98};
+        assertEquals(0.830497, my_math.run_operate(operands, Operation.SIN), accuracy);
+        operands = new double[]{0};
+        assertEquals(0, my_math.run_operate(operands, Operation.SIN), accuracy);
+        operands = new double[]{Math.PI};
+        assertEquals(1, my_math.run_operate(operands, Operation.SIN), accuracy);
+    }
+
+    @Test(expected = MathException.class)
+    public void sin_2_arguments_failure() throws Exception {
+        double[] operands = {0.98, 1.5};
+        my_math.run_operate(operands, Operation.SIN);
+    }
+
+    /*-------------------------Cos-tests----------------------------*/
+    @Test
+    public void cos() throws Exception {
+        operation_count++;
+        double[] operands = {2.45};
+        assertEquals(-0.770231, my_math.run_operate(operands, Operation.COS), accuracy);
+        operands = new double[]{0};
+        assertEquals(1, my_math.run_operate(operands, Operation.COS), accuracy);
+        operands = new double[]{Math.PI};
+        assertEquals(0, my_math.run_operate(operands, Operation.COS), accuracy);
+    }
+
+    @Test(expected = MathException.class)
+    public void cos_2_arguments_failure() throws Exception {
+        double[] operands = {1.33, 13.313};
+        my_math.run_operate(operands, Operation.COS);
+    }
+
+    /*------------------------Tag-tests------------------------------*/
+    @Test
+    public void tag() throws Exception {
+        operation_count++;
+        double[] operands = {1.54};
+        assertEquals(32.461138, my_math.run_operate(operands, Operation.TAG), accuracy);
+        operands = new double[]{Math.PI};
+        assertEquals(0, my_math.run_operate(operands, Operation.TAG), accuracy);
+    }
+
+    @Ignore
+//@Test(expected = MathException.class) //tangens pre pi / 2 nie je definovany ale neviem ci sa da ta hodnota dosiahnut
+    public void tag_failure_half_pi() throws Exception { //treba to skusit az pri implementacii mat. kniznice a pripadne zmazat
+        double[] operands = {Math.PI / 2};
+        my_math.run_operate(operands, Operation.TAG);
+    }
+
+    @Test(expected = MathException.class)
+    public void tag_2_arguments_failure() throws Exception {
+        double[] operands = {5.32, 14.463};
+        my_math.run_operate(operands, Operation.TAG);
+    }
+
+    /*-----------------------Cotg------------------------------------*/
+    @Test
+    public void cotag() throws Exception {
+        operation_count++;
+        double[] operands = {1.23};
+        assertEquals(0.354633, my_math.run_operate(operands, Operation.COTG), accuracy);
+        operands = new double[]{Math.PI * 3 / 2};
+        assertEquals(0, my_math.run_operate(operands, Operation.COTG), accuracy);
+    }
+
+    @Ignore
+//@Test(expected = MathException.class) //cotangens pre pi nie je definovany ale neviem ci sa da ta hodnota dosiahnut
+    public void cotag_failure_pi() throws Exception { //treba to skusit az pri implementacii mat. kniznice a pripadne zmazat
+        double[] operands = {Math.PI};
+        my_math.run_operate(operands, Operation.COTG);
+    }
+
+    @Test(expected = MathException.class)
+    public void cotag_2_arguments_failure() throws Exception {
+        double[] operands = {3, 4.463};
+        my_math.run_operate(operands, Operation.COTG);
+    }
+
+    /*------------------------Enum-Operations-------------------------*/
+    @Test
+    public void number_of_tested_operations() throws Exception {
+        assertEquals(operation_count, Operation.values().length);
+    }
+
 }
