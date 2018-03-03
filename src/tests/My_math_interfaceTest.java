@@ -32,7 +32,6 @@ public class My_math_interfaceTest {
     public void contant_euler() throws Exception {
         assertEquals(Math.E, my_math.return_constant(Type_of_constant.EULER_NUMBER));
     }
-
     /*----------------------ADD-Tests---------------------------------*/
     @Test
     public void add() throws Exception {
@@ -56,7 +55,6 @@ public class My_math_interfaceTest {
         double[] operands = {40, 120, 100};
         my_math.run_operate(operands, Operation.ADD);
     }
-
     /*-----------------------Substract-tests-----------------------*/
     @Test
     public void subtract() throws Exception {
@@ -80,7 +78,6 @@ public class My_math_interfaceTest {
         double[] operands = {40, 120, 100};
         my_math.run_operate(operands, Operation.SUBTRACT);
     }
-
     /*-----------------------Multiply-tests-------------------------*/
     @Test
     public void multiply() throws Exception {
@@ -139,7 +136,6 @@ public class My_math_interfaceTest {
         double[] operands = {40, 120, 100};
         my_math.run_operate(operands, Operation.DIVIDE);
     }
-
     /*--------------------------Sin-tests--------------------------*/
     @Test
     public void sin() throws Exception {
@@ -158,6 +154,11 @@ public class My_math_interfaceTest {
         my_math.run_operate(operands, Operation.SIN);
     }
 
+    @Test
+    public void sin_failure() throws Exception {
+        double[] operands = {12};
+        assertFalse(3 == my_math.run_operate(operands, Operation.SIN));
+    }
     /*-------------------------Cos-tests----------------------------*/
     @Test
     public void cos() throws Exception {
@@ -176,6 +177,11 @@ public class My_math_interfaceTest {
         my_math.run_operate(operands, Operation.COS);
     }
 
+    @Test
+    public void cos_failure() throws Exception {
+        double[] operands = {5};
+        assertFalse(4 == my_math.run_operate(operands, Operation.COS));
+    }
     /*------------------------Tag-tests------------------------------*/
     @Test
     public void tag() throws Exception {
@@ -199,6 +205,11 @@ public class My_math_interfaceTest {
         my_math.run_operate(operands, Operation.TAG);
     }
 
+    @Test
+    public void tag_failure() throws Exception {
+        double[] operands = {23.321};
+        assertFalse(1 == my_math.run_operate(operands, Operation.TAG));
+    }
     /*-----------------------Cotg------------------------------------*/
     @Test
     public void cotag() throws Exception {
@@ -222,10 +233,113 @@ public class My_math_interfaceTest {
         my_math.run_operate(operands, Operation.COTG);
     }
 
+    @Test
+    public void cotg_failure() throws Exception {
+        double[] operands = {0.348};
+        assertFalse(1 == my_math.run_operate(operands, Operation.COTG));
+    }
+
+    /*-------------------------Factorial------------------------------*/
+    @Test
+    public void fact() throws Exception {
+        operation_count++;
+        double[] operators = {4};
+        assertEquals(24, my_math.run_operate(operators, Operation.FACTORIAL), accuracy);
+        operators = new double[]{0};
+        assertEquals(1, my_math.run_operate(operators, Operation.FACTORIAL), accuracy);
+    }
+
+    @Test(expected = MathException.class)
+    public void fact_not_int_failure() throws Exception {
+        double[] operands = {1.5};
+        my_math.run_operate(operands, Operation.FACTORIAL);
+    }
+
+    @Test(expected = MathException.class)
+    public void fact_negative_integer_failure() throws MathException {
+        double[] operands = {-1};
+        my_math.run_operate(operands, Operation.FACTORIAL);
+    }
+
+    @Test(expected = MathException.class)
+    public void fact_overflow_failure() throws MathException {
+        double MAXFACT = 170;
+        double[] operands = {MAXFACT + 1};
+        my_math.run_operate(operands, Operation.FACTORIAL);
+    }
+
+    @Test(expected = MathException.class)
+    public void fact_2_arguments_failure() throws MathException {
+        double[] operands = {1, 2};
+        my_math.run_operate(operands, Operation.FACTORIAL);
+    }
+
+    @Test
+    public void fact_failure() throws Exception {
+        double[] operands = {5};
+        assertFalse(5 == my_math.run_operate(operands, Operation.FACTORIAL));
+    }
+
+    /*------------------------Sqrt------------------------------------*/
+    @Test
+    public void sqrt() throws Exception {
+        operation_count++;
+        double[] operators = {4};
+        assertEquals(2, my_math.run_operate(operators, Operation.SQRT), accuracy);
+        operators = new double[]{0};
+        assertEquals(0, my_math.run_operate(operators, Operation.SQRT), accuracy);
+        operators = new double[]{1};
+        assertEquals(1, my_math.run_operate(operators, Operation.SQRT), accuracy);
+    }
+
+    @Test(expected = MathException.class)
+    public void sqrt_negative_number_failure() throws MathException {
+        double[] operands = {-1};
+        my_math.run_operate(operands, Operation.SQRT);
+    }
+
+    @Test(expected = MathException.class)
+    public void sqrt_2_arguments_failure() throws MathException {
+        double[] operands = {1, 2};
+        my_math.run_operate(operands, Operation.SQRT);
+    }
+
+    @Test
+    public void sqrt_failure() throws Exception {
+        double[] operands = {16};
+        assertFalse(-4 == my_math.run_operate(operands, Operation.SQRT));
+    }
+
+    /*------------------------Modulo----------------------------------*/
+    @Test
+    public void modulo() throws Exception {
+        operation_count++;
+        double[] operators = {4, 3};
+        assertEquals(1, my_math.run_operate(operators, Operation.MODULO), accuracy);
+        operators = new double[]{-4, 3};
+        assertEquals(-1, my_math.run_operate(operators, Operation.MODULO), accuracy);
+        operators = new double[]{-4, -3};
+        assertEquals(-1, my_math.run_operate(operators, Operation.MODULO), accuracy);
+        operators = new double[]{-23.4, -23.4};
+        assertEquals(0, my_math.run_operate(operators, Operation.MODULO), accuracy);
+        operators = new double[]{16.5, 42};
+        assertEquals(16.5, my_math.run_operate(operators, Operation.MODULO), accuracy);
+    }
+
+    @Test(expected = MathException.class)
+    public void modulo_3_arguments_failure() throws MathException {
+        double[] operands = {1, 2, 3};
+        my_math.run_operate(operands, Operation.MODULO);
+    }
+
+    @Test
+    public void modulo_failure() throws Exception {
+        double[] operands = {3, 5};
+        assertFalse(0 == my_math.run_operate(operands, Operation.MODULO));
+    }
     /*------------------------Enum-Operations-------------------------*/
     @Test
     public void number_of_tested_operations() throws Exception {
         assertEquals(operation_count, Operation.values().length);
     }
-
 }
