@@ -12,7 +12,7 @@ public class My_math_interfaceTest {
     private double accuracy;
 
     @BeforeClass
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         my_math = new My_math();
         operation_count = 0;
         accuracy = 0.00001;
