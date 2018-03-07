@@ -8,10 +8,6 @@ package my_math;
  */
 public class My_math implements My_math_interface{
 
-    public My_math(){
-
-    }
-
     @Override
     public double run_operate(double[] operands, Operation operation) throws MathException {
         double result;
@@ -87,10 +83,13 @@ public class My_math implements My_math_interface{
      * @param operands contains two operands for this operation
      * @return op1 / op2
      * @throws MathException if less or more than two operands are provided
+     * or if second operand is zero
      */
     private double div(double[] operands)throws MathException{
         if(operands.length != 2)
             throw new MathException("Wrong amount of operands!");
+        if(operands[1] == 0)
+            throw new MathException("Division by zero!");
         return operands[0] / operands[1];
     }
 
@@ -152,6 +151,8 @@ public class My_math implements My_math_interface{
      * @param operands contains one operand for this operation
      * @return factorial of operand
      * @throws MathException if less or more than one operand is provided
+     * or if operands are not integer numbers
+     * or if operands are out of range <0, inf)
      */
     private double fac(double[] operands)throws MathException{
         if(operands.length != 1)
@@ -172,6 +173,7 @@ public class My_math implements My_math_interface{
      * @param operands contains one operand for this operation
      * @return square root of operand
      * @throws MathException if less or more than one operand is provided
+     * or if operands are out of range <0, inf)
      */
     private double sqrt(double[] operands)throws MathException{
         if(operands.length == 1)
@@ -187,6 +189,7 @@ public class My_math implements My_math_interface{
      * @param operands contains two operands for this operation
      * @return op1 mod op2
      * @throws MathException if less or more than two operands are provided
+     * or if operands are not integer numbers
      */
     private double mod(double[] operands)throws MathException{
         if(operands.length != 2)
