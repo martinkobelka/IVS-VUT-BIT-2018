@@ -1,5 +1,7 @@
 package translator;
 
+import java.util.List;
+
 public interface Translator_interface {
 
     /**
@@ -9,7 +11,7 @@ public interface Translator_interface {
      * @param language
      * @exception LanguageException
      */
-    void setLanguage(Languages language);
+    void setLanguage(String language);
 
     /**
      * Translate item from department. If the item is not in actual language,
@@ -21,5 +23,11 @@ public interface Translator_interface {
      * @return Translated text
      */
     String translate(String department, String item);
+
+    /**
+     * Return list of languages
+     * @return
+     */
+    List<String> getLanguages();
 
 }
