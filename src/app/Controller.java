@@ -7,8 +7,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.web.WebView;
 
 import java.io.Console;
+import java.net.URL;
 
 public class Controller{
 
@@ -16,7 +18,19 @@ public class Controller{
 
     @FXML
     public Button button_null;
+    @FXML
     public TextField test_action;
+    @FXML
+    public WebView visualisation;
+
+    @FXML
+    public void initialize() {
+
+
+        URL url = this.getClass().getResource("novy.html");
+
+        visualisation.getEngine().load(url.toString());
+    }
 
 
     @FXML
@@ -29,6 +43,10 @@ public class Controller{
         else {
             test_action.setText(actualText + ((Button) event.getSource()).getText());
         }
+
+        visualisation.getEngine().executeScript(
+            "katex.render(\"c = \\\\pm\\\\sqrt{a^2 + b^2}\", element);"
+        );
 
     }
 
