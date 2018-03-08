@@ -11,11 +11,11 @@ public class My_math_interfaceTest {
     private int operation_count;
     private double accuracy;
 
-    @BeforeClass
+    @Before
     void setUp() throws Exception {
         my_math = new My_math();
         operation_count = 0;
-        accuracy = 0.00001;
+        accuracy = 0.0000000001;
     }
 
     @After
@@ -25,12 +25,12 @@ public class My_math_interfaceTest {
 
     @Test
     public void contant_pi() throws Exception {
-        assertEquals(Math.PI, my_math.return_constant(Type_of_constant.PI));
+        assertEquals(Math.PI, my_math.return_constant(Type_of_constant.PI), 0.0);
     }
 
     @Test
     public void contant_euler() throws Exception {
-        assertEquals(Math.E, my_math.return_constant(Type_of_constant.EULER_NUMBER));
+        assertEquals(Math.E, my_math.return_constant(Type_of_constant.EULER_NUMBER), 0.0);
     }
     /*----------------------ADD-Tests---------------------------------*/
     @Test
@@ -141,7 +141,7 @@ public class My_math_interfaceTest {
     public void sin() throws Exception {
         operation_count++;
         double[] operands = {0.98};
-        assertEquals(0.830497, my_math.run_operate(operands, Operation.SIN), accuracy);
+        assertEquals(0.83049737049, my_math.run_operate(operands, Operation.SIN), accuracy);
         operands = new double[]{0};
         assertEquals(0, my_math.run_operate(operands, Operation.SIN), accuracy);
         operands = new double[]{Math.PI};
@@ -159,12 +159,19 @@ public class My_math_interfaceTest {
         double[] operands = {12};
         assertFalse(3 == my_math.run_operate(operands, Operation.SIN));
     }
+
+    @Test
+    public void sin_periodicity() throws Exception {
+        double[] operands = {0.425};
+        double[] operands2 = {0.425 + 2 * Math.PI};
+        assertTrue(my_math.run_operate(operands2, Operation.SIN) == my_math.run_operate(operands, Operation.SIN));
+    }
     /*-------------------------Cos-tests----------------------------*/
     @Test
     public void cos() throws Exception {
         operation_count++;
         double[] operands = {2.45};
-        assertEquals(-0.770231, my_math.run_operate(operands, Operation.COS), accuracy);
+        assertEquals(-0.77023125405, my_math.run_operate(operands, Operation.COS), accuracy);
         operands = new double[]{0};
         assertEquals(1, my_math.run_operate(operands, Operation.COS), accuracy);
         operands = new double[]{Math.PI};
@@ -182,19 +189,25 @@ public class My_math_interfaceTest {
         double[] operands = {5};
         assertFalse(4 == my_math.run_operate(operands, Operation.COS));
     }
+
+    @Test
+    public void cos_periodicity() throws Exception {
+        double[] operands = {0.425};
+        double[] operands2 = {0.425 + 2 * Math.PI};
+        assertTrue(my_math.run_operate(operands2, Operation.COS) == my_math.run_operate(operands, Operation.COS));
+    }
     /*------------------------Tag-tests------------------------------*/
     @Test
     public void tag() throws Exception {
         operation_count++;
         double[] operands = {1.54};
-        assertEquals(32.461138, my_math.run_operate(operands, Operation.TAG), accuracy);
+        assertEquals(32.46113891286, my_math.run_operate(operands, Operation.TAG), accuracy);
         operands = new double[]{Math.PI};
         assertEquals(0, my_math.run_operate(operands, Operation.TAG), accuracy);
     }
 
-    @Ignore
-//@Test(expected = MathException.class) //tangens pre pi / 2 nie je definovany ale neviem ci sa da ta hodnota dosiahnut
-    public void tag_failure_half_pi() throws Exception { //treba to skusit az pri implementacii mat. kniznice a pripadne zmazat
+    @Test(expected = MathException.class)
+    public void tag_failure_half_pi() throws Exception {
         double[] operands = {Math.PI / 2};
         my_math.run_operate(operands, Operation.TAG);
     }
@@ -210,19 +223,26 @@ public class My_math_interfaceTest {
         double[] operands = {23.321};
         assertFalse(1 == my_math.run_operate(operands, Operation.TAG));
     }
+
+    @Test
+    public void tag_periodicity() throws Exception {
+        double[] operands = {0.425};
+        double[] operands2 = {0.425 + 2 * Math.PI};
+        assertTrue(my_math.run_operate(operands2, Operation.TAG) == my_math.run_operate(operands, Operation.TAG));
+    }
     /*-----------------------Cotg------------------------------------*/
     @Test
     public void cotag() throws Exception {
         operation_count++;
         double[] operands = {1.23};
-        assertEquals(0.354633, my_math.run_operate(operands, Operation.COTG), accuracy);
+        assertEquals(0.35463310168, my_math.run_operate(operands, Operation.COTG), accuracy);
         operands = new double[]{Math.PI * 3 / 2};
         assertEquals(0, my_math.run_operate(operands, Operation.COTG), accuracy);
     }
 
-    @Ignore
-//@Test(expected = MathException.class) //cotangens pre pi nie je definovany ale neviem ci sa da ta hodnota dosiahnut
-    public void cotag_failure_pi() throws Exception { //treba to skusit az pri implementacii mat. kniznice a pripadne zmazat
+
+    @Test(expected = MathException.class)
+    public void cotag_failure_pi() throws Exception {
         double[] operands = {Math.PI};
         my_math.run_operate(operands, Operation.COTG);
     }
@@ -239,6 +259,12 @@ public class My_math_interfaceTest {
         assertFalse(1 == my_math.run_operate(operands, Operation.COTG));
     }
 
+    @Test
+    public void cotg_periodicity() throws Exception {
+        double[] operands = {0.425};
+        double[] operands2 = {0.425 + 2 * Math.PI};
+        assertTrue(my_math.run_operate(operands2, Operation.COTG) == my_math.run_operate(operands, Operation.COTG));
+    }
     /*-------------------------Factorial------------------------------*/
     @Test
     public void fact() throws Exception {
