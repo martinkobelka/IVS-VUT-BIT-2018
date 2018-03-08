@@ -2,14 +2,16 @@ package tests;
 
 import org.junit.*;
 import my_math.*;
+import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.*;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class My_math_interfaceTest {
 
     private My_math_interface my_math;
-    private int operation_count = 0;
-    private int constant_count = 0;
+    public static int operation_count = 0;
+    public static int constant_count = 0;
     private double accuracy;
 
     @Before
@@ -316,6 +318,16 @@ public class My_math_interfaceTest {
         assertEquals(1, my_math.run_operate(operators, Operation.SQRT), accuracy);
     }
 
+    @Test
+    public void sqrt_two_operands() throws Exception {
+        double[] operators = {2, 4};
+        assertEquals(2, my_math.run_operate(operators, Operation.SQRT), accuracy);
+        operators = new double[]{3, 8};
+        assertEquals(2, my_math.run_operate(operators, Operation.SQRT), accuracy);
+        operators = new double[]{4, 16};
+        assertEquals(2, my_math.run_operate(operators, Operation.SQRT), accuracy);
+    }
+
     @Test(expected = MathException.class)
     public void sqrt_negative_number_failure() throws MathException {
         double[] operands = {-1};
@@ -323,8 +335,8 @@ public class My_math_interfaceTest {
     }
 
     @Test(expected = MathException.class)
-    public void sqrt_2_arguments_failure() throws MathException {
-        double[] operands = {1, 2};
+    public void sqrt_3_arguments_failure() throws MathException {
+        double[] operands = {1, 2, 4};
         my_math.run_operate(operands, Operation.SQRT);
     }
 
@@ -332,6 +344,12 @@ public class My_math_interfaceTest {
     public void sqrt_failure() throws Exception {
         double[] operands = {16};
         assertFalse(-4 == my_math.run_operate(operands, Operation.SQRT));
+    }
+
+    @Test(expected = MathException.class)
+    public void sqrt_null_arguments_failure() throws Exception {
+        double[] operands = {};
+        my_math.run_operate(operands, Operation.SQRT);
     }
 
     /*------------------------Modulo----------------------------------*/
@@ -369,12 +387,12 @@ public class My_math_interfaceTest {
     }
     /*------------------------Enum-Operations-------------------------*/
     @Test
-    public void number_of_tested_operations() {
+    public void zz_last_test_number_of_tested_operations() {
         assertEquals(operation_count, Operation.values().length);
     }
 
     @Test
-    public void number_of_tested_constants() {
+    public void zz_last_test_number_of_tested_constants() {
         assertEquals(constant_count, Type_of_constant.values().length);
     }
 }
