@@ -8,30 +8,28 @@ import static org.junit.Assert.*;
 public class My_math_interfaceTest {
 
     private My_math_interface my_math;
-    private int operation_count;
+    private int operation_count = 0;
+    private int constant_count = 0;
     private double accuracy;
 
     @Before
-    void setUp() throws Exception {
+    public void setUp() throws Exception {
         my_math = new My_math();
-        operation_count = 0;
         accuracy = 0.0000000001;
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
-    public void contant_pi() throws Exception {
+    public void contant_pi() {
         assertEquals(Math.PI, my_math.return_constant(Type_of_constant.PI), 0.0);
+        constant_count++;
     }
 
     @Test
-    public void contant_euler() throws Exception {
+    public void contant_euler() {
         assertEquals(Math.E, my_math.return_constant(Type_of_constant.EULER_NUMBER), 0.0);
+        constant_count++;
     }
+
     /*----------------------ADD-Tests---------------------------------*/
     @Test
     public void add() throws Exception {
@@ -365,7 +363,12 @@ public class My_math_interfaceTest {
     }
     /*------------------------Enum-Operations-------------------------*/
     @Test
-    public void number_of_tested_operations() throws Exception {
+    public void number_of_tested_operations() {
         assertEquals(operation_count, Operation.values().length);
+    }
+
+    @Test
+    public void number_of_tested_constants() {
+        assertEquals(constant_count, Type_of_constant.values().length);
     }
 }
