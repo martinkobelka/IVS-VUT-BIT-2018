@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<translate language="czech">
+
+    <department name="gui">
+
+        <item name="title">Advanced science calculator</item>
+        <item name="no_java">There is no Java in your computer. Please, install it in version at least 8.</item>
+
+    </department>
+
+    <department name="math">
+
+        <item name="error_count_operands">Wrong count of operands</item>
+
+    </department>
+
+</translate>

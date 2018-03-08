@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<translate language="czech">
+
+    <department name="gui">
+
+        <item name="title">Pokročilá vědecká kalkulačka</item>
+        <item name="no_java">Ve vašem počítači nebyla nalezena Java, prosím nainstalujte si ji ve verzi alespoň 8</item>
+
+    </department>
+
+    <department name="math">
+
+        <item name="error_count_operands">Špatný počet operandů</item>
+
+    </department>
+
+</translate>
