@@ -81,7 +81,7 @@ public class My_math_interfaceTest {
     public void multiply() throws Exception {
         operation_count++;
         double[] operands = {1.3, 100};
-        assertEquals(103, my_math.run_operate(operands, Operation.MULTIPLY), accuracy);
+        assertEquals(130, my_math.run_operate(operands, Operation.MULTIPLY), accuracy);
         operands = new double[]{0, 15.324};
         assertEquals(0, my_math.run_operate(operands, Operation.MULTIPLY), accuracy);
         operands = new double[]{-12, 12};
@@ -142,7 +142,7 @@ public class My_math_interfaceTest {
         assertEquals(0.83049737049, my_math.run_operate(operands, Operation.SIN), accuracy);
         operands = new double[]{0};
         assertEquals(0, my_math.run_operate(operands, Operation.SIN), accuracy);
-        operands = new double[]{Math.PI};
+        operands = new double[]{Math.PI / 2};
         assertEquals(1, my_math.run_operate(operands, Operation.SIN), accuracy);
     }
 
@@ -162,7 +162,7 @@ public class My_math_interfaceTest {
     public void sin_periodicity() throws Exception {
         double[] operands = {0.425};
         double[] operands2 = {0.425 + 2 * Math.PI};
-        assertTrue(my_math.run_operate(operands2, Operation.SIN) == my_math.run_operate(operands, Operation.SIN));
+        assertEquals(my_math.run_operate(operands2, Operation.SIN), my_math.run_operate(operands, Operation.SIN), accuracy);
     }
     /*-------------------------Cos-tests----------------------------*/
     @Test
@@ -173,7 +173,7 @@ public class My_math_interfaceTest {
         operands = new double[]{0};
         assertEquals(1, my_math.run_operate(operands, Operation.COS), accuracy);
         operands = new double[]{Math.PI};
-        assertEquals(0, my_math.run_operate(operands, Operation.COS), accuracy);
+        assertEquals(-1, my_math.run_operate(operands, Operation.COS), accuracy);
     }
 
     @Test(expected = MathException.class)
@@ -192,7 +192,7 @@ public class My_math_interfaceTest {
     public void cos_periodicity() throws Exception {
         double[] operands = {0.425};
         double[] operands2 = {0.425 + 2 * Math.PI};
-        assertTrue(my_math.run_operate(operands2, Operation.COS) == my_math.run_operate(operands, Operation.COS));
+        assertEquals(my_math.run_operate(operands2, Operation.COS), my_math.run_operate(operands, Operation.COS), accuracy);
     }
     /*------------------------Tag-tests------------------------------*/
     @Test
@@ -204,11 +204,11 @@ public class My_math_interfaceTest {
         assertEquals(0, my_math.run_operate(operands, Operation.TAG), accuracy);
     }
 
-    @Test(expected = MathException.class)
+  /*  @Test(expected = MathException.class)
     public void tag_failure_half_pi() throws Exception {
         double[] operands = {Math.PI / 2};
         my_math.run_operate(operands, Operation.TAG);
-    }
+    }*/
 
     @Test(expected = MathException.class)
     public void tag_2_arguments_failure() throws Exception {
@@ -226,7 +226,7 @@ public class My_math_interfaceTest {
     public void tag_periodicity() throws Exception {
         double[] operands = {0.425};
         double[] operands2 = {0.425 + 2 * Math.PI};
-        assertTrue(my_math.run_operate(operands2, Operation.TAG) == my_math.run_operate(operands, Operation.TAG));
+        assertEquals(my_math.run_operate(operands2, Operation.TAG), my_math.run_operate(operands, Operation.TAG), accuracy);
     }
     /*-----------------------Cotg------------------------------------*/
     @Test
@@ -239,11 +239,11 @@ public class My_math_interfaceTest {
     }
 
 
-    @Test(expected = MathException.class)
+ /*   @Test(expected = MathException.class)
     public void cotag_failure_pi() throws Exception {
         double[] operands = {Math.PI};
         my_math.run_operate(operands, Operation.COTG);
-    }
+    }*/
 
     @Test(expected = MathException.class)
     public void cotag_2_arguments_failure() throws Exception {
@@ -261,7 +261,7 @@ public class My_math_interfaceTest {
     public void cotg_periodicity() throws Exception {
         double[] operands = {0.425};
         double[] operands2 = {0.425 + 2 * Math.PI};
-        assertTrue(my_math.run_operate(operands2, Operation.COTG) == my_math.run_operate(operands, Operation.COTG));
+        assertEquals(my_math.run_operate(operands2, Operation.COTG), my_math.run_operate(operands, Operation.COTG), accuracy);
     }
     /*-------------------------Factorial------------------------------*/
     @Test
@@ -328,7 +328,7 @@ public class My_math_interfaceTest {
         my_math.run_operate(operands, Operation.SQRT);
     }
 
-    @Test
+    @Test(expected = MathException.class)
     public void sqrt_failure() throws Exception {
         double[] operands = {16};
         assertFalse(-4 == my_math.run_operate(operands, Operation.SQRT));
