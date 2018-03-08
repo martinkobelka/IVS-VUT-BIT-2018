@@ -13,7 +13,7 @@ public class My_math_interfaceTest {
     private double accuracy;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         my_math = new My_math();
         accuracy = 0.0000000001;
     }
@@ -344,10 +344,16 @@ public class My_math_interfaceTest {
         assertEquals(-1, my_math.run_operate(operators, Operation.MODULO), accuracy);
         operators = new double[]{-4, -3};
         assertEquals(-1, my_math.run_operate(operators, Operation.MODULO), accuracy);
-        operators = new double[]{-23.4, -23.4};
+        operators = new double[]{-23, -23};
         assertEquals(0, my_math.run_operate(operators, Operation.MODULO), accuracy);
-        operators = new double[]{16.5, 42};
-        assertEquals(16.5, my_math.run_operate(operators, Operation.MODULO), accuracy);
+        operators = new double[]{16, 42};
+        assertEquals(16, my_math.run_operate(operators, Operation.MODULO), accuracy);
+    }
+
+    @Test(expected = MathException.class)
+    public void modulo_not_integer_fail() throws Exception {
+        double operands[] = {1.1, 2};
+        my_math.run_operate(operands, Operation.MODULO);
     }
 
     @Test(expected = MathException.class)
