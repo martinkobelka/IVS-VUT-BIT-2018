@@ -12,7 +12,7 @@ public class Main extends Application {
      */
     private static final String TITLE = "Pokročilá věděcká kalkulačka";
 
-    private static final int WIDTH = 880;
+    private static final int WIDTH = 1100;
     private static final int HEIGHT = 700;
 
     @Override

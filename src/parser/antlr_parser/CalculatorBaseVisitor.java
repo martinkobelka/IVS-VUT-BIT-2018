@@ -55,7 +55,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 				);
 
 				value.setTextRepresentation(
-						first.getTextRepresentation() + "\\ddot" + second.getTextRepresentation()
+						first.getTextRepresentation() + "\\\\cdot" + second.getTextRepresentation()
 				);
 
 				return value;
@@ -88,7 +88,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 				);
 
 				value.setTextRepresentation(
-						"\\frac{"+first.getTextRepresentation() + "}{" + second.getTextRepresentation() + "}"
+						"\\\\frac{"+first.getTextRepresentation() + "}{" + second.getTextRepresentation() + "}"
 				);
 
 				return value;
@@ -123,5 +123,9 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		}
 
 		return null;
+	}
+
+	public String getLatexRepresentation() {
+		return latexRepresentation;
 	}
 }

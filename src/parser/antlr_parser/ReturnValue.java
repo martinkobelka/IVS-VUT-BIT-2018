@@ -47,4 +47,5 @@ public class ReturnValue {
     public void setTextRepresentation(String textRepresentation) {
         this.textRepresentation = textRepresentation;
     }
+
 }

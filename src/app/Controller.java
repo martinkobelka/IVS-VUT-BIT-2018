@@ -1,13 +1,18 @@
 package app;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
+import parser.MyParser;
+import parser.antlr_parser.ReturnValue;
 
 import java.io.Console;
 import java.net.URL;
@@ -24,12 +29,31 @@ public class Controller{
     public WebView visualisation;
 
     @FXML
-    public void initialize() {
+    public ListView<String> functionSymbolTable;
 
+    @FXML
+    public ListView<String> symbolTableFunctions;
+
+    private MyParser myParser;
+
+
+
+    @FXML
+    public void initialize() {
 
         URL url = this.getClass().getResource("novy.html");
 
         visualisation.getEngine().load(url.toString());
+
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "E = 2.718281", "PI = 3.141593", "SOUCET = E + PI");
+        symbolTableFunctions.setItems(items);
+
+        ObservableList<String> functions = FXCollections.observableArrayList (
+                "f(x) = x + 10", "g(x) = x^e", "ahoj(x) = f(x) * g(x)");
+        functionSymbolTable.setItems(functions);
+
+        this.myParser = new MyParser();
     }
 
 
@@ -44,9 +68,18 @@ public class Controller{
             test_action.setText(actualText + ((Button) event.getSource()).getText());
         }
 
-        visualisation.getEngine().executeScript(
-            "katex.render(\"c = \\\\pm\\\\sqrt{a^2 + b^2}\", element);"
-        );
+        ReturnValue returnValue;
+        try {
+            returnValue = myParser.parse(test_action.getText());
+            visualisation.getEngine().executeScript(
+                    "katex.render(\""+returnValue.getTextRepresentation()+"="
+                            +String.valueOf(returnValue.getValue())+"\", element);"
+            );
+        }
+        catch (NullPointerException ex) {
+            System.err.println("Neúplný výraz");
+        }
+
 
     }
 
