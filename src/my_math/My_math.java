@@ -8,6 +8,12 @@ package my_math;
  */
 public class My_math implements My_math_interface{
 
+    private final String ERR_TYPE = "Unsupported type of operation.";
+    private final String ERR_OPERANDS = "Wrong amount of operands!";
+    private final String ERR_ZERO = "Division by zero!";
+    private final String ERR_NG_ZERO = "Input not greater than zero!";
+    private final String ERR_NOT_INT = "Input is not an integer!";
+
     @Override
     public double run_operate(double[] operands, Operation operation) throws MathException {
         double result;
@@ -23,7 +29,7 @@ public class My_math implements My_math_interface{
             case FACTORIAL: result = fac(operands); break;
             case SQRT: result = sqrt(operands); break;
             case MODULO: result = mod(operands); break;
-            default: throw new MathException("Unsupported type of operation.");
+            default: throw new MathException(ERR_TYPE);
         }
         return result;
     }
@@ -47,7 +53,7 @@ public class My_math implements My_math_interface{
      */
     private double add(double[] operands)throws MathException{
         if(operands.length != 2)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         return operands[0] + operands[1];
     }
 
@@ -60,7 +66,7 @@ public class My_math implements My_math_interface{
      */
     private double sub(double[] operands)throws MathException{
         if(operands.length != 2)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         return operands[0] - operands[1];
     }
 
@@ -73,7 +79,7 @@ public class My_math implements My_math_interface{
      */
     private double mul(double[] operands)throws MathException{
         if(operands.length != 2)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         return operands[0] * operands[1];
     }
 
@@ -87,9 +93,9 @@ public class My_math implements My_math_interface{
      */
     private double div(double[] operands)throws MathException{
         if(operands.length != 2)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         if(operands[1] == 0)
-            throw new MathException("Division by zero!");
+            throw new MathException(ERR_ZERO);
         return operands[0] / operands[1];
     }
 
@@ -102,7 +108,7 @@ public class My_math implements My_math_interface{
      */
     private double sin(double[] operands)throws MathException{
         if(operands.length != 1)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         return Math.sin(operands[0]);
     }
 
@@ -115,7 +121,7 @@ public class My_math implements My_math_interface{
      */
     private double cos(double[] operands)throws MathException{
         if(operands.length != 1)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         return Math.cos(operands[0]);
     }
 
@@ -128,7 +134,7 @@ public class My_math implements My_math_interface{
      */
     private double tan(double[] operands)throws MathException{
         if(operands.length != 1)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         return Math.tan(operands[0]);
     }
 
@@ -141,7 +147,7 @@ public class My_math implements My_math_interface{
      */
     private double cotg(double[] operands)throws MathException{
         if(operands.length != 1)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         return 1/Math.tan(operands[0]);
     }
 
@@ -156,11 +162,11 @@ public class My_math implements My_math_interface{
      */
     private double fac(double[] operands)throws MathException{
         if(operands.length != 1)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         if(operands[0] < 0)
-            throw new MathException("Input not greater than zero!");
+            throw new MathException(ERR_NG_ZERO);
         if(operands[0] != Math.floor(operands[0]))
-            throw new MathException("Input is not integer!");
+            throw new MathException(ERR_NOT_INT);
         int result = 1;
         for(int i = 1; i <= operands[0]; i++)
             result *= i;
@@ -177,9 +183,9 @@ public class My_math implements My_math_interface{
      */
     private double sqrt(double[] operands)throws MathException{
         if(operands.length == 1)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         if(operands[0] < 0)
-            throw new MathException("Input not greater than zero!");
+            throw new MathException(ERR_NG_ZERO);
         return Math.sqrt(operands[0]);
     }
 
@@ -193,9 +199,9 @@ public class My_math implements My_math_interface{
      */
     private double mod(double[] operands)throws MathException{
         if(operands.length != 2)
-            throw new MathException("Wrong amount of operands!");
+            throw new MathException(ERR_OPERANDS);
         if(operands[0] != Math.floor(operands[0]) || operands[1] != Math.floor(operands[1]))
-            throw new MathException("Input is not integer!");
+            throw new MathException(ERR_NOT_INT);
         return (int)operands[0] % (int)operands[1];
     }
 }
