@@ -13,6 +13,7 @@ public class My_math implements My_math_interface{
     private final String ERR_ZERO = "Division by zero!";
     private final String ERR_NG_ZERO = "Input not greater than zero!";
     private final String ERR_NOT_INT = "Input is not an integer!";
+    private final String ERR_FACT_OVERFLOW = "Input number too big for factorial!";
 
     @Override
     public double run_operate(double[] operands, Operation operation) throws MathException {
@@ -167,9 +168,12 @@ public class My_math implements My_math_interface{
             throw new MathException(ERR_NG_ZERO);
         if(operands[0] != Math.floor(operands[0]))
             throw new MathException(ERR_NOT_INT);
-        int result = 1;
-        for(int i = 1; i <= operands[0]; i++)
+        double result = 1.0;
+        for(double i = 1; i <= operands[0]; i++) {
             result *= i;
+            if (result >= Double.MAX_VALUE)
+                throw new MathException(ERR_FACT_OVERFLOW);
+        }
         return result;
     }
 
@@ -182,7 +186,7 @@ public class My_math implements My_math_interface{
      * or if operands are out of range <0, inf)
      */
     private double sqrt(double[] operands)throws MathException{
-        if(operands.length == 1)
+        if(operands.length != 1)
             throw new MathException(ERR_OPERANDS);
         if(operands[0] < 0)
             throw new MathException(ERR_NG_ZERO);
@@ -202,6 +206,6 @@ public class My_math implements My_math_interface{
             throw new MathException(ERR_OPERANDS);
         if(operands[0] != Math.floor(operands[0]) || operands[1] != Math.floor(operands[1]))
             throw new MathException(ERR_NOT_INT);
-        return (int)operands[0] % (int)operands[1];
+        return (double)((int)operands[0] % (int)operands[1]);
     }
 }
