@@ -340,7 +340,7 @@ public class My_math_interfaceTest {
         my_math.run_operate(operands, Operation.SQRT);
     }
 
-    @Test(expected = MathException.class)
+    @Test
     public void sqrt_failure() throws Exception {
         double[] operands = {16};
         assertFalse(-4 == my_math.run_operate(operands, Operation.SQRT));
