@@ -178,19 +178,58 @@ public class My_math implements My_math_interface{
     }
 
     /**
-     * Square root
+     * Square (n-th) root
      *
-     * @param operands contains one operand for this operation
-     * @return square root of operand
+     * @param operands contains one or two operands for this operation
+     *                 one operand:
+     *                      square root for value operand[0]
+     *                 two operands:
+     *                      operand[0] is base
+     *                      operand[1] is value
+     * @return n-th root
      * @throws MathException if less or more than one operand is provided
      * or if operands are out of range <0, inf)
      */
     private double sqrt(double[] operands)throws MathException{
-        if(operands.length != 1)
-            throw new MathException(ERR_OPERANDS);
-        if(operands[0] < 0)
-            throw new MathException(ERR_NG_ZERO);
-        return Math.sqrt(operands[0]);
+        switch(operands.length){
+            case 1: {
+                if(operands[0] < 0)
+                    throw new MathException(ERR_NG_ZERO);
+                return Math.sqrt(operands[0]);
+            }
+            case 2: {
+                if(operands[0] != Math.floor(operands[0]))
+                    throw new MathException(ERR_NOT_INT);
+                return nthrt((int)operands[0], operands[1]);
+            }
+            default: {
+                throw new MathException(ERR_OPERANDS);
+            }
+        }
+    }
+
+    /**
+     * N-th root
+     *
+     * Helper method for computing n-th root of a value
+     *
+     * @param base of root
+     * @param value to get a root of
+     * @return n-th root
+     * @throws MathException if a negative value is provided for odd number base
+     */
+    private double nthrt(int base, double value)throws MathException{
+        if(base % 2 == 0) {     //even number
+            if(value < 0)
+                throw new MathException(ERR_NG_ZERO);
+        }
+        switch(base){
+            case 1: return value;
+            case 2: return Math.sqrt(value);
+            case 3: return Math.cbrt(value);
+            case 4: return Math.sqrt(Math.sqrt(value));
+            default: return Math.pow(value, 1.0/base);
+        }
     }
 
     /**
