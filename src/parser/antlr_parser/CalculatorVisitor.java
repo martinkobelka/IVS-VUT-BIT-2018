@@ -17,13 +17,6 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(CalculatorParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code PlusMinus}
-	 * labeled alternative in {@link CalculatorParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPlusMinus(CalculatorParser.PlusMinusContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Identifier}
 	 * labeled alternative in {@link CalculatorParser#expr}.
 	 * @param ctx the parse tree

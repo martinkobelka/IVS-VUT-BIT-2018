@@ -3,19 +3,19 @@ grammar Calculator;
 
 prog:   expr;
 
-expr:   NUMBER #DoubleValue
-    |   IDENTIFIER #Identifier
-    |   expr '!' #UnaryOperationAfter
-    |   ('-'|'+') expr #UnaryOperationBefore
+expr:   expr '!' #UnaryOperationAfter
     |   expr ('%'|'*'|'/') expr #BinaryOperation
-    |   expr ('+'|'-') expr #PlusMinus
+    |   expr ('+'|'-') expr #BinaryOperation
+    |   ('-'|'+') expr #UnaryOperationBefore
     |   expr ',' expr #TwoOperands
     |   IDENTIFIER '(' expr ')' #CallFunction
     |   '(' expr ')' #Brackets
+    |   NUMBER #DoubleValue
+    |   IDENTIFIER #Identifier
     ;
 
 fragment Digit
-    : ('0'..'9')
+    : [0-9]
     ;
 
 fragment IdentifierStart
@@ -30,6 +30,6 @@ fragment PLusMinus
     : ('+' | '-')
     ;
 
-NUMBER: Digit ( '.' Digit ( Exponent PLusMinus? Digit+ )? )? ;
+NUMBER: (Digit+ ( '.' Digit+ ( Exponent PLusMinus? Digit+ )? )?) ;
 
-IDENTIFIER: IdentifierStart (IdentifierStart | Digit)*;
+IDENTIFIER: (IdentifierStart (IdentifierStart | Digit)*);

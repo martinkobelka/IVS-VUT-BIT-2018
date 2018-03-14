@@ -1,5 +1,7 @@
 package parser;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+import my_math.Operation;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -14,7 +16,7 @@ class MyParser{
     public static void main(String args[]) {
 
         MyParser parser = new MyParser();
-        parser.parse("10-10*10/10");
+        parser.parse("-1,2,3");
     }
 
     public void parse(String input){
@@ -32,13 +34,17 @@ class MyParser{
 
         ReturnValue value = new CalculatorBaseVisitor().visit(tree);
 
-        System.out.println(value.getValue());
-        System.out.println(value.getTextRepresentation());
+        while(value != null) {
+            System.out.println(value.getValue());
+            System.out.println(value.getTextRepresentation());
+            value = value.getNext();
+        }
 
 
 
 
 
     }
+
 
 }
