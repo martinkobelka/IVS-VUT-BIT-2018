@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import parser.antlr_parser.CalculatorBaseVisitor;
 import parser.antlr_parser.CalculatorLexer;
 import parser.antlr_parser.CalculatorParser;
+import parser.antlr_parser.ReturnValue;
 
 class MyParser{
 
@@ -29,7 +30,12 @@ class MyParser{
         ParseTree tree = parser.prog();
 
 
-        new CalculatorBaseVisitor().visit(tree);
+        ReturnValue value = new CalculatorBaseVisitor().visit(tree);
+
+        System.out.println(value.getValue());
+        System.out.println(value.getTextRepresentation());
+
+
 
 
 
