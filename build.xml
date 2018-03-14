@@ -16,6 +16,7 @@
         <mkdir dir="out" />
         <mkdir dir="out/compile" />
         <javac srcdir="src/module_example" destdir="out/compile" includeantruntime="false" />
+        <javac srcdir="src/my_math" destdir="out/compile" includeantruntime="false" />
         <javac srcdir="src/app" destdir="out/compile" includeantruntime="false" />
 
         <javac srcdir="src/tests" destdir="out/compile" includeantruntime="false">

@@ -17,9 +17,59 @@ public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(CalculatorParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CalculatorParser#expr}.
+	 * Visit a parse tree produced by the {@code Identifier}
+	 * labeled alternative in {@link CalculatorParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpr(CalculatorParser.ExprContext ctx);
+	T visitIdentifier(CalculatorParser.IdentifierContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Brackets}
+	 * labeled alternative in {@link CalculatorParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBrackets(CalculatorParser.BracketsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code DoubleValue}
+	 * labeled alternative in {@link CalculatorParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDoubleValue(CalculatorParser.DoubleValueContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BinaryOperation}
+	 * labeled alternative in {@link CalculatorParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinaryOperation(CalculatorParser.BinaryOperationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TwoOperands}
+	 * labeled alternative in {@link CalculatorParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTwoOperands(CalculatorParser.TwoOperandsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CallFunction}
+	 * labeled alternative in {@link CalculatorParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCallFunction(CalculatorParser.CallFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code UnaryOperationBefore}
+	 * labeled alternative in {@link CalculatorParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryOperationBefore(CalculatorParser.UnaryOperationBeforeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code UnaryOperationAfter}
+	 * labeled alternative in {@link CalculatorParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryOperationAfter(CalculatorParser.UnaryOperationAfterContext ctx);
 }
