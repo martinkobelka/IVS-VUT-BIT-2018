@@ -11,15 +11,16 @@ import parser.antlr_parser.CalculatorLexer;
 import parser.antlr_parser.CalculatorParser;
 import parser.antlr_parser.ReturnValue;
 
-class MyParser{
+public class MyParser{
 
     public static void main(String args[]) {
 
         MyParser parser = new MyParser();
-        parser.parse("-1,2,3");
+        parser.parse("10+20+(10*5)");
+        System.out.println("Hello world");
     }
 
-    public void parse(String input){
+    public ReturnValue parse(String input){
 
         CharStream stream = new ANTLRInputStream(input);
 
@@ -34,13 +35,8 @@ class MyParser{
 
         ReturnValue value = new CalculatorBaseVisitor().visit(tree);
 
-        while(value != null) {
-            System.out.println(value.getValue());
-            System.out.println(value.getTextRepresentation());
-            value = value.getNext();
-        }
 
-
+        return value;
 
 
 

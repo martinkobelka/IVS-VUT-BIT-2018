@@ -41,7 +41,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	@Override public ReturnValue visitIdentifier(CalculatorParser.IdentifierContext ctx) {
 		return new ReturnValue(
 				0.0,
-				""
+				ctx.getText()
 		);
 	}
 	/**
@@ -102,7 +102,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 				textRepresentation = first.getTextRepresentation() + textOperation + second.getTextRepresentation();
 			}
 			else {
-				textRepresentation = "\\frac{"+first.getTextRepresentation() + "}{" + second.getTextRepresentation() + "}";
+				textRepresentation = "\\\\frac{"+first.getTextRepresentation() + "}{" + second.getTextRepresentation() + "}";
 			}
 
 

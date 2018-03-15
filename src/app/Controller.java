@@ -16,6 +16,7 @@ import parser.antlr_parser.ReturnValue;
 
 import java.io.Console;
 import java.net.URL;
+import java.util.Random;
 
 public class Controller{
 
@@ -36,6 +37,8 @@ public class Controller{
 
     private MyParser myParser;
 
+    private int sequence;
+
 
 
     @FXML
@@ -54,11 +57,14 @@ public class Controller{
         functionSymbolTable.setItems(functions);
 
         this.myParser = new MyParser();
+
+        this.sequence = 0;
     }
 
 
     @FXML
     public void button_action(ActionEvent event) {
+
         String actualText = test_action.getText();
 
         if(actualText.equals("|")) {
@@ -70,15 +76,38 @@ public class Controller{
 
         ReturnValue returnValue;
         try {
+
             returnValue = myParser.parse(test_action.getText());
+
             visualisation.getEngine().executeScript(
-                    "katex.render(\""+returnValue.getTextRepresentation()+"="
-                            +String.valueOf(returnValue.getValue())+"\", element);"
+                    "telo.innerHTML = \"\";"
             );
+
+            while(returnValue != null) {
+
+                int next = this.sequence++;
+
+                visualisation.getEngine().executeScript(
+                        "var nadpis = document.createElement(\"H1\");" +
+                                "nadpis.id = \"vyk" + String.valueOf(next) + "\";" +
+                                "telo.appendChild(nadpis);" +
+                                "var vykresleni = document.getElementById(\"vyk" + String.valueOf(next) + "\");"
+                );
+
+                visualisation.getEngine().executeScript(
+                        "katex.render(\"" + returnValue.getTextRepresentation() + "="
+                                + String.valueOf(returnValue.getValue()) + "\", vykresleni);"
+                );
+
+                System.out.println(returnValue.getTextRepresentation());
+
+                returnValue = returnValue.getNext();
+            }
         }
         catch (NullPointerException ex) {
-            System.err.println("Neúplný výraz");
+            System.err.println("Neúplný výraz: ");
         }
+
 
 
     }
