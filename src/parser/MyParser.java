@@ -10,14 +10,27 @@ import parser.antlr_parser.CalculatorBaseVisitor;
 import parser.antlr_parser.CalculatorLexer;
 import parser.antlr_parser.CalculatorParser;
 import parser.antlr_parser.ReturnValue;
+import parser.symbol_table.TableOfVariables;
+import parser.symbol_table.Variable;
 
 public class MyParser{
 
     public static void main(String args[]) {
 
         MyParser parser = new MyParser();
-        parser.parse("10+20+(10*5)");
-        System.out.println("Hello world");
+        parser.parse("-1,2,3");
+
+        TableOfVariables table = new TableOfVariables();
+
+        Variable variable = new Variable("e", "blabla");
+
+        if(table.isVariableExists(variable)) {
+            System.out.println("variable existuje");
+        }
+        else {
+            System.out.println("Variable neexistuje");
+        }
+
     }
 
     public ReturnValue parse(String input){
