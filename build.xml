@@ -8,6 +8,12 @@
         <pathelement location="out/compile"/>
     </path>
 
+    <path id="classpath.product">
+        <pathelement location="lib/antlr-4.7.1-complete.jar"/>
+        <pathelement location="out/compile"/>
+    </path>
+
+
     <target name="clean">
         <delete dir="out" />
     </target>
@@ -17,6 +23,15 @@
         <mkdir dir="out/compile" />
         <javac srcdir="src/module_example" destdir="out/compile" includeantruntime="false" />
         <javac srcdir="src/my_math" destdir="out/compile" includeantruntime="false" />
+
+        <javac
+                srcdir="src/parser"
+                destdir="out/compile"
+                includeantruntime="false">
+
+            <classpath refid="classpath.product"/>
+        </javac>
+
         <javac srcdir="src/app" destdir="out/compile" includeantruntime="false" />
 
         <javac srcdir="src/tests" destdir="out/compile" includeantruntime="false">
@@ -24,11 +39,16 @@
         </javac>
 
         <copy file="src/app/app.fxml" tofile="out/compile/app/app.fxml" />
+        <copy file="src/app/style.css" tofile="out/compile/app/style.css" />
+        <copy file="src/app/novy.html" tofile="out/compile/app/novy.html" />
+        <copydir src="src/app/fonts" dest="out/compile/app/fonts" />
 
     </target>
 
     <target depends="compile" name="pack">
         <mkdir dir="out/pack" />
+        <mkdir dir="out/pack/lib" />
+        <copy file="lib/antlr-4.7.1-complete.jar" tofile="out/pack/lib/antlr-4.7.1-complete.jar" />
         <jar destfile="out/pack/IVS-VUT-BIT-2018.jar" basedir="out/compile">
             <manifest>
                 <attribute name="Main-Class" value="app.Main"/>

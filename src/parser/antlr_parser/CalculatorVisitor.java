@@ -11,11 +11,46 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface CalculatorVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link CalculatorParser#prog}.
+	 * Visit a parse tree produced by the {@code exprProg}
+	 * labeled alternative in {@link CalculatorParser#prog}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitProg(CalculatorParser.ProgContext ctx);
+	T visitExprProg(CalculatorParser.ExprProgContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code assignmentProg}
+	 * labeled alternative in {@link CalculatorParser#prog}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignmentProg(CalculatorParser.AssignmentProgContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code declareFunction}
+	 * labeled alternative in {@link CalculatorParser#prog}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclareFunction(CalculatorParser.DeclareFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CalculatorParser#funcid}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncid(CalculatorParser.FuncidContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code twoParams}
+	 * labeled alternative in {@link CalculatorParser#params}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTwoParams(CalculatorParser.TwoParamsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code paramIdentifier}
+	 * labeled alternative in {@link CalculatorParser#params}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParamIdentifier(CalculatorParser.ParamIdentifierContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Identifier}
 	 * labeled alternative in {@link CalculatorParser#expr}.

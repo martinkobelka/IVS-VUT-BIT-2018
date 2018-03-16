@@ -54,4 +54,8 @@ public class TableOfVariables {
 
         return null;
     }
+
+    public ObservableList<Variable> getVariables() {
+        return variables;
+    }
 }

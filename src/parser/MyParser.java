@@ -1,7 +1,5 @@
 package parser;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import my_math.Operation;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -10,27 +8,25 @@ import parser.antlr_parser.CalculatorBaseVisitor;
 import parser.antlr_parser.CalculatorLexer;
 import parser.antlr_parser.CalculatorParser;
 import parser.antlr_parser.ReturnValue;
+import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 
 public class MyParser{
 
-    public static void main(String args[]) {
+    TableOfVariables tableOfVariables;
+    TableOfFunctions tableOfFunctions;
+    private boolean addVariable;
 
-        MyParser parser = new MyParser();
-        parser.parse("-1,2,3");
+    public MyParser(TableOfVariables tableOfVariables, TableOfFunctions tableOfFunctions) {
 
-        TableOfVariables table = new TableOfVariables();
+        this.tableOfVariables = tableOfVariables;
+        this.tableOfFunctions = tableOfFunctions;
+        this.addVariable = true;
+    }
 
-        Variable variable = new Variable("e", "blabla");
-
-        if(table.isVariableExists(variable)) {
-            System.out.println("variable existuje");
-        }
-        else {
-            System.out.println("Variable neexistuje");
-        }
-
+    public void sedAddVariable(boolean value) {
+        addVariable = value;
     }
 
     public ReturnValue parse(String input){
@@ -45,13 +41,33 @@ public class MyParser{
 
         ParseTree tree = parser.prog();
 
+        CalculatorBaseVisitor baseVisitor = new CalculatorBaseVisitor(tableOfVariables, tableOfFunctions);
+        baseVisitor.setAddVariable(addVariable);
 
-        ReturnValue value = new CalculatorBaseVisitor().visit(tree);
-
+        ReturnValue value = baseVisitor.visit(tree);
 
         return value;
 
+    }
 
+    public static void main(String args[]) {
+
+        TableOfVariables tableOfVariables = new TableOfVariables();
+        TableOfFunctions tableOfFunctions = new TableOfFunctions();
+
+        MyParser parser = new MyParser(tableOfVariables, tableOfFunctions);
+        parser.parse("-1,2,3");
+
+        TableOfVariables table = new TableOfVariables();
+
+        Variable variable = new Variable("e", "blabla");
+
+        if(table.isVariableExists(variable)) {
+            System.out.println("variable existuje");
+        }
+        else {
+            System.out.println("Variable neexistuje");
+        }
 
     }
 

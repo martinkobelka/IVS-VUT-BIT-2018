@@ -1,7 +1,17 @@
 grammar Calculator;
 
 
-prog:   expr;
+prog:   expr #exprProg
+    |   IDENTIFIER '=' expr #assignmentProg
+    |   funcid '=' expr #declareFunction
+    ;
+
+funcid: IDENTIFIER '(' params ')'
+    ;
+
+params: params ',' params #twoParams
+    | IDENTIFIER #paramIdentifier
+    ;
 
 expr:   expr '!' #UnaryOperationAfter
     |   expr ('%'|'*'|'/') expr #BinaryOperation

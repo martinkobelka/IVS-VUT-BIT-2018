@@ -1,6 +1,5 @@
 package app;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,9 +12,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
 import parser.MyParser;
 import parser.antlr_parser.ReturnValue;
+import parser.symbol_table.Function;
+import parser.symbol_table.TableOfFunctions;
+import parser.symbol_table.TableOfVariables;
+import parser.symbol_table.Variable;
 
 import java.io.Console;
 import java.net.URL;
+import java.security.Key;
 import java.util.Random;
 
 public class Controller{
@@ -30,12 +34,15 @@ public class Controller{
     public WebView visualisation;
 
     @FXML
-    public ListView<String> functionSymbolTable;
+    public ListView<Function> functionSymbolTable;
 
     @FXML
-    public ListView<String> symbolTableFunctions;
+    public ListView<Variable> symbolTableFunctions;
 
     private MyParser myParser;
+
+    private TableOfVariables tableOfVariables;
+    private TableOfFunctions tableOfFunctions;
 
     private int sequence;
 
@@ -48,31 +55,46 @@ public class Controller{
 
         visualisation.getEngine().load(url.toString());
 
-        ObservableList<String> items = FXCollections.observableArrayList (
-                "E = 2.718281", "PI = 3.141593", "SOUCET = E + PI");
-        symbolTableFunctions.setItems(items);
+        tableOfVariables = new TableOfVariables();
+        tableOfFunctions = new TableOfFunctions();
 
-        ObservableList<String> functions = FXCollections.observableArrayList (
-                "f(x) = x + 10", "g(x) = x^e", "ahoj(x) = f(x) * g(x)");
-        functionSymbolTable.setItems(functions);
+        ObservableList<Variable> listOfVariables = tableOfVariables.getVariables();
+        ObservableList<Function> listOfFunctions = tableOfFunctions.getFunctions();
 
-        this.myParser = new MyParser();
+        symbolTableFunctions.setItems(listOfVariables);
+        functionSymbolTable.setItems(listOfFunctions);
 
+        this.myParser = new MyParser(tableOfVariables, tableOfFunctions);
         this.sequence = 0;
+
+        test_action.textProperty().addListener((observable, oldValue, newValue) -> {
+            myParser.sedAddVariable(false);
+            count();
+        });
     }
 
 
     @FXML
     public void button_action(ActionEvent event) {
 
+        addCharacter(((Button) event.getSource()).getText());
+
+        myParser.sedAddVariable(false);
+    }
+
+    private void addCharacter(String character) {
+
         String actualText = test_action.getText();
 
         if(actualText.equals("|")) {
-            test_action.setText(((Button) event.getSource()).getText());
+            test_action.setText(character);
         }
         else {
-            test_action.setText(actualText + ((Button) event.getSource()).getText());
+            test_action.setText(actualText + character);
         }
+    }
+
+    private void count() {
 
         ReturnValue returnValue;
         try {
@@ -99,8 +121,6 @@ public class Controller{
                                 + String.valueOf(returnValue.getValue()) + "\", vykresleni);"
                 );
 
-                System.out.println(returnValue.getTextRepresentation());
-
                 returnValue = returnValue.getNext();
             }
         }
@@ -108,22 +128,22 @@ public class Controller{
             System.err.println("Neúplný výraz: ");
         }
 
-
-
     }
 
     @FXML
     public void send_action(ActionEvent event)  {
 
-        String actualText = test_action.getText();
-        System.out.println("Posílám ke zpracování: " + actualText);
+        myParser.sedAddVariable(true);
+        count();
 
     }
 
     @FXML
     public void send_action_button(MouseEvent event) {
-        String actualText = test_action.getText();
-        System.out.println("Posílám ke zpracování: " + actualText);
+
+        myParser.sedAddVariable(true);
+        count();
+
     }
 
     @FXML
@@ -135,20 +155,61 @@ public class Controller{
     }
 
     public void backspace_click(MouseEvent mouseEvent) {
+
+        removeChar();
+
+    }
+
+    private void removeChar() {
+
         String actualText = test_action.getText();
         int length = actualText.length();
         if(length != 0) {
             test_action.setText(actualText.substring(0, length - 1));
         }
+
+
+
     }
 
     public void layout_key_press(KeyEvent keyEvent) {
 
-        if(keyEvent.getCode() == KeyCode.ENTER) {
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+            myParser.sedAddVariable(true);
+            count();
+        }
+        else {
 
-            String actualText = test_action.getText();
-            System.out.println("Posílám ke zpracování: " + actualText);
+            if (!test_action.isFocused()) {
+
+                String actualText = test_action.getText();
+
+                if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+
+                    removeChar();
+                } else {
+
+                    String firstChar = keyEvent.getText();
+
+                    if (isPrintableCharacter(firstChar)) {
+                        addCharacter(firstChar);
+                    }
+
+                }
+            }
+
         }
 
     }
+
+    private boolean isPrintableCharacter(String checkChar) {
+
+        if(checkChar.matches("^[a-zA-Z0-9]|\\.|\\(|\\)|\\+|\\-|\\*|/$|=")) {
+            return true;
+        }
+
+        return false;
+
+    }
+
 }

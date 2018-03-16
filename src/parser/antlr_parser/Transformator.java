@@ -1,6 +1,5 @@
 package parser.antlr_parser;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import my_math.Operation;
 
 import java.util.Arrays;
@@ -8,7 +7,7 @@ import java.util.Arrays;
 public class Transformator {
 
 
-    public static Operation mapOperation(String operation) throws InvalidArgumentException {
+    public static Operation mapOperation(String operation){
 
         switch (operation) {
 
@@ -37,7 +36,7 @@ public class Transformator {
 
         }
 
-        throw new InvalidArgumentException(new String[]{"Operation"});
+        return null;
     }
 
 

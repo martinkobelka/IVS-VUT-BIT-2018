@@ -37,7 +37,7 @@ public class Variable {
         if(x instanceof Variable) {
 
             // The name is same
-            if(((Variable)x).getName() == this.name) {
+            if(((Variable)x).getName().equals(this.name)) {
                 return true;
             }
         }
