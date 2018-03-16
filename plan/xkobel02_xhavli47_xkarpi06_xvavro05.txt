@@ -1,0 +1,45 @@
+Stanovené termíny
+-----------------
+- 20. 2. 2018 - Schůzka týmu
+- 4. 3. 2018 - Testy na matematickou knihovnu
+- 11. 3. 2018 - Implementace matematické knihovny
+- 25. 3. 2018 - Implementace vykreslování grafů funkcí
+- 28. 3. 2018 - Systém správy proměnných včetně závislosti
+- 31. 3. 2018 - Vektorové operace
+- 3. 4. 2018 - Grafické rozhraní
+- 5. 4. 2018 - Překlady do více jazyků
+- 10. 4. 2018 - Naprogramování Makefile
+- 14. 4. 2018 - Vytvoření dokumentace
+- 14. 4. 2018 - Vytvoření uživatelské příručky
+- 17. 4. 2018 - Finální verze programu
+- 20. 4. 2018 - Instalátor
+
+Přidělené úkoly
+---------------
+Martin Kobelka
+- Implementace grafického rozhraní
+- Vykreslování grafů funkcí
+- Instalátor
+- Systém správy proměnných včetně závislosti
+- Vektorové operace
+
+Jan Havlín
+- Uživatelská příručka pro aplikaci (HTML stránka)
+
+Jakub Karpíšek
+- Implementace matematické knihovny
+
+Ján Vavro
+- Implementace testů
+- Naprogramování Makefile
+
+Komunikační kanály
+------------------
+- GitHub issues
+- GitHub projects
+- Osobní schůzky
+- Facebook Messenger
+
+Systém pro správu verzí
+-----------------------
+Git s hostingem na službě GitHub na adrese https://github.com/martinkobelka/IVS-VUT-BIT-2018/.
