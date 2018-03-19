@@ -14,24 +14,34 @@ Stanovené termíny
 - 17. 4. 2018 - Finální verze programu
 - 20. 4. 2018 - Instalátor
 
+Ostatní rozšíření nemají stanovený termín, budou přidávány podle časových možností jednotlivých členů týmu
+
 Přidělené úkoly
 ---------------
+
 Martin Kobelka
+- Nastavení prostředí a konfigurace nástrojů pro týmovou spolupráci
+- Pravidelná údržba větví a zodpovědnost za refactoring
 - Implementace grafického rozhraní
 - Vykreslování grafů funkcí
-- Instalátor
+- Instalační a odninstalační script
 - Systém správy proměnných včetně závislosti
 - Vektorové operace
 
 Jan Havlín
 - Uživatelská příručka pro aplikaci (HTML stránka)
+- Grafické práce
 
 Jakub Karpíšek
 - Implementace matematické knihovny
+- Provedení profilingu a sepsání zprávy
 
 Ján Vavro
 - Implementace testů
 - Naprogramování Makefile
+- jazyková knihovna
+
+Ostatní rozšíření nemají stanoveného řešitele, budou přidávány podle časových možností jednotlivých členů týmu
 
 Komunikační kanály
 ------------------
@@ -39,6 +49,7 @@ Komunikační kanály
 - GitHub projects
 - Osobní schůzky
 - Facebook Messenger
+- Github project
 
 Systém pro správu verzí
 -----------------------
