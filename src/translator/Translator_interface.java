@@ -11,7 +11,7 @@ public interface Translator_interface {
      * @param language
      * @exception LanguageException
      */
-    void setLanguage(String language);
+    void setLanguage(String language) throws Exception;
 
     /**
      * Translate item from department. If the item is not in actual language,
@@ -22,12 +22,12 @@ public interface Translator_interface {
      * @exception LanguageException
      * @return Translated text
      */
-    String translate(String department, String item);
+    String translate(String department, String item) throws LanguageException;
 
     /**
      * Return list of languages
      * @return
      */
-    List<String> getLanguages();
+    List<String> getLanguages() throws Exception;
 
 }
