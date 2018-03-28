@@ -14,7 +14,7 @@ public class Translator implements Translator_interface {
     private String language;
 
     @Override
-    public void setLanguage(String language) throws Exception {
+    public void setLanguage(String language) throws LanguageException {
         List<String> languages;
         languages = getLanguages();
         boolean is_supported = false;
@@ -83,7 +83,7 @@ public class Translator implements Translator_interface {
         return null;
     }
 
-    public List<String> getLanguages() throws Exception {
+    public List<String> getLanguages() throws LanguageException {
         List<String> languages = new ArrayList<>();
         Files.newDirectoryStream(Paths.get("./languages"),
                 path -> path.toString().endsWith(".xml")).forEach(filePath -> languages.add(filePath.toString()));
