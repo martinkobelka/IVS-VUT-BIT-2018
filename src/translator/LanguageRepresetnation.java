@@ -64,7 +64,7 @@ public class LanguageRepresetnation {
         @Override
         public boolean equals(Object o) {
 
-            if(o instanceof Item && ((Item) o).getDepartment() == department && ((Item) o).getItem() == item) {
+            if (o instanceof Item && ((Item) o).getDepartment().equals(department) && ((Item) o).getItem().equals(item)) {
                 return true;
             }
             else {
