@@ -1,0 +1,24 @@
+.keyboard_button {
+    -fx-background-color: #556272;
+    -fx-text-fill:  #FFFFFF;
+    -fx-font-size:  24pt;
+    -fx-font-weight: bold;
+    -fx-pref-width: 70;
+    -fx-cursor: hand;
+}
+
+.keyboard_button_goniometry {
+    -fx-pref-width: 140;
+}
+
+.equal_button{
+    -fx-background-color: #556272;
+    -fx-text-fill:  #FFFFFF;
+    -fx-font-size:  24pt;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.equal_button:hover{
+    -fx-background-color: #F4F4F4;
+    -fx-text-fill:  #556272;
+}

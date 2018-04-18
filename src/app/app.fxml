@@ -1,10 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#layout_key_press" prefHeight="958.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
    <children>
-      <Button fx:id="my_button" mnemonicParsing="false" onAction="#test_method" prefHeight="125.0" prefWidth="209.0" text="Tlačítko" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <top>
+            <Pane prefHeight="58.0" prefWidth="812.0" style="-fx-background-color: #556272;" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <VBox prefHeight="393.0" prefWidth="812.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="81.0" prefWidth="806.0" style="-fx-background-color: #556272;">
+                     <children>
+                        <TextField fx:id="test_action" focusTraversable="false" layoutX="56.0" layoutY="25.0" onAction="#send_action" onMouseClicked="#field_click" prefHeight="75.0" prefWidth="587.0" style="-fx-font-size: 32 pt; -fx-font-weight: bold; -fx-background-color: #556272; -fx-text-fill: white;" text="|" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="0.0" />
+                        <Label alignment="CENTER" layoutX="679.0" layoutY="30.0" onMouseClicked="#send_action_button" prefHeight="75.0" prefWidth="135.0" styleClass="equal_button" stylesheets="@style.css" text="=" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label alignment="CENTER" layoutX="686.0" layoutY="30.0" onMouseClicked="#backspace_click" prefHeight="75.0" prefWidth="69.0" styleClass="equal_button" stylesheets="@style.css" text="&lt;X|" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="0.0" />
+                        <Label alignment="CENTER" onMouseClicked="#send_action_button" prefHeight="75.0" prefWidth="44.0" styleClass="equal_button" stylesheets="@style.css" text="&gt;" />
+                     </children>
+                  </AnchorPane>
+                  <HBox alignment="CENTER" prefHeight="324.0" prefWidth="806.0" style="-fx-background-color: #81BEFD;">
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="29.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="29.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="171.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="1" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="4" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="5" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="7" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="3" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="9" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <Button fx:id="button_null" mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="0" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="(" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text=")" GridPane.columnIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="/" GridPane.columnIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="*" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#button_action" stylesheets="@style.css" text="sin" GridPane.columnIndex="7">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#button_action" stylesheets="@style.css" text="cos" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#button_action" stylesheets="@style.css" text="tan" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#button_action" stylesheets="@style.css" text="cotg" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="!" GridPane.columnIndex="5" />
+                              <Button mnemonicParsing="false" onAction="#button_action" prefHeight="62.0" prefWidth="77.0" styleClass="keyboard_button" stylesheets="@style.css" text="," GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#button_action" styleClass="keyboard_button" stylesheets="@style.css" text="=" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#button_action" prefHeight="62.0" prefWidth="77.0" style="-fx-font-size: 22pt;" styleClass="keyboard_button" stylesheets="@style.css" text="\%" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </bottom>
+         <center>
+            <VBox alignment="CENTER" style="-fx-background-color: white;">
+               <children>
+                  <WebView fx:id="visualisation" minWidth="200.0" prefHeight="800.0" prefWidth="-1.0" />
+               </children></VBox>
+         </center>
+         <left>
+            <VBox prefWidth="300.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" minHeight="60.0" prefHeight="80.0" prefWidth="300.0" style="-fx-background-color: #81BEFD;">
+                     <children>
+                        <Label style="-fx-text-fill: #556272; -fx-font-weight: bold;" text="Proměnné">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="symbolTableFunctions" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="300.0" style="-fx-border-color: white; -fx-font-size: 14pt;" />
+               </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" minHeight="60.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #81BEFD;">
+                     <children>
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: #556272;" text="Funkce">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="functionSymbolTable" maxWidth="1.7976931348623157E308" prefWidth="300.0" style="-fx-border-color: white; -fx-font-size: 18pt;" />
+               </children>
+            </VBox>
+         </right>
+      </BorderPane>
    </children>
 </StackPane>
