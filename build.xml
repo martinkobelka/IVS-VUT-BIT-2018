@@ -69,7 +69,7 @@
 
             <formatter type="brief" usefile="false" />
 
-            <test name="tests.Class_exampleTest" />
+            <test name="tests.My_math_interfaceTest"/>
         </junit>
     </target>
     <target name="all" depends="compile, unit-tests, pack, run" />
