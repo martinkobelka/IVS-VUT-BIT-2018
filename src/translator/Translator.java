@@ -11,57 +11,123 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @brief Translator for loading and using xml languages
+ *
+ * <p>
+ *     This class represents translator. It can load languages and
+ *     geturn elements from then
+ * </p>
+ *
+ * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
+ * @version 1.0
+ */
 public class Translator implements Translator_interface {
 
-    private String language;
-    private String default_language;
-    private LanguageRepresetnation language_content;
-    private LanguageRepresetnation default_language_content;
+    /**
+     * Directory with languages
+     */
+    private final String LANGUAGES_DIRECTORY = "languages";
 
+    /**
+     * Actual language
+     */
+    private String language;
+
+    /**
+     * Default language
+     */
+    private String defaultLanguage;
+
+    /**
+     * Model of actual language
+     */
+    private LanguageRepresetnation languageContent;
+
+    /**
+     * Model of default language
+     */
+    private LanguageRepresetnation defaultLanguageContent;
+
+
+    /**
+     * Create new translator
+     */
     public Translator() {
-        default_language = getDefaultLanguage();
-        if (default_language != null) {
-            language = default_language;
-            default_language_content = new LanguageRepresetnation();
+
+        // Get default language
+        defaultLanguage = getDefaultLanguage();
+
+        // When there default language, set language to default language
+        if (defaultLanguage != null) {
+            language = defaultLanguage; // Set actual language
+            defaultLanguageContent = new LanguageRepresetnation();
             loadFromFile();
         }
     }
 
+    /**
+     * Set actual language
+     *
+     * @param language String actual language
+     *
+     * @throws LanguageException When language does not exists
+     */
     public void setLanguage(String language) throws LanguageException {
 
-        if (language.equals(default_language.substring(1))) {
-            this.language = default_language;
+        // When we select default language, it is not important to load next language
+        if (language.equals(defaultLanguage)) {
+            this.language = defaultLanguage;
             return;
         }
 
+        // List of languages
         List<String> languages = getLanguages();
-        boolean is_supported = false;
+        boolean isSupported = false;
 
-        for (String tmp : languages) {
-            if (language.equals(tmp)) {
-                is_supported = true;
+        // Find language in languages
+        for (String actualLanguage : languages) {
+
+            if (actualLanguage.equals(language)) {
+                isSupported = true;
             }
+
         }
-        if (is_supported) {
+
+        // Test if fanguage is supported
+        if (isSupported) {
             this.language = language;
-        } else {
+        }
+        else {
             throw new LanguageException(LanguageException.LanguageExceptionType.LANGUAGE_NOT_FOUND);
         }
 
-        language_content = new LanguageRepresetnation();
+        // Create new language content && load it from file
+        languageContent = new LanguageRepresetnation();
         loadFromFile();
     }
 
+    /**
+     * Find translation of item in department
+     *
+     * @param department target department
+     * @param item target items
+     *
+     * @return translation of item
+     * @throws LanguageException when item does not exists
+     */
     public String translate(String department, String item) throws LanguageException {
-        if (language == null && default_language == null) {
+
+        // When there is no language, throw exception
+        if (language == null && defaultLanguage == null) {
             throw new LanguageException(LanguageException.LanguageExceptionType.LANGUAGE_NOT_SET);
         }
 
         String result;
 
-        if (default_language.equals(language)) {
+        if (defaultLanguage.equals(language)) {
             try {
-                result = default_language_content.getItem(department, item);
+                result = defaultLanguageContent.getItem(department, item);
             } catch (LanguageException ex) {
                 throw new LanguageException(LanguageException.LanguageExceptionType.NO_TRANSLATION);
             }
@@ -69,10 +135,10 @@ public class Translator implements Translator_interface {
         }
 
         try {
-            result = language_content.getItem(department, item);
+            result = languageContent.getItem(department, item);
         } catch (LanguageException e) {
             try {
-                result = default_language_content.getItem(department, item);
+                result = defaultLanguageContent.getItem(department, item);
             } catch (LanguageException ex) {
                 throw new LanguageException(LanguageException.LanguageExceptionType.NO_TRANSLATION);
             }
@@ -81,42 +147,96 @@ public class Translator implements Translator_interface {
         return result;
     }
 
+    /**
+     * Get files from target directory
+     * @return
+     */
     private List<String> getFileNames() {
+
+        // Cretae list for languages
         List<String> languages = new ArrayList<>();
-        URL lang_path = this.getClass().getResource("./languages");
+
+        // Get url for these files
+        URL lang_path = this.getClass().getResource(LANGUAGES_DIRECTORY);
         try {
-            Files.newDirectoryStream(Paths.get(lang_path.getPath()), path -> path.toString().endsWith(".xml")).forEach(filePath -> languages.add(filePath.toString().substring(filePath.toString().lastIndexOf('/') + 1, filePath.toString().length() - 4)));
-        } catch (IOException e) {
+            // Find all files && add them into list
+            Files.newDirectoryStream(
+                    Paths.get(lang_path.getPath()),
+                    path -> path.toString().endsWith(".xml")).forEach(
+                            filePath -> languages.add(
+                                    filePath.toString().substring(
+                                            filePath.toString().lastIndexOf('/') + 1,
+                                            filePath.toString().length() - 4
+                                    )
+                            )
+            );
+        }
+        catch (IOException e) {
+            // Critical error, exit application
+            System.err.println(e.getMessage());
+            System.exit(1);
         }
 
         return languages;
     }
 
+    /**
+     * Get all languages from directory
+     * @return List of languages
+     */
     public List<String> getLanguages() {
+
+        // List of files, which will be used for languages
         List<String> fileNames = getFileNames();
         List<String> languages = new ArrayList<>();
 
+        // Loop over all files ad
         for (String fileName : fileNames) {
+
+            // If it is default language
             if (fileName.startsWith("_")) {
-                String tmp = fileName.substring(1);
-                languages.add(tmp);
-            } else {
+                languages.add(fileName.substring(1));
+            }
+            // If it is not default language
+            else {
                 languages.add(fileName);
             }
+
         }
+
+        // Get list of languages
         return languages;
     }
 
+    /**
+     * Load languages from file
+     */
     private void loadFromFile() {
+
+        // Create actual department, item, value && element
         String department = null, item = null, value = null, element = null;
+
+        // Create new reader from factory
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader xsr = null;
 
         URL lang_path = this.getClass().getResource("./languages");
-        String path = lang_path.getPath() + "/" + language + ".xml";
+
+        // Create different path for default language and actual language
+        String path = "";
+        if(language.equals(defaultLanguage)) {
+            path = lang_path.getPath() + "/_" + language + ".xml";
+        }
+        else{
+            path = lang_path.getPath() + "/" + language + ".xml";
+        }
 
         try {
+
+            // Create new reader from path
             xsr = factory.createXMLStreamReader(new FileReader(path));
+
+            // Loop over all tokens in file
             while (xsr.hasNext()) {
                 if (xsr.getEventType() == XMLStreamConstants.START_ELEMENT) {
                     element = xsr.getName().getLocalPart();
@@ -133,10 +253,10 @@ public class Translator implements Translator_interface {
                     }
                 } else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
                     if ((xsr.getName().getLocalPart().equals("item"))) {
-                        if (language.equals(default_language)) {
-                            default_language_content.addItem(department, item, value);
+                        if (language.equals(defaultLanguage)) {
+                            defaultLanguageContent.addItem(department, item, value);
                         } else {
-                            language_content.addItem(department, item, value);
+                            languageContent.addItem(department, item, value);
                         }
                     }
                 }
@@ -144,23 +264,41 @@ public class Translator implements Translator_interface {
                 xsr.next();
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
 
-        } finally {
+        }
+        finally {
+
             try {
                 xsr.close();
             } catch (Exception e) {
+                // TODO: action for closing file exception
             }
+
         }
     }
 
+    /**-
+     * Find default language
+     * @return
+     */
     private String getDefaultLanguage() {
+
+        // Get list of files
         List<String> filenames = getFileNames();
+
+        // Loop over all strings
         for (String tmp : filenames) {
+
+            // If string starts with _, it is default language
+            // Remove _ and return it
             if (tmp.startsWith("_")) {
-                return tmp;
+                return tmp.substring(1);
             }
         }
+
+        // There is no default language
         return null;
     }
 }
