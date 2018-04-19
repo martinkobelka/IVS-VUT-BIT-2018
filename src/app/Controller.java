@@ -1,9 +1,25 @@
+/**
+ * Copyright 2018 Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package app;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -17,14 +33,21 @@ import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 
-import java.io.Console;
 import java.net.URL;
-import java.security.Key;
-import java.util.Random;
+import java.text.ParseException;
 
+/**
+ * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
+ * @version 1.0
+ *
+ * @brief Constroller for main app view
+ */
 public class Controller{
 
-    private final String NULL_VALUE = "0";
+    /**
+     * Regex for printable character
+     */
+    private final String PRINTABLE_CHARACTER = "^[a-zA-Z0-9]|\\.|\\(|\\)|\\+|\\-|\\*|/$|=|,|\\^";
 
     @FXML
     public Button button_null;
@@ -33,42 +56,61 @@ public class Controller{
     @FXML
     public WebView visualisation;
 
-    @FXML
-    public ListView<Function> functionSymbolTable;
 
     @FXML
-    public ListView<Variable> symbolTableFunctions;
+    public ListView<Variable> symbolVariableListView;
 
+    @FXML
+    public ListView<Function> symbolFunctionsListView;
+
+    /**
+     * Parser for parsing expression
+     */
     private MyParser myParser;
 
+    /**
+     * Run representation of table of variables
+     */
     private TableOfVariables tableOfVariables;
+
+    /**
+     * Run representation of table of functions
+     */
     private TableOfFunctions tableOfFunctions;
 
+    /**
+     * Counter of equation which was written
+     */
     private int sequence;
-
-
 
     @FXML
     public void initialize() {
 
-        URL url = this.getClass().getResource("novy.html");
+        // Get address of render html file
+        URL url = this.getClass().getResource("eqRender.html");
 
+        // Load visu
         visualisation.getEngine().load(url.toString());
 
+        // Create tables
         tableOfVariables = new TableOfVariables();
         tableOfFunctions = new TableOfFunctions();
 
+        // Create lists for tables
         ObservableList<Variable> listOfVariables = tableOfVariables.getVariables();
         ObservableList<Function> listOfFunctions = tableOfFunctions.getFunctions();
 
-        symbolTableFunctions.setItems(listOfVariables);
-        functionSymbolTable.setItems(listOfFunctions);
+        // Set ovservalble lists to views
+        symbolVariableListView.setItems(listOfVariables);
+        symbolFunctionsListView.setItems(listOfFunctions);
 
+        // Create parser
         this.myParser = new MyParser(tableOfVariables, tableOfFunctions);
         this.sequence = 0;
 
+        // Add listener for changing value in text box
         test_action.textProperty().addListener((observable, oldValue, newValue) -> {
-            myParser.sedAddVariable(false);
+            myParser.setAddVariable(false);
             count();
         });
     }
@@ -79,9 +121,14 @@ public class Controller{
 
         addCharacter(((Button) event.getSource()).getText());
 
-        myParser.sedAddVariable(false);
+        myParser.setAddVariable(false);
     }
 
+    /**
+     * Add one character into textob with equation
+     *
+     * @param character
+     */
     private void addCharacter(String character) {
 
         String actualText = test_action.getText();
@@ -94,28 +141,43 @@ public class Controller{
         }
     }
 
+    /**
+     * @brief count all entered values
+     *
+     * <p>
+     *     Count all entered values. It write them into webview use KaTex engine.
+     * </p>
+     */
     private void count() {
 
-        ReturnValue returnValue;
         try {
 
-            returnValue = myParser.parse(test_action.getText());
+            // Set sequence to default velue
+            sequence = 0;
 
+            // Get return value from parser
+            myParser.clearParentVariables();
+            ReturnValue returnValue = myParser.parse(test_action.getText());
+
+            // Clear engline
             visualisation.getEngine().executeScript(
                     "telo.innerHTML = \"\";"
             );
 
+            // While there is another value, render it
             while(returnValue != null) {
 
-                int next = this.sequence++;
+                sequence++;
 
+                // Create element for rendering (elements are indexes with next sequence
                 visualisation.getEngine().executeScript(
-                        "var nadpis = document.createElement(\"H1\");" +
-                                "nadpis.id = \"vyk" + String.valueOf(next) + "\";" +
+                        "var nadpis = document.createElement(\"H2\");" +
+                                "nadpis.id = \"vyk" + String.valueOf(sequence) + "\";" +
                                 "telo.appendChild(nadpis);" +
-                                "var vykresleni = document.getElementById(\"vyk" + String.valueOf(next) + "\");"
+                                "var vykresleni = document.getElementById(\"vyk" + String.valueOf(sequence) + "\");"
                 );
 
+                // Render it into element
                 visualisation.getEngine().executeScript(
                         "katex.render(\"" + returnValue.getTextRepresentation() + "="
                                 + String.valueOf(returnValue.getValue()) + "\", vykresleni);"
@@ -133,7 +195,7 @@ public class Controller{
     @FXML
     public void send_action(ActionEvent event)  {
 
-        myParser.sedAddVariable(true);
+        myParser.setAddVariable(true);
         count();
 
     }
@@ -141,7 +203,7 @@ public class Controller{
     @FXML
     public void send_action_button(MouseEvent event) {
 
-        myParser.sedAddVariable(true);
+        myParser.setAddVariable(true);
         count();
 
     }
@@ -153,6 +215,7 @@ public class Controller{
             test_action.setText("");
         }
     }
+
 
     public void backspace_click(MouseEvent mouseEvent) {
 
@@ -172,10 +235,16 @@ public class Controller{
 
     }
 
+    /**
+     * Function is called when we are focused on layout and press key
+     * @param keyEvent
+     */
     public void layout_key_press(KeyEvent keyEvent) {
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            myParser.sedAddVariable(true);
+
+            // If it is enter, set that variables can be added && count
+            myParser.setAddVariable(true);
             count();
         }
         else {
@@ -202,14 +271,23 @@ public class Controller{
 
     }
 
+    /**
+     * Test if the character is printable
+     *
+     * @param checkChar character
+     *
+     * @return
+     */
     private boolean isPrintableCharacter(String checkChar) {
 
-        if(checkChar.matches("^[a-zA-Z0-9]|\\.|\\(|\\)|\\+|\\-|\\*|/$|=")) {
-            return true;
-        }
-
-        return false;
+        return checkChar.matches(PRINTABLE_CHARACTER);
 
     }
 
+    public void changeExpandVarsAction(ActionEvent actionEvent) {
+
+        myParser.setExpandVariables(((CheckBox) actionEvent.getSource()).isSelected());
+        count();
+
+    }
 }

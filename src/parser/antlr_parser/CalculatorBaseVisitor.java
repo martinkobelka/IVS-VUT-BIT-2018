@@ -1,3 +1,4 @@
+
 // Generated from Calculator.g4 by ANTLR 4.7.1
 package parser.antlr_parser;
 import my_math.MathException;
@@ -10,7 +11,11 @@ import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 
+import java.text.ParseException;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class provides an empty implementation of {@link CalculatorVisitor},
@@ -21,18 +26,70 @@ import java.util.Comparator;
  */
 public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue> implements CalculatorVisitor<ReturnValue> {
 
+	/**
+	 * Math library
+	 */
 	private My_math math;
+
+	/**
+	 * Table of variables for this parser
+	 */
 	private TableOfVariables tableOfVariables;
+
+	/**
+	 * Table of functions for this parser
+	 */
 	private TableOfFunctions tableOfFunctions;
+
+	/**
+	 * Acltual function
+	 */
 	private Function actualFunction;
+
+	/**
+	 * Flag which tell us if variable can be added
+	 */
 	private boolean addVariable;
 
+	/**
+	 * List of parent variables (for cyclical dependence)
+	 */
+    private Set<String> parentVariables;
+
+	/**
+	 * List of parent variables (for cyclical dependence)
+	 */
+    private Set<String> actualVariables;
+
+	/**
+	 * Flag which tell us if variables can be expand
+	 */
+	private boolean expandVariables;
+
+	/**
+	 * Create new Visitor for calculator
+	 *
+	 * @param tableOfVariables actual table of variables
+	 * @param tableOfFunctions actual table of functions
+	 */
 	public CalculatorBaseVisitor(TableOfVariables tableOfVariables, TableOfFunctions tableOfFunctions) {
 		this.math = new My_math();
 		this.tableOfVariables = tableOfVariables;
 		this.tableOfFunctions = tableOfFunctions;
 		this.addVariable = true;
+		this.expandVariables = true;
+		parentVariables = null;
+		actualVariables = new HashSet<>();
 
+	}
+
+	/**
+	 * Setter for parent variables
+	 *
+	 * @param parentVariables
+	 */
+	public void setParentVariables(Set<String> parentVariables) {
+		this.parentVariables = parentVariables;
 	}
 
 	/**
@@ -44,7 +101,14 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	 */
 	@Override
 	public ReturnValue visitExprProg(CalculatorParser.ExprProgContext ctx) {
-		return visitChildren(ctx);
+
+		ReturnValue returnValue =  visitChildren(ctx);
+
+		if(returnValue.getTypeReturnValue() == TypeReturnValue.CYCLE) {
+			return emptyValeuFactory();
+		}
+
+		return returnValue;
 	}
 
 	/**
@@ -57,42 +121,56 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	@Override
 	public ReturnValue visitAssignmentProg(CalculatorParser.AssignmentProgContext ctx) {
 
+		// Get name && content of variable
 		String name = ctx.getChild(0).getText();
 		String content = ctx.getChild(2).getText();
 
+		// Set actual variable
+		actualVariables.add(name);
 		Variable variable = new Variable(name, content);
 
+		// If additable of variable is active
 		if(addVariable) {
 
+			// If variable exists, remove it
 			if(tableOfVariables.isVariableExists(variable)) {
-
-
 				tableOfVariables.getVariables().remove(variable);
-
-
 			}
 
+			// Add new variable && sort it
 			tableOfVariables.addVariable(variable);
-
-			tableOfVariables.getVariables().sort(new Comparator<Variable>() {
-
-				@Override
-				public int compare(Variable o1, Variable o2) {
-					return o1.getName().compareTo(o2.getName());
-				}
-
-			});
 		}
 
-
 		MyParser tempParser = new MyParser(tableOfVariables, tableOfFunctions);
-		tempParser.sedAddVariable(addVariable);
+		tempParser.setAddVariable(addVariable);
+		actualVariables.addAll(parentVariables);
+		tempParser.setParentVariables(actualVariables);
 		ReturnValue variableValue = tempParser.parse(content);
+
+		// If there are variables in cycle, cancel it
+		if(variableValue.getTypeReturnValue() == TypeReturnValue.CYCLE) {
+			variable.setContent("0.0");
+		}
+
+		sortVariables();
 
 		return new ReturnValue(
 				variableValue.getValue(),
 				name
 		);
+
+	}
+
+	private void sortVariables() {
+
+		tableOfVariables.getVariables().sort(new Comparator<Variable>() {
+
+			@Override
+			public int compare(Variable o1, Variable o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+
+		});
 	}
 
 	/**
@@ -172,9 +250,16 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public ReturnValue visitIdentifier(CalculatorParser.IdentifierContext ctx) {
+	@Override public ReturnValue visitIdentifier(CalculatorParser.IdentifierContext ctx){
 
 		String content = ctx.getText();
+
+		if(parentVariables.contains(content)) {
+			return emptyValeuFactory();
+		}
+
+		actualVariables.add(content);
+
 
 		Variable tempVariable = new Variable(content, "0.0");
 
@@ -201,11 +286,25 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			}
 		}
 
-
+		// Parse variable && get return value
 		MyParser localParser = new MyParser(tableOfVariables, tableOfFunctions);
-		localParser.sedAddVariable(addVariable);
+		localParser.setAddVariable(addVariable);
+		localParser.setParentVariables(actualVariables);
 
-		return localParser.parse(tempVariable.getContent());
+		actualVariables.addAll(parentVariables);
+		localParser.setParentVariables(actualVariables);
+		ReturnValue returnValue = localParser.parse(tempVariable.getContent());
+
+		// If the name should not be expand, get real name
+		if(!expandVariables) {
+			returnValue.setTextRepresentation(getRealVariableName(content));
+		}
+		else{
+			returnValue.setTextRepresentation("(" + returnValue.getTextRepresentation() + ")");
+		}
+
+		return returnValue;
+
 	}
 	/**
 	 * {@inheritDoc}
@@ -216,6 +315,10 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	@Override public ReturnValue visitBrackets(CalculatorParser.BracketsContext ctx) {
 
 		ReturnValue child = visit(ctx.getChild(1));
+
+		if (child.getTypeReturnValue() == TypeReturnValue.CYCLE) {
+			return emptyValeuFactory();
+		}
 
 		return new ReturnValue(
 				child.getValue(),
@@ -247,6 +350,11 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 
 		ReturnValue first = visit(ctx.getChild(0));
 		ReturnValue second = visit(ctx.getChild(2));
+
+		// If there is cycle, return error
+		if (first.getTypeReturnValue() == TypeReturnValue.CYCLE || first.getTypeReturnValue() == TypeReturnValue.CYCLE ) {
+			return emptyValeuFactory();
+		}
 
 		String textOperation = ctx.getChild(1).getText();
 
@@ -361,10 +469,12 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	 */
 	@Override public ReturnValue visitUnaryOperationBefore(CalculatorParser.UnaryOperationBeforeContext ctx) {
 
-
-
 			Operation operation = Transformator.mapOperation(ctx.getChild(0).getText());
 			ReturnValue child = visit(ctx.getChild(1));
+
+			if(child.getTypeReturnValue() == TypeReturnValue.CYCLE) {
+				return emptyValeuFactory();
+			}
 
 			switch (operation) {
 				case ADD:
@@ -397,6 +507,10 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			Operation operation = Transformator.mapOperation(ctx.getChild(1).getText());
 			ReturnValue child = visit(ctx.getChild(0));
 
+			if(child.getTypeReturnValue() == TypeReturnValue.CYCLE) {
+				return emptyValeuFactory();
+			}
+
 			if(operation == Operation.FACTORIAL) {
 				return new ReturnValue(
 						math.run_operate(new double[]{child.getValue()}, operation),
@@ -414,7 +528,50 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		return new ReturnValue();
 	}
 
+	/**
+	 * Setter for {@code addVariable}
+	 *
+	 * @param value
+	 */
 	public void setAddVariable(boolean value) {
 		addVariable = value;
+	}
+
+	public boolean isExpandVariables() {
+		return expandVariables;
+	}
+
+	public void setExpandVariables(boolean expandVariables) {
+		this.expandVariables = expandVariables;
+	}
+
+	/**
+	 * Get real variable name from string (pi to latex pi...)
+	 * @param variableName
+	 * @return
+	 */
+	private String getRealVariableName(String variableName) {
+
+		switch (variableName) {
+			case "pi":
+				return "\\\\pi";
+			default:
+				return variableName;
+		}
+	}
+
+	/**
+	 * Return empty value with cycle error
+	 * @return
+	 */
+	private ReturnValue emptyValeuFactory() {
+		ReturnValue returnValue = new ReturnValue(
+				0.0,
+				"0.0"
+		);
+
+		returnValue.setTypeReturnValue(TypeReturnValue.CYCLE);
+
+		return returnValue;
 	}
 }

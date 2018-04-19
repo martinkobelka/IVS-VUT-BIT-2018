@@ -40,7 +40,7 @@
 
         <copy file="src/app/app.fxml" tofile="out/compile/app/app.fxml" />
         <copy file="src/app/style.css" tofile="out/compile/app/style.css" />
-        <copy file="src/app/novy.html" tofile="out/compile/app/novy.html" />
+        <copy file="src/app/eqRender.html" tofile="out/compile/app/novy.html" />
         <copydir src="src/app/fonts" dest="out/compile/app/fonts" />
 
     </target>
