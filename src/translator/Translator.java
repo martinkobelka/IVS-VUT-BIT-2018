@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package translator;
 
 import javax.xml.stream.XMLInputFactory;

@@ -1,13 +1,31 @@
+/**
+ *
+ */
 package translator;
-
 
 import java.util.HashSet;
 
+/**
+ *
+ */
 public class LanguageRepresetnation {
 
     private class Item {
 
-        private String department, item, value;
+        /**
+         * Name of epartment of item
+         */
+        private String department;
+
+        /**
+         * Name of item
+         */
+        private String item;
+
+        /**
+         * Actual value
+         */
+        private String value;
 
         /**
          * Get value of item
@@ -61,8 +79,12 @@ public class LanguageRepresetnation {
             this.department = department;
         }
 
-        @Override
-        public boolean equals(Object o) {
+        /**
+         * Test if o is equas ad actual item
+         * @param o
+         * @return
+         */
+        @Override public boolean equals(Object o) {
 
             // Items are equal when department && items are the sammem
             return (
@@ -72,14 +94,18 @@ public class LanguageRepresetnation {
             );
         }
 
-        @Override
-        public int hashCode() {
+        /**
+         * Get hashcode of actual item
+         * @return
+         */
+        @Override public int hashCode() {
             return department.hashCode() + item.hashCode();
         }
-
-
     }
 
+    /**
+     * Items of actual LanguageRepresentation
+     */
     private HashSet<Item> items;
 
     /**
@@ -121,7 +147,4 @@ public class LanguageRepresetnation {
         // When there is no translation
         throw new LanguageException(LanguageException.LanguageExceptionType.NO_TRANSLATION);
     }
-
-
-
 }
