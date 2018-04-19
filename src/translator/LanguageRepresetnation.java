@@ -64,12 +64,12 @@ public class LanguageRepresetnation {
         @Override
         public boolean equals(Object o) {
 
-            if (o instanceof Item && ((Item) o).getDepartment().equals(department) && ((Item) o).getItem().equals(item)) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            // Items are equal when department && items are the sammem
+            return (
+                    o instanceof Item &&
+                    ((Item) o).getDepartment().equals(department) &&
+                    ((Item) o).getItem().equals(item)
+            );
         }
 
         @Override
@@ -82,21 +82,43 @@ public class LanguageRepresetnation {
 
     private HashSet<Item> items;
 
+    /**
+     * Create new language representation
+     */
     public LanguageRepresetnation() {
-        items = new HashSet<>();
+        items = new HashSet<>(); // Cretae new set
     }
 
+    /**
+     * Add new intem into language model
+     * @param department department of item
+     * @param item item name
+     * @param value value
+     */
     public void addItem(String department, String item, String value) {
         items.add(new Item(department, item, value));
     }
 
+    /**
+     * Get element from set of items
+     * @param department depatment of item
+     * @param item item name
+     * @return text value of item
+     * @throws LanguageException when item does not exists
+     */
     public String getItem(String department, String item) throws LanguageException {
+
+        // Test item, items are equals when department && item are the same
+        Item testItem = new Item(department, item, "");
+
+        // Loop over all items
         for(Item i : items) {
-            if (i.equals(new Item(department, item, ""))) {
+            if (i.equals(testItem)) {
                 return i.getValue();
             }
         }
 
+        // When there is no translation
         throw new LanguageException(LanguageException.LanguageExceptionType.NO_TRANSLATION);
     }
 
