@@ -28,6 +28,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
 import parser.MyParser;
 import parser.antlr_parser.ReturnValue;
+import parser.antlr_parser.TypeReturnValue;
 import parser.symbol_table.Function;
 import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
@@ -177,11 +178,17 @@ public class Controller{
                                 "var vykresleni = document.getElementById(\"vyk" + String.valueOf(sequence) + "\");"
                 );
 
+                String executeScript = "katex.render(\"" + returnValue.getTextRepresentation();
+
+                if (returnValue.getTypeReturnValue() != TypeReturnValue.FUNCITON_DECLARATION) {
+                    executeScript += "=" + String.valueOf(returnValue.getValue()) + "\", vykresleni);";
+                }
+                else {
+                    executeScript += "\", vykresleni);";;
+                }
+
                 // Render it into element
-                visualisation.getEngine().executeScript(
-                        "katex.render(\"" + returnValue.getTextRepresentation() + "="
-                                + String.valueOf(returnValue.getValue()) + "\", vykresleni);"
-                );
+                visualisation.getEngine().executeScript(executeScript);
 
                 returnValue = returnValue.getNext();
             }

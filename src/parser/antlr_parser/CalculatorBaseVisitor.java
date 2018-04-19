@@ -11,10 +11,8 @@ import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 
-import java.text.ParseException;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -145,6 +143,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		tempParser.setAddVariable(addVariable);
 		actualVariables.addAll(parentVariables);
 		tempParser.setParentVariables(actualVariables);
+		tempParser.setExpandVariables(expandVariables);
 		ReturnValue variableValue = tempParser.parse(content);
 
 		// If there are variables in cycle, cancel it
@@ -183,27 +182,38 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	@Override
 	public ReturnValue visitDeclareFunction(CalculatorParser.DeclareFunctionContext ctx) {
 
+		// Create function from first parameter
 		actualFunction = new Function(ctx.getChild(0).getText(), ctx.getChild(2).getText());
 
 		visit(ctx.getChild(0));
 
-		if(!tableOfFunctions.isFunctionDeclared(actualFunction)) {
+		// If there is flag of function
+		if(addVariable) {
 
-			tableOfFunctions.addFunction(
-					actualFunction
-			);
-		}
-		else {
-
-			tableOfFunctions.removeFunction(actualFunction);
-			tableOfFunctions.addFunction(actualFunction);
+			addOrActualizeFunction(actualFunction);
 
 		}
 
 		return new ReturnValue(
 			0.0,
-			""
+			ctx.getText(),
+			TypeReturnValue.FUNCITON_DECLARATION
 		);
+	}
+
+	private void addOrActualizeFunction(Function function){
+
+		if (!tableOfFunctions.isFunctionDeclared(function)) {
+
+			tableOfFunctions.addFunction(
+					function
+			);
+		} else {
+
+			tableOfFunctions.removeFunction(function);
+			tableOfFunctions.addFunction(function);
+
+		}
 	}
 
 	/**
@@ -293,6 +303,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 
 		actualVariables.addAll(parentVariables);
 		localParser.setParentVariables(actualVariables);
+		localParser.setExpandVariables(expandVariables);
 		ReturnValue returnValue = localParser.parse(tempVariable.getContent());
 
 		// If the name should not be expand, get real name
@@ -419,8 +430,10 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	 */
 	@Override public ReturnValue visitCallFunction(CalculatorParser.CallFunctionContext ctx) {
 
+		// Get function name
 		String functionName = ctx.getChild(0).getText();
 
+		// If it is builtInFunction
 		if(Transformator.isBuiltInFunction(functionName)) {
 
 			ReturnValue arguments = visit(ctx.getChild(2));
@@ -457,7 +470,16 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 
 		}
 
-		System.err.println("Bad function");
+		// If it is not built in function
+		else {
+			ReturnValue returnValue = new ReturnValue(
+				0.0,
+				ctx.getText()
+			);
+
+			return returnValue;
+		}
+
 		return new ReturnValue();
 
 	}
