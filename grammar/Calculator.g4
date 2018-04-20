@@ -14,7 +14,7 @@ params: params ',' params #twoParams
     ;
 
 expr:   expr '!' #UnaryOperationAfter
-    |   expr ('%'|'*'|'/') expr #BinaryOperation
+    |   expr ('%'|'*'|'/'|'^') expr #BinaryOperation
     |   expr ('+'|'-') expr #BinaryOperation
     |   ('-'|'+') expr #UnaryOperationBefore
     |   expr ',' expr #TwoOperands

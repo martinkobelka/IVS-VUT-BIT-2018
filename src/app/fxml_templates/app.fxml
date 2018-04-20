@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#layoutKeyPress" prefHeight="958.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.MainWindow">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#layoutKeyPress" prefHeight="958.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MainWindow">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <bottom>
@@ -40,11 +40,13 @@
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="110.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="29.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="80.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="29.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="171.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="171.0" />
                           </columnConstraints>
                           <rowConstraints>
@@ -70,34 +72,62 @@
                               <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="*" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                               <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="sin" GridPane.columnIndex="7">
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="sin" GridPane.columnIndex="8">
                                  <styleClass>
                                     <String fx:value="keyboard_button" />
                                     <String fx:value="keyboard_button_goniometry" />
                                  </styleClass>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="cos" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="cos" GridPane.columnIndex="8" GridPane.rowIndex="1">
                                  <styleClass>
                                     <String fx:value="keyboard_button" />
                                     <String fx:value="keyboard_button_goniometry" />
                                  </styleClass>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="tan" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="tan" GridPane.columnIndex="8" GridPane.rowIndex="2">
                                  <styleClass>
                                     <String fx:value="keyboard_button" />
                                     <String fx:value="keyboard_button_goniometry" />
                                  </styleClass>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="cotg" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="cotg" GridPane.columnIndex="8" GridPane.rowIndex="3">
                                  <styleClass>
                                     <String fx:value="keyboard_button" />
                                     <String fx:value="keyboard_button_goniometry" />
                                  </styleClass>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="!" GridPane.columnIndex="5" />
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" prefHeight="62.0" prefWidth="77.0" styleClass="keyboard_button" stylesheets="@style.css" text="," GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="=" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" onAction="#addCharacterAction" prefHeight="62.0" prefWidth="77.0" style="-fx-font-size: 22pt;" styleClass="keyboard_button" stylesheets="@style.css" text="\%" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="!" GridPane.columnIndex="6" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" prefHeight="62.0" prefWidth="77.0" styleClass="keyboard_button" stylesheets="@style.css" text="," GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="=" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" prefHeight="62.0" prefWidth="77.0" style="-fx-font-size: 22pt;" styleClass="keyboard_button" stylesheets="@style.css" text="\%" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="log" GridPane.columnIndex="9">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="sqrt" GridPane.columnIndex="9" GridPane.rowIndex="2">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="^" GridPane.columnIndex="4" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="π" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="e" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" styleClass="keyboard_button" stylesheets="@style.css" text="!" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="nsqrt" GridPane.columnIndex="9" GridPane.rowIndex="3">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#addCharacterAction" stylesheets="@style.css" text="ln" GridPane.columnIndex="9" GridPane.rowIndex="1">
+                                 <styleClass>
+                                    <String fx:value="keyboard_button" />
+                                    <String fx:value="keyboard_button_goniometry" />
+                                 </styleClass>
+                              </Button>
                            </children>
                         </GridPane>
                      </children>

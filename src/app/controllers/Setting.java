@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package app;
+package app.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

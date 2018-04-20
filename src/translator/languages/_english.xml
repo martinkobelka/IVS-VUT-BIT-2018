@@ -19,4 +19,8 @@
 
     </department>
 
+    <department name="cli">
+        <item name="ERROR_ARGUMENTS">Error command line arguments</item>
+    </department>
+
 </translate>

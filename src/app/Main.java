@@ -15,14 +15,17 @@
  */
 package app;
 
-import translator.Translator;
-import translator.TranslatorSingleton;
+import app.runable_modes.Error;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
+ *
+ * Main class of application
+ *
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  * @version 1.0
- *
- * @brief Main class of application
  *
  */
 public class Main{
@@ -34,7 +37,8 @@ public class Main{
         GRAPHIC,
         PROFFILING,
         HELP,
-        ERROR
+        ERROR,
+        CLI
     }
 
     /**
@@ -44,37 +48,40 @@ public class Main{
      */
     public static void main(String[] args) {
 
-        // Get translator from singleton
-        Translator translator = TranslatorSingleton.getTranslator();
+        Main main = new Main();
 
-        // Use application mode according command line argumetns
-        switch (Main.getModeFromCLI(args)) {
+        // Get object with runable model
+        RunableMode runableMode = main.getRunableInstance(args);
 
-            case GRAPHIC:
-
-                App app = new App();
-                app.run(args);
-
-                break;
-
-            case HELP:
-                System.out.println(translator.translate("cli", "HELP"));
-                break;
-
-            case PROFFILING:
-                Proffiling proffiling = new Proffiling(System.in);
-                proffiling.run();
-                break;
-
-            case ERROR:
-                System.err.println(translator.translate("cli", "ERROR"));
-                System.exit(1);
-                break;
-        }
+        // Run application with it model
+        runableMode.run(args);
 
         // Exit with OK status
         System.exit(0);
 
+    }
+
+    /**
+     * Get instance of class, which should be runned
+     * @param args
+     * @return
+     */
+    public RunableMode getRunableInstance(String[] args) {
+
+        try {
+            // Find  this class, && return its instance
+            Class<?> c = Class.forName("app.runable_modes." + mapModeToClass(getModeFromCLI(args)));
+            Constructor<?> cons = c.getConstructor();
+            return (RunableMode) cons.newInstance();
+        }
+
+        // If we cannot find this class, return error class
+        catch (ClassNotFoundException | NoSuchMethodException |
+                InstantiationException | IllegalAccessException | InvocationTargetException e) {
+
+            return new Error();
+
+        }
     }
 
     /**
@@ -83,27 +90,64 @@ public class Main{
      * @param args Array Of command line arguments
      * @return Mode
      */
-    public static Mode getModeFromCLI(String[] args) {
+    private Mode getModeFromCLI(String[] args) {
 
+        // Test count of args
         if(args.length == 0) {
             return Mode.GRAPHIC;
         }
+
+        // Support just one argument
         else if (args.length > 1) {
             return Mode.ERROR;
         }
 
+        // Loop over all command line arguments
         for (String arg : args) {
 
-            if(arg.equals("-p") || arg.equals("--proffiling")) {
-                return Mode.PROFFILING;
-            }
+            // Test actual argument
+            switch (arg) {
 
-            else if(arg.equals("-h") || arg.equals("--help")) {
-                return Mode.HELP;
-            }
+                case "-p":
+                case "--proffiling":
+                    return Mode.PROFFILING;
 
+                case "-h":
+                case "--help":
+                    return Mode.HELP;
+
+                case "-c":
+                case "--cli":
+                    return Mode.CLI;
+            }
         }
 
+        // Nothing found, return error mode
         return Mode.ERROR;
+    }
+
+    /**
+     * Map mode to its string representation
+     *
+     * @param mode
+     * @return
+     */
+    private String mapModeToClass(Mode mode) {
+
+        switch (mode) {
+            case CLI:
+                return "Cli";
+            case ERROR:
+                return "Error";
+            case HELP:
+                return "Help";
+            case GRAPHIC:
+                return "Graphics";
+            case PROFFILING:
+                return "Proffiling";
+        }
+
+        return "Error";
+
     }
 }

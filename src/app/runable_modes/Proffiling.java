@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package app;
+package app.runable_modes;
+
+import app.RunableMode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +30,7 @@ import java.util.List;
  *
  * @brief Library for proffiling
  */
-public class Proffiling {
+public class Proffiling implements RunableMode {
 
     /**
      * Pattern of splitter for two
@@ -82,7 +84,7 @@ public class Proffiling {
     /**
      * Run proffiling
      */
-    public void run() {
+    public void run(String[] args) {
 
         System.out.println("Zadávejte hodnoty (hodnoty lze oddělovat čárkou, novými řádky a bílími znaky): ");
 

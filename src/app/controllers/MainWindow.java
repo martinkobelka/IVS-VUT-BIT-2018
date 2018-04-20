@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package app;
+package app.controllers;
 
+import app.ComputingEnviroment;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +51,7 @@ import java.text.ParseException;
  *
  * @brief Constroller for main app view
  */
-public class MainWindow {
+public class MainWindow extends ComputingEnviroment {
 
     /**
      * Regex for printable character
@@ -60,17 +61,17 @@ public class MainWindow {
     /**
      * Address for render template
      */
-    private final String RENDER_TEMPLATE = "html_templates/eqRender.html";
+    private final String RENDER_TEMPLATE = "../html_templates/eqRender.html";
 
     /**
      * File with template of setting dialog
      */
-    private final String SETTING_TEMPLATE_FILE = "fxml_templates/setting.fxml";
+    private final String SETTING_TEMPLATE_FILE = "../fxml_templates/setting.fxml";
 
     /**
      * File with template of help dialog
      */
-    private final String HELP_TEMPLATE_FILE = "fxml_templates/help.fxml";
+    private final String HELP_TEMPLATE_FILE = "../fxml_templates/help.fxml";
 
     /**
      * Translator for translating texts
@@ -105,21 +106,6 @@ public class MainWindow {
     public ListView<Function> symbolFunctionsListView;
 
     /**
-     * Parser for parsing expression
-     */
-    private MyParser myParser;
-
-    /**
-     * Run representation of table of variables
-     */
-    private TableOfVariables tableOfVariables;
-
-    /**
-     * Run representation of table of functions
-     */
-    private TableOfFunctions tableOfFunctions;
-
-    /**
      * Counter of equation which was written
      */
     private int sequence;
@@ -136,10 +122,6 @@ public class MainWindow {
         // Load visualisation page
         visualisation.getEngine().load(url.toString());
 
-        // Create tables
-        tableOfVariables = new TableOfVariables();
-        tableOfFunctions = new TableOfFunctions();
-
         // Create lists for tables
         ObservableList<Variable> listOfVariables = tableOfVariables.getVariables();
         ObservableList<Function> listOfFunctions = tableOfFunctions.getFunctions();
@@ -148,9 +130,7 @@ public class MainWindow {
         symbolVariableListView.setItems(listOfVariables);
         symbolFunctionsListView.setItems(listOfFunctions);
 
-        // Create parser
-        this.myParser = new MyParser(tableOfVariables, tableOfFunctions);
-        this.sequence = 0;
+        sequence = 0;
 
         // Add listener for changing value in text box
         test_action.textProperty().addListener((observable, oldValue, newValue) -> {

@@ -19,4 +19,8 @@
 
     </department>
 
+    <department name="cli">
+        <item name="ERROR_ARGUMENTS">Chybné argumenty příkazové řádky</item>
+    </department>
+
 </translate>

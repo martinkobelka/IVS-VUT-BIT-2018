@@ -21,7 +21,7 @@ package tests;
  * Profilling tests
  */
 
-import app.Proffiling;
+import app.runable_modes.Proffiling;
 import org.junit.Before;
 import org.junit.Test;
 

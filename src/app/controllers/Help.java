@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package app;
+package app.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,7 +37,7 @@ public class Help {
     /**
      * File with "prirucka"
      */
-    private final String FILE_HELP = "html_templates/prirucka.html";
+    private final String FILE_HELP = "../html_templates/prirucka.html";
 
     @FXML
     public void initialize() {

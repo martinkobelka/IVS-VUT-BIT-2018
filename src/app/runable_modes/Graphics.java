@@ -1,5 +1,6 @@
-package app;
+package app.runable_modes;
 
+import app.RunableMode;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,12 +9,12 @@ import javafx.stage.Stage;
 import translator.Translator;
 import translator.TranslatorSingleton;
 
-public class App extends Application {
+public class Graphics extends Application implements RunableMode {
 
     /**
      * View of app
      */
-    private final String APP_VIEW = "fxml_templates/app.fxml";
+    private final String APP_VIEW = "../fxml_templates/app.fxml";
 
     /**
      * Prefer && Minimum width of window
