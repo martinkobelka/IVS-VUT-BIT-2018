@@ -4,8 +4,12 @@
 
     <department name="gui">
 
-        <item name="title">Pokročilá vědecká kalkulačka</item>
+        <item name="TITLE">Pokročilá vědecká kalkulačka</item>
         <item name="no_java">Ve vašem počítači nebyla nalezena Java, prosím nainstalujte si ji ve verzi alespoň 8</item>
+        <item name="SETTING">Nastavení</item>
+        <item name="USERS">Uživatelé</item>
+        <item name="VARIABLES">Proměnné</item>
+        <item name="FUNCTIONS">Funkce</item>
 
     </department>
 

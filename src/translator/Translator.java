@@ -33,6 +33,11 @@ public class Translator implements Translator_interface {
     private final String LANGUAGES_DIRECTORY = "languages";
 
     /**
+     * Supported suffix for files
+     */
+    private final String SUFFIX = ".xml";
+
+    /**
      * Actual language
      */
     private String language;
@@ -119,11 +124,11 @@ public class Translator implements Translator_interface {
      * @return translation of item
      * @throws LanguageException when item does not exists
      */
-    public String translate(String department, String item) throws LanguageException {
+    public String translate(String department, String item){
 
         // When there is no language, throw exception
         if (language == null && defaultLanguage == null) {
-            throw new LanguageException(LanguageException.LanguageExceptionType.LANGUAGE_NOT_SET);
+            return item;
         }
 
         String result;
@@ -132,7 +137,7 @@ public class Translator implements Translator_interface {
             try {
                 result = defaultLanguageContent.getItem(department, item);
             } catch (LanguageException ex) {
-                throw new LanguageException(LanguageException.LanguageExceptionType.NO_TRANSLATION);
+                return item;
             }
             return result;
         }
@@ -143,10 +148,12 @@ public class Translator implements Translator_interface {
             try {
                 result = defaultLanguageContent.getItem(department, item);
             } catch (LanguageException ex) {
-                throw new LanguageException(LanguageException.LanguageExceptionType.NO_TRANSLATION);
+                return item;
             }
             return result;
         }
+
+        System.err.println("Translator Unsupported: " + result);
         return result;
     }
 
@@ -165,7 +172,7 @@ public class Translator implements Translator_interface {
             // Find all files && add them into list
             Files.newDirectoryStream(
                     Paths.get(lang_path.getPath()),
-                    path -> path.toString().endsWith(".xml")).forEach(
+                    path -> path.toString().endsWith(SUFFIX)).forEach(
                             filePath -> languages.add(
                                     filePath.toString().substring(
                                             filePath.toString().lastIndexOf('/') + 1,
@@ -223,15 +230,15 @@ public class Translator implements Translator_interface {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader xsr = null;
 
-        URL lang_path = this.getClass().getResource("./languages");
+        // Get path from acual directory
+        String path = this.getClass().getResource(LANGUAGES_DIRECTORY).getPath();
 
-        // Create different path for default language and actual language
-        String path = "";
+        // Modify path according default/not default language
         if(language.equals(defaultLanguage)) {
-            path = lang_path.getPath() + "/_" + language + ".xml";
+            path += "/_" + language + SUFFIX;
         }
         else{
-            path = lang_path.getPath() + "/" + language + ".xml";
+            path += "/" + language + SUFFIX;
         }
 
         try {
@@ -241,24 +248,37 @@ public class Translator implements Translator_interface {
 
             // Loop over all tokens in file
             while (xsr.hasNext()) {
+
                 if (xsr.getEventType() == XMLStreamConstants.START_ELEMENT) {
+
                     element = xsr.getName().getLocalPart();
+
                     if (element.equals("department")) {
                         department = xsr.getAttributeValue(0);
-                    } else if (element.equals("item")) {
+                    }
+                    else if (element.equals("item")) {
                         item = xsr.getAttributeValue(0);
                     }
 
-                } else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
+                }
+
+                else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
+
                     if (element.equals("item")) {
                         value = xsr.getText();
                         element = "";
                     }
-                } else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
+                }
+
+                else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
+
                     if ((xsr.getName().getLocalPart().equals("item"))) {
+
                         if (language.equals(defaultLanguage)) {
                             defaultLanguageContent.addItem(department, item, value);
-                        } else {
+                        }
+
+                        else {
                             languageContent.addItem(department, item, value);
                         }
                     }
@@ -286,7 +306,7 @@ public class Translator implements Translator_interface {
      * Find default language
      * @return
      */
-    private String getDefaultLanguage() {
+    public String getDefaultLanguage() {
 
         // Get list of files
         List<String> filenames = getFileNames();

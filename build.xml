@@ -23,6 +23,7 @@
         <mkdir dir="out/compile" />
         <javac srcdir="src/module_example" destdir="out/compile" includeantruntime="false" />
         <javac srcdir="src/my_math" destdir="out/compile" includeantruntime="false" />
+        <javac srcdir="src/translator" destdir="out/translator" includeantruntime="false" />
 
         <javac
                 srcdir="src/parser"
@@ -38,9 +39,9 @@
             <classpath refid="classpath.test"/>
         </javac>
 
-        <copy file="src/app/app.fxml" tofile="out/compile/app/app.fxml" />
-        <copy file="src/app/style.css" tofile="out/compile/app/style.css" />
-        <copy file="src/app/eqRender.html" tofile="out/compile/app/eqRender.html" />
+        <copy file="src/app/fxml_templates/app.fxml" tofile="out/compile/app/app.fxml" />
+        <copy file="src/app/fxml_templates/style.css" tofile="out/compile/app/style.css" />
+        <copy file="src/app/html_templates/eqRender.html" tofile="out/compile/app/eqRender.html" />
         <copydir src="src/app/fonts" dest="out/compile/app/fonts" />
 
     </target>
@@ -56,10 +57,6 @@
         </jar>
     </target>
 
-    <target name="run">
-        <java jar="out/pack/IVS-VUT-BIT-2018.jar" fork="true" />
-    </target>
-
     <target name="unit-tests">
         <junit haltonfailure="true" printsummary="true">
             <classpath>
@@ -72,7 +69,8 @@
             <test name="tests.My_math_interfaceTest"/>
         </junit>
     </target>
-    <target name="all" depends="compile, unit-tests, pack, run" />
+
+    <target name="all" depends="compile, unit-tests, pack" />
 
 
 

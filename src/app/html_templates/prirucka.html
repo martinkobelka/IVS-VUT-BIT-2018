@@ -1,0 +1,111 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pokročilá vědecká kalkulačka</title>
+<style>
+.navbar {
+	padding-left: 100px;
+	overflow: hidden;
+	background-color: #81BEFD;
+	position: fixed;
+	top: 0;	
+	width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  background-color: #556272;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  margin-right: 2px;
+}
+
+.navbar a:hover {
+	background: #F4F4F4;
+	color: #556272;
+}
+
+.main {
+	margin-top: 30px;
+	margin-left: 100px;
+	margin-right: 100px;
+	padding: 16px;
+	background-color: #F4F4F4;
+}
+
+body {
+	margin: 0px;
+	font-family: "Arial", Helvetica, sans-serif;
+}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-fixed-top " role="navigation" id="navMenu">
+<a href="#odkaz1">Uživatelské rozhraní</a>
+<a href="#odkaz2">Základní operace</a>
+<a href="#odkaz3">Proměnné</a>
+<a href="#odkaz4">Funkce</a>
+</nav>
+
+
+<div class="main" id="godown">
+
+<center><h1>Uživatelská příručka pro Pokročilou vědeckou kalkulačku</h1></center>
+<a id="odkaz1">
+	<h2 style="padding-top: 50px; margin-top: -50px;">Uživatelské rozhraní</h2>
+</a>
+--- chybí obrázek ---<p><p>
+
+<ol>
+<li>Tlačítka pro zadání vstupních hodnot
+<li>Vstupní řádek
+<li>Tlačítko pro smazání jednoho znaku
+<li>Tlačítko pro odeslání vstupu
+<li>Výstup
+<li>Seznam definovaných proměnných
+<li>Seznam definovaných funkcí
+<li>Nastavení, zdali se u proměnných zobrazí jejich název, nebo hodnota
+</ol>
+<a id="odkaz2">
+	<h2 style="padding-top: 50px; margin-top: -50px;">Základní operace</h2>
+</a>
+Veškeré výpočty a příkazy se zadávají na vstupní řádek, lze řetězit několik operací za sebou. Pro zadání vstupu použít jak klávesnici, tak tlačítka uživatelského rozhraní. Při zadání výrazu kalkulačka automaticky přehledně rozepíše vstup a zobrazí výsledek.<p>
+
+Kalkulačka podporuje následující operace:
+<ul>
+<li>Sčítání (<kbd>+</kbd>), odčítání (<kbd>-</kbd>), násobení (<kbd>*</kbd>), dělení (<kbd>/</kbd>), modulo (<kbd>%</kbd>).<br>
+Použití: <kbd>operand operátor operand</kbd>, např. <kbd>1 + 2</kbd>. Operace se vyhodnocují zleva doprava, tudíž výraz <kbd>4 / 2 * 2</kbd> se bude rovnat <kbd>4</kbd>.<p>
+<li>Goniometrické funkce: <kbd>sin</kbd>, <kbd>cos</kbd>, <kbd>tan</kbd>, <kbd>cotg</kbd>.<br>
+Použití: názvy funkcí lze napsat na klávesnici nebo pomocí tlačítek uživatelského rozhraní. Argumenty funkce je nutné zapsat do závorky za jméno funkce, např. <kbd>sin(0)</kbd>. Funkce počítají v radiánech.<p>
+<li>Faktoriál (<kbd>!</kbd>)<br>
+Použití: <kbd>N!</kbd>, kde <kbd>N</kbd> je kladné celé číslo. Kalkulačka nepodporuje multifaktoriál.<p>
+<li>Závorky<br>
+Lze zanořit libovolný počet závorek. Vyhodnocují se postupně zevnitř ven.<p>
+</ul>
+
+
+<a id="odkaz3">
+	<h2 style="padding-top: 50px; margin-top: -50px;">Proměnné</h2>
+</a>
+Kalkulačka umožňuje definovat si vlastní proměnné, které lze využít ve výrazech a funkcích. Definované proměnné se nachází ve sloupci <i>Proměnné</i>. Předem definované proměnné jsou <kbd>pi = 3.1416</kbd> a <kbd>e = 2.71828</kbd>.<p>
+
+Použití: <kbd>název_proměnné = výraz</kbd>, kde výraz může obsahovat libovolné operace, funkce, i jiné proměnné. Proměnná se uloží stisknutím enter. Následně se při zapsání <kbd>název_proměnné</kbd> dosadí uložený výraz.<p>
+
+<a id="odkaz4">
+	<h2 style="padding-top: 50px; margin-top: -50px;">Funkce</h2>
+</a>
+
+Kalkulačka podporuje definice vlastních funkcí. Definované funkce se nachází ve sloupci <i>Funkce</i><p>
+
+Použití: <kbd>název_funkce(proměnná) = výraz</kbd>, výraz lze skládat z jiných proměnných i funkcí.<p>
+
+Příklad: Vytvoření funkce, která počítá obsah kruhu s proměnlivým poloměrem se definuje jako <kbd>obsah(r) = pi * r * r</kbd>. Následné použití pro poloměr <kbd>2</kbd> bude <kbd>obsah(2)</kbd>.
+
+
+</div>
+
+</body>

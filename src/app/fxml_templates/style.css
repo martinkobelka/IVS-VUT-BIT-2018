@@ -22,3 +22,21 @@
     -fx-background-color: #F4F4F4;
     -fx-text-fill:  #556272;
 }
+
+.dialogButton {
+    -fx-background-color: #556272;
+    -fx-text-fill:  #FFFFFF;
+    -fx-font-size:  18pt;
+    -fx-font-weight: bold;
+    -fx-pref-width: 150;
+    -fx-cursor: hand;
+}
+
+.dialog_panel {
+    -fx-background-color:  #81BEFD;
+}
+
+.dialog_control {
+    -fx-text-fill: #556272;
+    -fx-font-weight: bold;
+}
