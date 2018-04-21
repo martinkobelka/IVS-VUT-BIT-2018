@@ -18,6 +18,7 @@ package translator;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -224,23 +225,16 @@ public class Translator implements TranslatorInterface {
 
         String separatePath = System.getProperty( "os.name" ).contains( "indow" ) ? lang_path.getPath().substring(1)  : lang_path.getPath();
 
-        try {
-            // Find all files && add them into list
-            Files.newDirectoryStream(
-                    Paths.get(separatePath),
-                    path -> path.toString().endsWith(SUFFIX)).forEach(
-                            filePath -> languages.add(
-                                    filePath.toString().substring(
-                                            filePath.toString().lastIndexOf('/') + 1,
-                                            filePath.toString().length() - 4
-                                    )
-                            )
-            );
-        }
-        catch (IOException e) {
-            // Critical error, exit application
-            System.err.println(e.getMessage());
-            System.exit(1);
+        File folder = new File(separatePath);
+
+        File[] listOfFiles = folder.listFiles();
+
+        for(File file : listOfFiles) {
+
+            if(file.isFile() && file.getPath().endsWith(".xml")) {
+                languages.add(file.getName().substring(0, file.getName().length() - 4));
+            }
+
         }
 
         return languages;

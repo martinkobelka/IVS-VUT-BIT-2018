@@ -2,10 +2,33 @@ package setting;
 
 public class PernamentSetting {
 
-    private String language;
-    private boolean expandVariables;
-    private boolean expandFunctions;
+    private static String OS = System.getProperty("os.name").toLowerCase();
+
+    public String language;
+    public boolean expandVariables;
+    public boolean expandFunctions;
+
+    private String filePath;
+
+    public PernamentSetting() {
+        getFile();
+    }
+
+    private void getFile() {
 
 
+
+    }
+
+
+    public void load() {
+
+
+
+    }
+
+    public void save() {
+
+    }
 
 }
