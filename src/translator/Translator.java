@@ -64,7 +64,7 @@ public class Translator implements TranslatorInterface {
     /**
      * Model of actual language
      */
-    private LanguageRepresetnation languageContent;
+    private LanguageRepresetnation languageContent = null;
 
     /**
      * Model of default language
@@ -221,10 +221,13 @@ public class Translator implements TranslatorInterface {
 
         // Get url for these files
         URL lang_path = this.getClass().getResource(LANGUAGES_DIRECTORY);
+
+        String separatePath = System.getProperty( "os.name" ).contains( "indow" ) ? lang_path.getPath().substring(1)  : lang_path.getPath();
+
         try {
             // Find all files && add them into list
             Files.newDirectoryStream(
-                    Paths.get(lang_path.getPath()),
+                    Paths.get(separatePath),
                     path -> path.toString().endsWith(SUFFIX)).forEach(
                             filePath -> languages.add(
                                     filePath.toString().substring(
