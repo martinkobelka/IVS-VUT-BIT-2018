@@ -20,12 +20,8 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -229,7 +225,6 @@ public class Translator implements TranslatorInterface {
             lang_path = getClass().getResource(LANGUAGES_DIRECTORY).toURI();
 
             String separatePath = lang_path.getPath();
-            // String separatePath = System.getProperty( "os.name" ).contains( "indow" ) ? lang_path.getPath().substring(1)  : lang_path.getPath();
 
             File folder = new File(separatePath);
 
@@ -293,75 +288,81 @@ public class Translator implements TranslatorInterface {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader xsr = null;
 
-        // Get path from acual directory
-        String path = this.getClass().getResource(LANGUAGES_DIRECTORY).getPath();
-
-        // Modify path according default/not default language
-        if(language.equals(defaultLanguage)) {
-            path += "/_" + language + SUFFIX;
-        }
-        else{
-            path += "/" + language + SUFFIX;
-        }
-
         try {
+            // Get path from acual directory
+            String path = getClass().getResource(LANGUAGES_DIRECTORY).toURI().getPath();
 
-            // Create new reader from path
-            xsr = factory.createXMLStreamReader(new FileReader(path));
-
-            // Loop over all tokens in file
-            while (xsr.hasNext()) {
-
-                if (xsr.getEventType() == XMLStreamConstants.START_ELEMENT) {
-
-                    element = xsr.getName().getLocalPart();
-
-                    if (element.equals("department")) {
-                        department = xsr.getAttributeValue(0);
-                    }
-                    else if (element.equals("item")) {
-                        item = xsr.getAttributeValue(0);
-                    }
-
-                }
-
-                else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
-
-                    if (element.equals("item")) {
-                        value = xsr.getText();
-                        element = "";
-                    }
-                }
-
-                else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
-
-                    if ((xsr.getName().getLocalPart().equals("item"))) {
-
-                        if (language.equals(defaultLanguage)) {
-                            defaultLanguageContent.addItem(department, item, value);
-                        }
-
-                        else {
-                            languageContent.addItem(department, item, value);
-                        }
-                    }
-                }
-
-                xsr.next();
+            // Modify path according default/not default language
+            if (language.equals(defaultLanguage)) {
+                path += "/_" + language + SUFFIX;
+            } else {
+                path += "/" + language + SUFFIX;
             }
-
-        }
-        catch (Exception e) {
-
-        }
-        finally {
 
             try {
-                xsr.close();
-            } catch (Exception e) {
-                // TODO: action for closing file exception
+
+                // Create new reader from path
+                xsr = factory.createXMLStreamReader(new FileReader(path));
+
+                // Loop over all tokens in file
+                while (xsr.hasNext()) {
+
+                    if (xsr.getEventType() == XMLStreamConstants.START_ELEMENT) {
+
+                        element = xsr.getName().getLocalPart();
+
+                        if (element.equals("department")) {
+                            department = xsr.getAttributeValue(0);
+                        } else if (element.equals("item")) {
+                            item = xsr.getAttributeValue(0);
+                        }
+
+                    } else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
+
+                        if (element.equals("item")) {
+                            value = xsr.getText();
+                            element = "";
+                        }
+                    } else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
+
+                        if ((xsr.getName().getLocalPart().equals("item"))) {
+
+                            if (language.equals(defaultLanguage)) {
+                                defaultLanguageContent.addItem(department, item, value);
+                            }
+
+                            else {
+                                languageContent.addItem(department, item, value);
+                            }
+                        }
+                    }
+
+                    xsr.next();
+                }
+
             }
 
+            catch (Exception e) {
+
+            }
+
+            finally {
+
+                try {
+                    xsr.close();
+                }
+
+                catch (Exception e) {
+                    // TODO: action for closing file exception
+                }
+
+            }
+
+        }
+
+        catch (URISyntaxException ex) {
+            System.err.println(ex.getMessage());
+            System.err.println("Chyba při načítání výrazů daného jazyka");
         }
     }
 
