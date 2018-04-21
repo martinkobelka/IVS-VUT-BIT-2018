@@ -69,7 +69,7 @@ public class Setting extends HaveTranslator{
         // Load actual languages to box
         ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll(translator.getLanguages());
-        languageView.setValue(translator.getDefaultLanguage());
+        languageView.setValue(translator.getLanguage());
         languageView.setItems(list);
 
         // Translate all labels

@@ -295,7 +295,9 @@ public class Translator implements TranslatorInterface {
             // Modify path according default/not default language
             if (language.equals(defaultLanguage)) {
                 path += "/_" + language + SUFFIX;
-            } else {
+            }
+
+            else {
                 path += "/" + language + SUFFIX;
             }
 
@@ -313,17 +315,24 @@ public class Translator implements TranslatorInterface {
 
                         if (element.equals("department")) {
                             department = xsr.getAttributeValue(0);
-                        } else if (element.equals("item")) {
+                        }
+
+                        else if (element.equals("item")) {
                             item = xsr.getAttributeValue(0);
                         }
 
-                    } else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
+                    }
+
+                    else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
 
                         if (element.equals("item")) {
                             value = xsr.getText();
                             element = "";
                         }
-                    } else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
+
+                    }
+
+                    else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
 
                         if ((xsr.getName().getLocalPart().equals("item"))) {
 
@@ -388,4 +397,14 @@ public class Translator implements TranslatorInterface {
         // There is no default language
         return null;
     }
+
+    /**
+     * Get actual language
+     *
+     * @return
+     */
+    public String getLanguage() {
+        return language;
+    }
+
 }
