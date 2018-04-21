@@ -43,6 +43,9 @@ public class ComputingEnviroment extends HaveTranslator{
      */
     protected MyParser myParser;
 
+    /**
+     * Create new Compuring enviroment
+     */
     public ComputingEnviroment() {
 
         // Create tables

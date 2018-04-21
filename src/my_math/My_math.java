@@ -19,9 +19,10 @@ package my_math;
  * Math library
  *
  * library implements every operation specified by enum Operation
- * @author KarpíšekJakub
+ * @author Karpíšek Jakub
  */
 public class My_math implements My_math_interface{
+
 
     private final String ERR_TYPE = "Unsupported type of operation.";
     private final String ERR_OPERANDS = "Wrong amount of operands!";
@@ -30,26 +31,43 @@ public class My_math implements My_math_interface{
     private final String ERR_NOT_INT = "Input is not an integer!";
     private final String ERR_FACT_OVERFLOW = "Input number too big for factorial!";
 
+    /**
+     * Run math operation
+     *
+     * @param operands Array of operands
+     * @param operation type of operation
+     *
+     * @return
+     * @throws MathException
+     */
     @Override
     public double run_operate(double[] operands, Operation operation) throws MathException {
-        double result;
+
+        // Return result according operation
         switch(operation){
-            case ADD: result = add(operands); break;
-            case SUBTRACT: result = sub(operands); break;
-            case MULTIPLY: result = mul(operands); break;
-            case DIVIDE: result = div(operands); break;
-            case SIN: result = sin(operands); break;
-            case COS: result = cos(operands); break;
-            case TAG: result = tan(operands); break;
-            case COTG: result = cotg(operands); break;
-            case FACTORIAL: result = fac(operands); break;
-            case SQRT: result = sqrt(operands); break;
-            case MODULO: result = mod(operands); break;
+            case ADD: return add(operands);
+            case SUBTRACT: return sub(operands);
+            case MULTIPLY: return mul(operands);
+            case DIVIDE: return div(operands);
+            case SIN: return sin(operands);
+            case COS: return cos(operands);
+            case TAG: return tan(operands);
+            case COTG: return cotg(operands);
+            case FACTORIAL: return fac(operands);
+            case SQRT: return sqrt(operands);
+            case MODULO: return mod(operands);
+            case POWER: return power(operands);
+
             default: throw new MathException(ERR_TYPE);
         }
-        return result;
     }
 
+    /**
+     * Return value of constant
+     *
+     * @param constant Type of contant
+     * @return
+     */
     @Override
     public double return_constant(Type_of_constant constant) {
         switch(constant){
@@ -61,6 +79,23 @@ public class My_math implements My_math_interface{
     }
 
     /**
+     * Power
+     *
+     * @param operands contains two operands for this operation
+     * @return operand[0] ^ operand[1]
+     */
+    private double power(double[] operands) throws MathException{
+
+        if(operands.length != 2) {
+            throw new MathException(ERR_OPERANDS);
+        }
+
+        return Math.pow(operands[0], operands[1]);
+
+    }
+
+
+    /**
      * Addition
      *
      * @param operands contains two operands for this operation
@@ -68,8 +103,9 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than two operands are provided
      */
     private double add(double[] operands)throws MathException{
-        if(operands.length != 2)
+        if(operands.length != 2) {
             throw new MathException(ERR_OPERANDS);
+        }
         return operands[0] + operands[1];
     }
 
@@ -81,8 +117,9 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than two operands are provided
      */
     private double sub(double[] operands)throws MathException{
-        if(operands.length != 2)
+        if(operands.length != 2) {
             throw new MathException(ERR_OPERANDS);
+        }
         return operands[0] - operands[1];
     }
 
@@ -94,8 +131,9 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than two operands are provided
      */
     private double mul(double[] operands)throws MathException{
-        if(operands.length != 2)
+        if(operands.length != 2) {
             throw new MathException(ERR_OPERANDS);
+        }
         return operands[0] * operands[1];
     }
 
@@ -108,10 +146,12 @@ public class My_math implements My_math_interface{
      * or if second operand is zero
      */
     private double div(double[] operands)throws MathException{
-        if(operands.length != 2)
+        if(operands.length != 2) {
             throw new MathException(ERR_OPERANDS);
-        if(operands[1] == 0)
+        }
+        if(operands[1] == 0) {
             throw new MathException(ERR_ZERO);
+        }
         return operands[0] / operands[1];
     }
 
@@ -123,8 +163,9 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than one operand is provided
      */
     private double sin(double[] operands)throws MathException{
-        if(operands.length != 1)
+        if(operands.length != 1) {
             throw new MathException(ERR_OPERANDS);
+        }
         return Math.sin(operands[0]);
     }
 
@@ -136,8 +177,9 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than one operand is provided
      */
     private double cos(double[] operands)throws MathException{
-        if(operands.length != 1)
+        if(operands.length != 1) {
             throw new MathException(ERR_OPERANDS);
+        }
         return Math.cos(operands[0]);
     }
 
@@ -149,8 +191,9 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than one operand is provided
      */
     private double tan(double[] operands)throws MathException{
-        if(operands.length != 1)
+        if(operands.length != 1) {
             throw new MathException(ERR_OPERANDS);
+        }
         return Math.tan(operands[0]);
     }
 
@@ -162,9 +205,11 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than one operand is provided
      */
     private double cotg(double[] operands)throws MathException{
-        if(operands.length != 1)
+
+        if(operands.length != 1) {
             throw new MathException(ERR_OPERANDS);
-        return 1/Math.tan(operands[0]);
+        }
+        return 1 / Math.tan(operands[0]);
     }
 
     /**
@@ -177,17 +222,25 @@ public class My_math implements My_math_interface{
      * or if operands are out of range <0, inf)
      */
     private double fac(double[] operands)throws MathException{
-        if(operands.length != 1)
+
+        if(operands.length != 1) {
             throw new MathException(ERR_OPERANDS);
-        if(operands[0] < 0)
+        }
+        if(operands[0] < 0) {
             throw new MathException(ERR_NG_ZERO);
-        if(operands[0] != Math.floor(operands[0]))
+        }
+        if(operands[0] != Math.floor(operands[0])) {
             throw new MathException(ERR_NOT_INT);
+        }
+
         double result = 1.0;
+
         for(double i = 1; i <= operands[0]; i++) {
+
             result *= i;
-            if (result >= Double.MAX_VALUE)
+            if (result >= Double.MAX_VALUE) {
                 throw new MathException(ERR_FACT_OVERFLOW);
+            }
         }
         return result;
     }
@@ -205,16 +258,18 @@ public class My_math implements My_math_interface{
      * @throws MathException if less or more than one operand is provided
      * or if operands are out of range <0, inf)
      */
-    private double sqrt(double[] operands)throws MathException{
+    private double sqrt(double[] operands) throws MathException{
         switch(operands.length){
             case 1: {
-                if(operands[0] < 0)
+                if(operands[0] < 0) {
                     throw new MathException(ERR_NG_ZERO);
+                }
                 return Math.sqrt(operands[0]);
             }
             case 2: {
-                if(operands[0] != Math.floor(operands[0]))
+                if(operands[0] != Math.floor(operands[0])) {
                     throw new MathException(ERR_NOT_INT);
+                }
                 return nthrt((int)operands[0], operands[1]);
             }
             default: {

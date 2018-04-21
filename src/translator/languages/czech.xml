@@ -21,6 +21,8 @@
 
     <department name="cli">
         <item name="ERROR_ARGUMENTS">Chybné argumenty příkazové řádky</item>
+        <item name="INTERNAL_ERROR">Nastala interní chyba aplikace, na nápravě se pracuje :(</item>
+        <item name="HELP">Nápověda ke spuštění aplikace\nBez argumentů : grafická verze\n-h || --help : nápověda\n-p || --proffiling : proffiling\n-c || --cli : Verze v příkazové řádce</item>
     </department>
 
 </translate>

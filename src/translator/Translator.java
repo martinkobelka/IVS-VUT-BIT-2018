@@ -128,7 +128,7 @@ public class Translator implements Translator_interface {
 
         // When there is no language, throw exception
         if (language == null && defaultLanguage == null) {
-            return item;
+            return item.replace("\\n", "\n");
         }
 
         String result;
@@ -137,24 +137,27 @@ public class Translator implements Translator_interface {
             try {
                 result = defaultLanguageContent.getItem(department, item);
             } catch (LanguageException ex) {
-                return item;
+                return item.replace("\\n", "\n");
             }
-            return result;
+            return result.replace("\\n", "\n");
         }
 
         try {
             result = languageContent.getItem(department, item);
-        } catch (LanguageException e) {
+        }
+        catch (LanguageException e) {
+
             try {
                 result = defaultLanguageContent.getItem(department, item);
-            } catch (LanguageException ex) {
-                return item;
             }
-            return result;
+            catch (LanguageException ex) {
+                return item.replace("\\n", "\n");
+            }
+            return result.replace("\\n", "\n");
         }
 
         System.err.println("Translator Unsupported: " + result);
-        return result;
+        return result.replace("\\n", "\n");
     }
 
     /**

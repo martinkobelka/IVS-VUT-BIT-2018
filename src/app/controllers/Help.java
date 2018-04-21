@@ -37,7 +37,7 @@ public class Help {
     /**
      * File with "prirucka"
      */
-    private final String FILE_HELP = "../html_templates/prirucka.html";
+    private final String FILE_HELP = "../html_templates/manual.html";
 
     @FXML
     public void initialize() {

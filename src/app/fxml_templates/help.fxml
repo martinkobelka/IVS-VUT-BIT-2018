@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.Help">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.Help">
    <children>
-      <WebView fx:id="webViewHelp" prefHeight="676.0" prefWidth="729.0" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <WebView fx:id="webViewHelp" prefHeight="2000" prefWidth="800" />
+      <HBox alignment="CENTER" minHeight="100.0" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#actionClose" prefHeight="50.0" prefWidth="110.0" text="Close" />
+            <Button mnemonicParsing="false" onAction="#actionClose" prefHeight="50.0" prefWidth="110.0" styleClass="dialogButton" stylesheets="@style.css" text="Close" />
          </children>
       </HBox>
    </children>

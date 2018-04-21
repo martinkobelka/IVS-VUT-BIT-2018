@@ -15,7 +15,7 @@
  */
 package app;
 
-import app.runable_modes.Error;
+import app.runable_modes.InternalError;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -40,6 +40,11 @@ public class Main{
         ERROR,
         CLI
     }
+
+    /**
+     * Package with runable modes
+     */
+    private final String PACKAGE_RUNABLE_MODES = "app.runable_modes";
 
     /**
      * This method is called after start of program
@@ -70,7 +75,7 @@ public class Main{
 
         try {
             // Find  this class, && return its instance
-            Class<?> c = Class.forName("app.runable_modes." + mapModeToClass(getModeFromCLI(args)));
+            Class<?> c = Class.forName(PACKAGE_RUNABLE_MODES + "." + mapModeToClass(getModeFromCLI(args)));
             Constructor<?> cons = c.getConstructor();
             return (RunableMode) cons.newInstance();
         }
@@ -79,7 +84,7 @@ public class Main{
         catch (ClassNotFoundException | NoSuchMethodException |
                 InstantiationException | IllegalAccessException | InvocationTargetException e) {
 
-            return new Error();
+            return new InternalError();
 
         }
     }

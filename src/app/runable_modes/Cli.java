@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Cli mode
+ * Enviroment mode for simple cli version
  *
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  * @version 1.0

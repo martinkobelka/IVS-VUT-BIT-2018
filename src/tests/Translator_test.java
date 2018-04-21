@@ -61,20 +61,16 @@ public class Translator_test {
         final String SECOND_EXPECT = "There is no Java in your computer. Please, install it in version at least 8.";
         final String THIRD_EXPECT = "Wrong count of operands";
 
-        try {
-           String first =  translator_interface.translate("gui", "title");
-           String second =  translator_interface.translate("gui", "no_java");
 
-           String third =  translator_interface.translate("math", "error_count_operands");
+       String first =  translator_interface.translate("gui", "title");
+       String second =  translator_interface.translate("gui", "no_java");
 
-           Assert.assertEquals(FIRST_EXPECT, first);
-           Assert.assertEquals(SECOND_EXPECT, second);
+       String third =  translator_interface.translate("math", "error_count_operands");
 
-           Assert.assertEquals(THIRD_EXPECT, third);
-        }
-        catch (LanguageException ex) {
-            Assert.fail("Should not failed");
-        }
+       Assert.assertEquals(FIRST_EXPECT, first);
+       Assert.assertEquals(SECOND_EXPECT, second);
+
+       Assert.assertEquals(THIRD_EXPECT, third);
 
     }
 

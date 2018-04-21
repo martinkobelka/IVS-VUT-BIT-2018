@@ -21,6 +21,8 @@
 
     <department name="cli">
         <item name="ERROR_ARGUMENTS">Error command line arguments</item>
+        <item name="INTERNAL_ERROR">Internal error in application. We are working on it :(</item>
+        <item name="HELP">Help for application\nWithout arguments : Graphics version\n-h || --help : help\n-p || --proffiling : proffiling\n-c || --cli : Command line version</item>
     </department>
 
 </translate>

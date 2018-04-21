@@ -74,6 +74,16 @@ public class MainWindow extends ComputingEnviroment {
     private final String HELP_TEMPLATE_FILE = "../fxml_templates/help.fxml";
 
     /**
+     * Min width of help dialog
+     */
+    private final double HELP_MIN_WIDTH = 800;
+
+    /**
+     * Min height of help dialog
+     */
+    private final double HELP_MIN_HEIGHT = 800;
+
+    /**
      * Translator for translating texts
      */
     private Translator translator = null;
@@ -414,6 +424,8 @@ public class MainWindow extends ComputingEnviroment {
             helpDialog.initModality(Modality.WINDOW_MODAL);
             helpDialog.initOwner(TARGET_WINDOW);
             helpDialog.setTitle(translator.translate("gui", "HELP"));
+            helpDialog.setMinWidth(HELP_MIN_WIDTH);
+            helpDialog.setMinHeight(HELP_MIN_HEIGHT);
             helpDialog.setScene(scene);
 
             helpDialog.showAndWait();

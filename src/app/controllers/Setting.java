@@ -59,6 +59,5 @@ public class Setting {
         languageView.setValue(translator.getDefaultLanguage());
         languageView.setItems(list);
 
-
     }
 }
