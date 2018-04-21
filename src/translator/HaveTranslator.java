@@ -22,7 +22,7 @@ package translator;
  * @version 1.0
  *
  */
-public class HaveTranslator {
+public abstract class HaveTranslator implements TranslatableObject{
 
 
     /**
@@ -35,6 +35,7 @@ public class HaveTranslator {
      */
     public HaveTranslator() {
         translator = TranslatorSingleton.getTranslator();
+        translator.addTranslatablObject(this);
     }
 
 }

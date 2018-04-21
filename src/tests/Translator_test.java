@@ -5,13 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 import translator.LanguageException;
 import translator.Translator;
-import translator.Translator_interface;
+import translator.TranslatorInterface;
 
 import java.util.List;
 
 public class Translator_test {
 
-    private Translator_interface translator_interface = null;
+    private TranslatorInterface translator_interface = null;
 
     @Before
     public void setUp() {

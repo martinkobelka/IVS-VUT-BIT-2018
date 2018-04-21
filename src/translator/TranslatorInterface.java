@@ -24,7 +24,7 @@ import java.util.List;
  * @version 1.0
  *
  */
-public interface Translator_interface {
+public interface TranslatorInterface {
 
     /**
      * Set language. If there no language, thwor exception LanguageException. After that there

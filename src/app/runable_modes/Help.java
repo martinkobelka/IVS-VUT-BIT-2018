@@ -39,4 +39,9 @@ public class Help extends HaveTranslator implements RunableMode {
         System.out.println(translator.translate("cli", "HELP"));
 
     }
+
+    @Override
+    public void translate() {
+
+    }
 }

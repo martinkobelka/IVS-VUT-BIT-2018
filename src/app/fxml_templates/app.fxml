@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -176,7 +177,7 @@
          <top>
             <AnchorPane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #556272;" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" layoutX="14.0" layoutY="5.0" onMouseClicked="#settingClick" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="5.0" onMouseClicked="#settingClick" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                      <children>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -202,22 +203,45 @@
                            <image>
                               <Image url="@../icones/avatar.png" />
                            </image>
+                           <effect>
+                              <Glow />
+                           </effect>
                         </ImageView>
-                        <Label fx:id="usersLabel" text="Uživatelé" textFill="WHITE">
+                        <Label fx:id="usersLabel" text="Uživatelé" textFill="#979393">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
                      </children>
                   </HBox>
-                  <HBox fx:id="helpBox" alignment="CENTER" layoutX="247.0" layoutY="10.0" onMouseClicked="#helpBoxClick" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="247.0">
+                  <HBox fx:id="helpBox" alignment="CENTER_LEFT" layoutX="239.0" layoutY="10.0" onMouseClicked="#helpBoxClick" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="239.0">
+                     <children>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icones/help.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="helpLabel" text="Nápověda" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                  <HBox fx:id="aboutBox" alignment="CENTER_LEFT" layoutX="463.0" layoutY="10.0" onMouseClicked="#aboutBoxClick" prefHeight="40.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../icones/information.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="helpLabel" text="Nápověda" textFill="WHITE">
+                        <Label fx:id="aboutLabel" text="O aplikaci" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>

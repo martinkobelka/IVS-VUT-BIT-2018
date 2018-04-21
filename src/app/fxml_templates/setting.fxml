@@ -15,7 +15,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="546.0" AnchorPane.bottomAnchor="76.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <CheckBox mnemonicParsing="false" styleClass="dialog_control" stylesheets="@style.css" text="Expandování proměnných">
+            <CheckBox fx:id="expandVariablesBox" mnemonicParsing="false" onAction="#expandChangeAction" styleClass="dialog_control" stylesheets="@style.css" text="Expandování proměnných">
                <font>
                   <Font size="22.0" />
                </font>
@@ -23,7 +23,7 @@
                   <Insets bottom="30.0" />
                </padding>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" styleClass="dialog_control" stylesheets="@style.css" text="Expandování funkcí">
+            <CheckBox fx:id="expandFunctionsBox" mnemonicParsing="false" onAction="#expandChangeAction" styleClass="dialog_control" stylesheets="@style.css" text="Expandování funkcí">
                <font>
                   <Font size="22.0" />
                </font>
@@ -35,19 +35,19 @@
             </Line>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label styleClass="dialog_control" stylesheets="@style.css" text="Jazyk">
+                  <Label fx:id="languageLabel" styleClass="dialog_control" stylesheets="@style.css" text="Jazyk">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="languageView" prefHeight="40.0" prefWidth="250.0" stylesheets="@style.css">
+                  <ComboBox fx:id="languageView" onAction="#languageChangeAction" prefHeight="40.0" prefWidth="250.0" stylesheets="@style.css">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </ComboBox>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="120.0" styleClass="dialogButton" stylesheets="@style.css" text="Uložit">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClick" prefHeight="62.0" prefWidth="120.0" styleClass="dialogButton" stylesheets="@style.css" text="SAVE">
                <font>
                   <Font size="22.0" />
                </font>

@@ -3,20 +3,24 @@
 <translate language="czech">
 
     <department name="gui">
-
         <item name="TITLE">Pokročilá vědecká kalkulačka</item>
-        <item name="no_java">Ve vašem počítači nebyla nalezena Java, prosím nainstalujte si ji ve verzi alespoň 8</item>
+        <item name="NO_JAVA">Ve vašem počítači nebyla nalezena Java, prosím nainstalujte si ji ve verzi alespoň 8</item>
         <item name="SETTING">Nastavení</item>
         <item name="USERS">Uživatelé</item>
         <item name="VARIABLES">Proměnné</item>
         <item name="FUNCTIONS">Funkce</item>
-
+        <item name="LANGUAGE">Jazyk</item>
+        <item name="EXPAND_VARIABLES">Expandovat proměnné</item>
+        <item name="EXPAND_FUNCTIONS">Expandovat funkce</item>
+        <item name="SAVE">Uložit</item>
+        <item name="HELP">Nápověda</item>
+        <item name="USERS">Uživatelé</item>
+        <item name="CLOSE">Zavřít</item>
+        <item name="ABOUT">O aplikaci</item>
     </department>
 
     <department name="math">
-
-        <item name="error_count_operands">Špatný počet operandů</item>
-
+        <item name="ERROR_COUNT_OPERANDS">Špatný počet operandů</item>
     </department>
 
     <department name="cli">

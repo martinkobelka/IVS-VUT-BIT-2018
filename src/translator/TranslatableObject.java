@@ -13,38 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package app.runable_modes;
-
-import app.RunableMode;
-import translator.HaveTranslator;
+package translator;
 
 /**
- *
- * Enviroment for Error cli
+ * Object should be translatable
  *
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  * @version 1.0
- *
  */
-public class Error extends HaveTranslator implements RunableMode {
+public interface TranslatableObject {
 
     /**
-     * Run application
-     *
-     * @param args
+     * Translate all translatable strings in object
      */
-    @Override
-    public void run(String[] args) {
+    void translate();
 
-        // Write error report && exit with 1
-
-        System.err.println(translator.translate("cli", "ERROR_ARGUMENTS"));
-        System.exit(1);
-
-    }
-
-    @Override
-    public void translate() {
-
-    }
 }

@@ -39,4 +39,5 @@
 .dialog_control {
     -fx-text-fill: #556272;
     -fx-font-weight: bold;
+    -fx-font-size: 18pt;
 }

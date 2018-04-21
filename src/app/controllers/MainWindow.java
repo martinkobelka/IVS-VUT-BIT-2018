@@ -31,19 +31,15 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import parser.MyParser;
 import parser.antlr_parser.ReturnValue;
 import parser.antlr_parser.TypeReturnValue;
 import parser.symbol_table.Function;
-import parser.symbol_table.TableOfFunctions;
-import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 import translator.Translator;
 import translator.TranslatorSingleton;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 
 /**
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
@@ -74,6 +70,11 @@ public class MainWindow extends ComputingEnviroment {
     private final String HELP_TEMPLATE_FILE = "../fxml_templates/help.fxml";
 
     /**
+     * File with template of about dialog
+     */
+    private final String ABOUT_TEMPLATE_FILE = "../fxml_templates/about.fxml";
+
+    /**
      * Min width of help dialog
      */
     private final double HELP_MIN_WIDTH = 800;
@@ -101,7 +102,7 @@ public class MainWindow extends ComputingEnviroment {
     public WebView visualisation;
 
     @FXML
-    public Label settingLabel, variablesLabel, usersLabel, functionsLabel, helpLabel;
+    public Label settingLabel, variablesLabel, usersLabel, functionsLabel, helpLabel, aboutLabel;
 
     /**
      * List View for variables
@@ -155,7 +156,7 @@ public class MainWindow extends ComputingEnviroment {
     /**
      * Translate all texts in forms
      */
-    private void translate() {
+    public void translate() {
 
         // Translate just when translator is not null
         if(translator != null) {
@@ -165,6 +166,9 @@ public class MainWindow extends ComputingEnviroment {
             variablesLabel.setText(translator.translate("gui", "VARIABLES"));
             functionsLabel.setText(translator.translate("gui", "FUNCTIONS"));
             helpLabel.setText(translator.translate("gui", "HELP"));
+            usersLabel.setText(translator.translate("gui", "USERS"));
+            aboutLabel.setText(translator.translate("gui", "ABOUT"));
+
 
         }
     }
@@ -362,13 +366,6 @@ public class MainWindow extends ComputingEnviroment {
 
     }
 
-    public void changeExpandVarsAction(ActionEvent actionEvent) {
-
-        myParser.setExpandVariables(((CheckBox) actionEvent.getSource()).isSelected());
-        count();
-
-    }
-
     /**
      * Action is called after click to setting box
      *
@@ -387,6 +384,10 @@ public class MainWindow extends ComputingEnviroment {
 
             AnchorPane pane = loader.load();
 
+            // Get Controller
+            Setting controller = loader.getController();
+            controller.setParser(myParser);
+
             Scene scene = new Scene(pane);
             dialog.initModality(Modality.WINDOW_MODAL);
             dialog.initOwner(TARGET_WINDOW);
@@ -397,7 +398,7 @@ public class MainWindow extends ComputingEnviroment {
 
         }
         catch(IOException ex) {
-            // TODO: Produce error
+            System.err.println("Error in creating dialog");
         }
 
     }
@@ -414,7 +415,7 @@ public class MainWindow extends ComputingEnviroment {
 
         // Create stage && load view file
         Stage helpDialog = new Stage();
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(HELP_TEMPLATE_FILE));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(HELP_TEMPLATE_FILE));
 
         try {
             VBox vBox = loader.load();
@@ -451,6 +452,52 @@ public class MainWindow extends ComputingEnviroment {
 
         // Get owner of this controller
         TARGET_WINDOW = button_null.getScene().getWindow();
+
+    }
+
+    /**
+     * Action, which is invocate after click to abot box
+     *
+     * @param mouseEvent
+     */
+    public void aboutBoxClick(MouseEvent mouseEvent) {
+
+        /**
+         * Width of dialog
+         */
+        final double WIDTH = 520;
+        /**
+         * height of dialog
+         */
+        final double HEIGHT = 400;
+
+        // Get parent dialog stage
+        getOwner();
+
+        Stage aboutDialog = new Stage();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(ABOUT_TEMPLATE_FILE));
+
+        try {
+            VBox vBox = loader.load();
+            Scene scene = new Scene(vBox);
+
+            aboutDialog.setScene(scene);
+            aboutDialog.setMinHeight(HEIGHT);
+            aboutDialog.setMaxHeight(HEIGHT);
+
+            aboutDialog.setMinWidth(WIDTH);
+            aboutDialog.setMaxWidth(WIDTH);
+
+            aboutDialog.initOwner(TARGET_WINDOW);
+            aboutDialog.initModality(Modality.WINDOW_MODAL);
+            aboutDialog.setTitle(translator.translate("gui", "ABOUT"));
+
+            aboutDialog.showAndWait();
+        }
+        catch (IOException ex) {
+            // TODO: Produce error
+        }
 
     }
 }

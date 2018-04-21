@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import translator.TranslatableObject;
 import translator.Translator;
 import translator.TranslatorSingleton;
 
@@ -31,7 +32,7 @@ import translator.TranslatorSingleton;
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  * @version 1.0
  */
-public class Graphics extends Application implements RunableMode {
+public class Graphics extends Application implements RunableMode, TranslatableObject {
 
     /**
      * View of app
@@ -51,27 +52,38 @@ public class Graphics extends Application implements RunableMode {
     /**
      * Prefer && Minimum height of window
      */
-    private final int HEIGHT = 700;
+    private final int HEIGHT = 750;
 
     /**
      * Translator for translationg texts
      */
-    Translator translator = null;
+    private Translator translator = null;
+
+    /**
+     * Stage of this application
+     */
+    private Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // Get tranlator from singleton
+        // Get translator from singleton
         translator = TranslatorSingleton.getTranslator();
+        translator.addTranslatablObject(this);
 
         // Load view
         Parent root = FXMLLoader.load(getClass().getResource(APP_VIEW));
 
+        // Set actual stage
+        stage = primaryStage;
+
         // Set some parameters of window
-        primaryStage.setTitle(translator.translate("gui", "TITLE"));
         primaryStage.setMinWidth(WIDTH);
         primaryStage.getIcons().add(new Image(getClass().getResource(ICON_PATH).toString()));
         primaryStage.setMinHeight(HEIGHT);
+
+        // Translate all texts
+        translate();
 
         // Set && show scene
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
@@ -83,4 +95,13 @@ public class Graphics extends Application implements RunableMode {
         launch(args);
     }
 
+    /**
+     * Translate all translatable strings in object
+     */
+    @Override
+    public void translate() {
+
+        stage.setTitle(translator.translate("gui", "TITLE"));
+
+    }
 }

@@ -28,6 +28,7 @@ import translator.HaveTranslator;
  *
  */
 public class ComputingEnviroment extends HaveTranslator{
+
     /**
      * Run representation of table of variables
      */
@@ -56,4 +57,8 @@ public class ComputingEnviroment extends HaveTranslator{
         myParser = new MyParser(tableOfVariables, tableOfFunctions);
     }
 
+    @Override
+    public void translate() {
+
+    }
 }

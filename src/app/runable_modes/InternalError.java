@@ -40,4 +40,9 @@ public class InternalError extends HaveTranslator implements RunableMode {
         System.exit(1);
 
     }
+
+    @Override
+    public void translate() {
+
+    }
 }

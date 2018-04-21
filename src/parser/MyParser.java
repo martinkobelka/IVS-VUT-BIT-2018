@@ -34,10 +34,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Class for parsing input text from textView
+ *
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  * @version 1.0
  *
- * @brief Class for parsing input text from textView
  */
 public class MyParser{
 
@@ -58,6 +59,11 @@ public class MyParser{
      * Flag, which sould tell parser if variables can be expand
      */
     private boolean expandVariables;
+
+    /**
+     * Flag, which tell us if functions can be expand
+     */
+    private boolean expandFunctions;
 
     /**
      * Set of names of parent variables
@@ -121,8 +127,19 @@ public class MyParser{
         this.parentVariables = parentVariables;
     }
 
+    /**
+     * Clear parent variables (variables for checking cycling dependence)
+     */
     public void clearParentVariables() {
         parentVariables = new HashSet<>();
+    }
+
+    public boolean isExpandFunctions() {
+        return expandFunctions;
+    }
+
+    public void setExpandFunctions(boolean expandFunctions) {
+        this.expandFunctions = expandFunctions;
     }
 
     /**

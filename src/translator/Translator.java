@@ -1,5 +1,17 @@
 /**
+ * Copyright 2018 Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package translator;
 
@@ -12,10 +24,12 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @brief Translator for loading and using xml languages
+ * Translator for loading and using xml languages
+ * <p>
  *
  * <p>
  *     This class represents translator. It can load languages and
@@ -25,7 +39,7 @@ import java.util.List;
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  * @version 1.0
  */
-public class Translator implements Translator_interface {
+public class Translator implements TranslatorInterface {
 
     /**
      * Directory with languages
@@ -57,11 +71,19 @@ public class Translator implements Translator_interface {
      */
     private LanguageRepresetnation defaultLanguageContent;
 
+    /**
+     * List of translatable object for this observer
+     */
+    private List<TranslatableObject> listOfTranslatableObjects;
+
 
     /**
      * Create new translator
      */
     public Translator() {
+
+        // Initialize list of translatable objects
+        listOfTranslatableObjects = new LinkedList<>();
 
         // Get default language
         defaultLanguage = getDefaultLanguage();
@@ -86,33 +108,61 @@ public class Translator implements Translator_interface {
         // When we select default language, it is not important to load next language
         if (language.equals(defaultLanguage)) {
             this.language = defaultLanguage;
-            return;
         }
 
-        // List of languages
-        List<String> languages = getLanguages();
-        boolean isSupported = false;
+        else {
+            // List of languages
+            List<String> languages = getLanguages();
+            boolean isSupported = false;
 
-        // Find language in languages
-        for (String actualLanguage : languages) {
+            // Find language in languages
+            for (String actualLanguage : languages) {
 
-            if (actualLanguage.equals(language)) {
-                isSupported = true;
+                if (actualLanguage.equals(language)) {
+                    isSupported = true;
+                }
+
+            }
+
+            // Test if fanguage is supported
+            if (isSupported) {
+                this.language = language;
+            } else {
+                throw new LanguageException(LanguageException.LanguageExceptionType.LANGUAGE_NOT_FOUND);
+            }
+
+            // Create new language content && load it from file
+            languageContent = new LanguageRepresetnation();
+            loadFromFile();
+
+        }
+
+        // translate all translateble objects
+        translateTranslatableObjects();
+
+    }
+
+    /**
+     * Translate all translatable objects
+     */
+    private void translateTranslatableObjects() {
+
+        for(TranslatableObject object : listOfTranslatableObjects) {
+
+            if(object != null) {
+                object.translate();
             }
 
         }
 
-        // Test if fanguage is supported
-        if (isSupported) {
-            this.language = language;
-        }
-        else {
-            throw new LanguageException(LanguageException.LanguageExceptionType.LANGUAGE_NOT_FOUND);
-        }
+    }
 
-        // Create new language content && load it from file
-        languageContent = new LanguageRepresetnation();
-        loadFromFile();
+    /**
+     * Add translatable object to list of objects
+     * @param object
+     */
+    public void addTranslatablObject(TranslatableObject object) {
+        listOfTranslatableObjects.add(object);
     }
 
     /**
