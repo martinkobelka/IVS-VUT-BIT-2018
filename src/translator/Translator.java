@@ -21,6 +21,8 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -221,20 +223,31 @@ public class Translator implements TranslatorInterface {
         List<String> languages = new ArrayList<>();
 
         // Get url for these files
-        URL lang_path = this.getClass().getResource(LANGUAGES_DIRECTORY);
+        URI lang_path = null;
 
-        String separatePath = System.getProperty( "os.name" ).contains( "indow" ) ? lang_path.getPath().substring(1)  : lang_path.getPath();
+        try {
+            lang_path = getClass().getResource(LANGUAGES_DIRECTORY).toURI();
 
-        File folder = new File(separatePath);
+            String separatePath = lang_path.getPath();
+            // String separatePath = System.getProperty( "os.name" ).contains( "indow" ) ? lang_path.getPath().substring(1)  : lang_path.getPath();
 
-        File[] listOfFiles = folder.listFiles();
+            File folder = new File(separatePath);
 
-        for(File file : listOfFiles) {
+            File[] listOfFiles = folder.listFiles();
 
-            if(file.isFile() && file.getPath().endsWith(".xml")) {
-                languages.add(file.getName().substring(0, file.getName().length() - 4));
+            for(File file : listOfFiles) {
+
+                if(file.isFile() && file.getPath().endsWith(".xml")) {
+                    languages.add(file.getName().substring(0, file.getName().length() - 4));
+                }
+
             }
 
+
+        }
+        catch (URISyntaxException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
         }
 
         return languages;
