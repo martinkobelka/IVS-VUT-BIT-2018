@@ -1,26 +1,74 @@
+/**
+ * Copyright 2018 Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package setting;
 
 import translator.HaveTranslator;
-
 import java.io.*;
 
+
+/**
+ * Loading && saving permanent setting
+ *
+ * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
+ * @version 1.0
+ *
+ */
 public class PernamentSetting extends HaveTranslator{
 
+    /**
+     * Name of app
+     */
     private final String APP_NAME = "my007calculator";
 
+    /**
+     * Actual operating system
+     */
     private String OS = System.getProperty("os.name").toLowerCase();
 
+    /**
+     * Actual language
+     */
     public String language = translator.getDefaultLanguage();
+
+    /**
+     * Flag for expand variables
+     */
     public boolean expandVariables = true;
+
+    /**
+     * Flag for expand functions
+     */
     public boolean expandFunctions = true;
 
-    private String filePath;
+    /**
+     * File path
+     */
+    private String filePath = null;
 
+    /**
+     * Create new permanent setting
+     */
     public PernamentSetting() {
         filePath = getFile();
         load();
     }
 
+    /**
+     * Load data from file
+     */
     public void load() {
 
         int counter = 0;
@@ -43,6 +91,9 @@ public class PernamentSetting extends HaveTranslator{
 
     }
 
+    /**
+     * Save data into file
+     */
     public void save() {
 
         try {
@@ -63,6 +114,12 @@ public class PernamentSetting extends HaveTranslator{
 
     }
 
+    /**
+     * Load one setting
+     *
+     * @param actualLine actual line in file
+     * @param counter kex
+     */
     private void loadSetting(String actualLine, int counter) {
 
         // Load according counter
@@ -86,6 +143,10 @@ public class PernamentSetting extends HaveTranslator{
 
     }
 
+    /**
+     * Get path for saving file
+     * @return
+     */
     private String getFile() {
 
         if (isWindows()) {
@@ -108,6 +169,11 @@ public class PernamentSetting extends HaveTranslator{
 
     }
 
+    /**
+     * Create || load file && return path
+     * @param path
+     * @return
+     */
     private String createOrLoadFile(String path) {
 
         File fCesta = new File(path);
@@ -146,13 +212,21 @@ public class PernamentSetting extends HaveTranslator{
 
         return null;
 
-
     }
 
+    /**
+     * Is windows?
+     *
+     * @return
+     */
     private boolean isWindows() {
         return (OS.indexOf("win") >= 0);
     }
 
+    /**
+     * Is unix
+     * @return
+     */
     private boolean isUnix() {
         return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
     }
