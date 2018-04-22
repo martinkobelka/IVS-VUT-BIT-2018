@@ -25,6 +25,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import parser.MyParser;
+import setting.PernamentSetting;
+import setting.SettingSingleton;
 import translator.HaveTranslator;
 import translator.LanguageException;
 import translator.Translator;
@@ -50,6 +52,8 @@ public class Setting extends HaveTranslator{
 
     public CheckBox expandFunctionsBox, expandVariablesBox;
 
+    private PernamentSetting pernamentSetting;
+
     /**
      * Actual parser
      */
@@ -61,6 +65,7 @@ public class Setting extends HaveTranslator{
 
     public Setting() {
         super();
+        this.pernamentSetting = SettingSingleton.getInstance();
     }
 
     @FXML
@@ -85,6 +90,8 @@ public class Setting extends HaveTranslator{
 
         try {
             translator.setLanguage((String) ((ComboBox)actionEvent.getSource()).getValue());
+            pernamentSetting.language = translator.getLanguage();
+            pernamentSetting.save();
         }
 
         catch (LanguageException e) {
@@ -136,6 +143,11 @@ public class Setting extends HaveTranslator{
 
         parser.setExpandVariables(expandVariablesBox.isSelected());
         parser.setExpandFunctions(expandFunctionsBox.isSelected());
+
+        pernamentSetting.expandVariables = expandVariablesBox.isSelected();
+        pernamentSetting.expandFunctions = expandFunctionsBox.isSelected();
+
+        pernamentSetting.save();
 
     }
 

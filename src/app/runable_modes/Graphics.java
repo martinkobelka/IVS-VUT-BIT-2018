@@ -100,8 +100,10 @@ public class Graphics extends Application implements RunableMode, TranslatableOb
      */
     @Override
     public void translate() {
-
-        stage.setTitle(translator.translate("gui", "TITLE"));
+        
+        if(stage != null) {
+            stage.setTitle(translator.translate("gui", "TITLE"));
+        }
 
     }
 }

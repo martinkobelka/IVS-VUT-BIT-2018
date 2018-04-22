@@ -49,6 +49,8 @@ public class ComputingEnviroment extends HaveTranslator{
      */
     public ComputingEnviroment() {
 
+        super();
+
         // Create tables
         tableOfVariables = new TableOfVariables();
         tableOfFunctions = new TableOfFunctions();

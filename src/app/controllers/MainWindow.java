@@ -35,6 +35,9 @@ import parser.antlr_parser.ReturnValue;
 import parser.antlr_parser.TypeReturnValue;
 import parser.symbol_table.Function;
 import parser.symbol_table.Variable;
+import setting.PernamentSetting;
+import setting.SettingSingleton;
+import translator.LanguageException;
 import translator.Translator;
 import translator.TranslatorSingleton;
 
@@ -117,15 +120,26 @@ public class MainWindow extends ComputingEnviroment {
     public ListView<Function> symbolFunctionsListView;
 
     /**
+     * Pernament setting
+     */
+    private PernamentSetting pernamentSetting = null;
+
+    /**
      * Counter of equation which was written
      */
     private int sequence;
 
+    public MainWindow() {
+        super();
+    }
+
     @FXML
     public void initialize() {
 
-        // Get translator
         translator = TranslatorSingleton.getTranslator();
+
+        // Initialize setting
+        initializeSettiong();
 
         // Get address of render html file
         URL url = this.getClass().getResource(RENDER_TEMPLATE);
@@ -151,6 +165,23 @@ public class MainWindow extends ComputingEnviroment {
 
         // Translate
         translate();
+    }
+
+    private void initializeSettiong() {
+
+        pernamentSetting = SettingSingleton.getInstance();
+
+        try {
+            translator.setLanguage(pernamentSetting.language);
+        }
+
+        catch (LanguageException e) {
+            System.err.println("Unsupported language");
+        }
+
+        myParser.setExpandVariables(pernamentSetting.expandVariables);
+        myParser.setExpandFunctions(pernamentSetting.expandFunctions);
+
     }
 
     /**
@@ -378,7 +409,7 @@ public class MainWindow extends ComputingEnviroment {
         // Create new stage &&
         Stage dialog = new Stage();
 
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(SETTING_TEMPLATE_FILE));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(SETTING_TEMPLATE_FILE));
 
         try {
 

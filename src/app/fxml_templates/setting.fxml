@@ -47,7 +47,7 @@
                   </ComboBox>
                </children>
             </HBox>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClick" prefHeight="62.0" prefWidth="120.0" styleClass="dialogButton" stylesheets="@style.css" text="SAVE">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClick" prefHeight="62.0" prefWidth="120.0" styleClass="dialogButton" stylesheets="@style.css" text="Budiž">
                <font>
                   <Font size="22.0" />
                </font>

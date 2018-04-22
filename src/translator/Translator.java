@@ -185,7 +185,9 @@ public class Translator implements TranslatorInterface {
         if (defaultLanguage.equals(language)) {
             try {
                 result = defaultLanguageContent.getItem(department, item);
-            } catch (LanguageException ex) {
+            }
+
+            catch (LanguageException ex) {
                 return item.replace("\\n", "\n");
             }
             return result.replace("\\n", "\n");
@@ -199,6 +201,7 @@ public class Translator implements TranslatorInterface {
             try {
                 result = defaultLanguageContent.getItem(department, item);
             }
+
             catch (LanguageException ex) {
                 return item.replace("\\n", "\n");
             }
