@@ -43,7 +43,7 @@ public class Translator implements TranslatorInterface {
     /**
      * Directory with languages
      */
-    private final String LANGUAGES_DIRECTORY = "languages";
+    private final String LANGUAGES_DIRECTORY = "./languages";
 
     /**
      * Supported suffix for files
@@ -221,31 +221,18 @@ public class Translator implements TranslatorInterface {
         // Cretae list for languages
         List<String> languages = new ArrayList<>();
 
-        // Get url for these files
-        URI lang_path = null;
+        String separatePath = LANGUAGES_DIRECTORY;
 
-        try {
-            lang_path = getClass().getResource(LANGUAGES_DIRECTORY).toURI();
+        File folder = new File(separatePath);
 
-            String separatePath = lang_path.getPath();
+        File[] listOfFiles = folder.listFiles();
 
-            File folder = new File(separatePath);
+        for(File file : listOfFiles) {
 
-            File[] listOfFiles = folder.listFiles();
-
-            for(File file : listOfFiles) {
-
-                if(file.isFile() && file.getPath().endsWith(".xml")) {
-                    languages.add(file.getName().substring(0, file.getName().length() - 4));
-                }
-
+            if(file.isFile() && file.getPath().endsWith(".xml")) {
+                languages.add(file.getName().substring(0, file.getName().length() - 4));
             }
 
-
-        }
-        catch (URISyntaxException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
         }
 
         return languages;
@@ -291,91 +278,85 @@ public class Translator implements TranslatorInterface {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader xsr = null;
 
+
+        // Get path from acual directory
+        String path = LANGUAGES_DIRECTORY;
+
+        // Modify path according default/not default language
+        if (language.equals(defaultLanguage)) {
+            path += "/_" + language + SUFFIX;
+        }
+
+        else {
+            path += "/" + language + SUFFIX;
+        }
+
         try {
-            // Get path from acual directory
-            String path = getClass().getResource(LANGUAGES_DIRECTORY).toURI().getPath();
 
-            // Modify path according default/not default language
-            if (language.equals(defaultLanguage)) {
-                path += "/_" + language + SUFFIX;
-            }
+            // Create new reader from path
+            xsr = factory.createXMLStreamReader(new FileReader(path));
 
-            else {
-                path += "/" + language + SUFFIX;
-            }
+            // Loop over all tokens in file
+            while (xsr.hasNext()) {
 
-            try {
+                if (xsr.getEventType() == XMLStreamConstants.START_ELEMENT) {
 
-                // Create new reader from path
-                xsr = factory.createXMLStreamReader(new FileReader(path));
+                    element = xsr.getName().getLocalPart();
 
-                // Loop over all tokens in file
-                while (xsr.hasNext()) {
-
-                    if (xsr.getEventType() == XMLStreamConstants.START_ELEMENT) {
-
-                        element = xsr.getName().getLocalPart();
-
-                        if (element.equals("department")) {
-                            department = xsr.getAttributeValue(0);
-                        }
-
-                        else if (element.equals("item")) {
-                            item = xsr.getAttributeValue(0);
-                        }
-
+                    if (element.equals("department")) {
+                        department = xsr.getAttributeValue(0);
                     }
 
-                    else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
-
-                        if (element.equals("item")) {
-                            value = xsr.getText();
-                            element = "";
-                        }
-
+                    else if (element.equals("item")) {
+                        item = xsr.getAttributeValue(0);
                     }
 
-                    else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
-
-                        if ((xsr.getName().getLocalPart().equals("item"))) {
-
-                            if (language.equals(defaultLanguage)) {
-                                defaultLanguageContent.addItem(department, item, value);
-                            }
-
-                            else {
-                                languageContent.addItem(department, item, value);
-                            }
-                        }
-                    }
-
-                    xsr.next();
                 }
 
+                else if (xsr.getEventType() == XMLStreamConstants.CHARACTERS) {
+
+                    if (element.equals("item")) {
+                        value = xsr.getText();
+                        element = "";
+                    }
+
+                }
+
+                else if ((xsr.getEventType() == XMLStreamConstants.END_ELEMENT)) {
+
+                    if ((xsr.getName().getLocalPart().equals("item"))) {
+
+                        if (language.equals(defaultLanguage)) {
+                            defaultLanguageContent.addItem(department, item, value);
+                        }
+
+                        else {
+                            languageContent.addItem(department, item, value);
+                        }
+                    }
+                }
+
+                xsr.next();
+            }
+
+        }
+
+        catch (Exception e) {
+
+        }
+
+        finally {
+
+            try {
+                xsr.close();
             }
 
             catch (Exception e) {
-
-            }
-
-            finally {
-
-                try {
-                    xsr.close();
-                }
-
-                catch (Exception e) {
-                    // TODO: action for closing file exception
-                }
-
+                // TODO: action for closing file exception
             }
 
         }
 
-        catch (URISyntaxException ex) {
-            System.err.println(ex.getMessage());
-            System.err.println("Chyba při načítání výrazů daného jazyka");
-        }
     }
 
     /**-

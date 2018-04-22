@@ -37,12 +37,12 @@ public class Graphics extends Application implements RunableMode, TranslatableOb
     /**
      * View of app
      */
-    private final String APP_VIEW = "../fxml_templates/app.fxml";
+    private final String APP_VIEW = "/app/fxml_templates/app.fxml";
 
     /**
      * Path of icon
      */
-    private final String ICON_PATH = "../icones/icon.png";
+    private final String ICON_PATH = "/app/icones/icon.png";
 
     /**
      * Prefer && Minimum width of window

@@ -60,22 +60,22 @@ public class MainWindow extends ComputingEnviroment {
     /**
      * Address for render template
      */
-    private final String RENDER_TEMPLATE = "../html_templates/eqRender.html";
+    private final String RENDER_TEMPLATE = "/app/html_templates/eqRender.html";
 
     /**
      * File with template of setting dialog
      */
-    private final String SETTING_TEMPLATE_FILE = "../fxml_templates/setting.fxml";
+    private final String SETTING_TEMPLATE_FILE = "/app/fxml_templates/setting.fxml";
 
     /**
      * File with template of help dialog
      */
-    private final String HELP_TEMPLATE_FILE = "../fxml_templates/help.fxml";
+    private final String HELP_TEMPLATE_FILE = "/app/fxml_templates/help.fxml";
 
     /**
      * File with template of about dialog
      */
-    private final String ABOUT_TEMPLATE_FILE = "../fxml_templates/about.fxml";
+    private final String ABOUT_TEMPLATE_FILE = "/app/fxml_templates/about.fxml";
 
     /**
      * Min width of help dialog
