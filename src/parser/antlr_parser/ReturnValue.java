@@ -57,7 +57,7 @@ public class ReturnValue {
      */
     public ReturnValue() {
         value = 0.0;
-        textRepresentation = "";
+        textRepresentation = "0.0";
         next = null;
         last = null;
         typeReturnValue = TypeReturnValue.OK;

@@ -60,7 +60,7 @@ public class MainWindow extends ComputingEnviroment {
     /**
      * Regex for printable character
      */
-    private final String PRINTABLE_CHARACTER = "^[a-zA-Z0-9]|\\.|\\(|\\)|\\+|\\-|\\*|/$|=|,|\\^";
+    private final String PRINTABLE_CHARACTER = "^[a-zA-Z0-9]|\\.|\\(|\\)|\\+|\\-|\\*|/$|=|,|\\^|!";
 
     /**
      * Address for render template
@@ -323,6 +323,9 @@ public class MainWindow extends ComputingEnviroment {
             case DIVIDE_BY_NULL:
                 errorReport.setText(translator.translate("math", "DIVIDE_BY_NULL"));
                 break;
+
+            case ERR_NG_ZERO:
+                errorReport.setText(translator.translate("math", "NG_ZERO"));
 
         }
 

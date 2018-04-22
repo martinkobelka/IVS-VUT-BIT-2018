@@ -34,6 +34,7 @@
         <item name="CYCLE_DEPENDENCE">Cyclic dependence of variables</item>
         <item name="DIVIDE_BY_NULL">Divide by null</item>
         <item name="TOO_BIG_FACT">Factorial base too high</item>
+        <item name="NG_ZERO">Operation consume just positive numbers</item>
 
     </department>
 

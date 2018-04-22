@@ -33,6 +33,7 @@
         <item name="CYCLE_DEPENDENCE">Cyklická závislost proměnných</item>
         <item name="DIVIDE_BY_NULL">Dělení nulou</item>
         <item name="TOO_BIG_FACT">Příliš vysoký základ faktoriálu</item>
+        <item name="NG_ZERO">Operace odmítá záporná číslu</item>
 
     </department>
 

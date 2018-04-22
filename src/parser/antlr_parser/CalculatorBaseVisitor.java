@@ -102,13 +102,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	@Override
 	public ReturnValue visitExprProg(CalculatorParser.ExprProgContext ctx) {
 
-		ReturnValue returnValue =  visitChildren(ctx);
-
-		if(returnValue.getTypeReturnValue() == TypeReturnValue.CYCLE) {
-			return emptyValeuFactory();
-		}
-
-		return returnValue;
+		return visitChildren(ctx);
 	}
 
 	/**
@@ -334,8 +328,8 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 
 		ReturnValue child = visit(ctx.getChild(1));
 
-		if (child.getTypeReturnValue() == TypeReturnValue.CYCLE) {
-			return emptyValeuFactory();
+		if (child.getTypeReturnValue() != TypeReturnValue.OK) {
+			return child;
 		}
 
 		return new ReturnValue(
@@ -528,8 +522,8 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			Operation operation = Transformator.mapOperation(ctx.getChild(0).getText());
 			ReturnValue child = visit(ctx.getChild(1));
 
-			if(child.getTypeReturnValue() == TypeReturnValue.CYCLE) {
-				return emptyValeuFactory();
+			if(child.getTypeReturnValue() != TypeReturnValue.OK) {
+				return child;
 			}
 
 			switch (operation) {
@@ -540,7 +534,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 					);
 				case SUBTRACT:
 					return new ReturnValue(
-							child.getValue(),
+							-child.getValue(),
 							"-" + child.getTextRepresentation()
 					);
 			}
@@ -558,30 +552,32 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	 */
 	@Override public ReturnValue visitUnaryOperationAfter(CalculatorParser.UnaryOperationAfterContext ctx) {
 
-		try {
+		Operation operation = Transformator.mapOperation(ctx.getChild(1).getText());
+		ReturnValue child = visit(ctx.getChild(0));
 
-			Operation operation = Transformator.mapOperation(ctx.getChild(1).getText());
-			ReturnValue child = visit(ctx.getChild(0));
-
-			if(child.getTypeReturnValue() == TypeReturnValue.CYCLE) {
-				return emptyValeuFactory();
-			}
-
-			if(operation == Operation.FACTORIAL) {
-				return new ReturnValue(
-						math.run_operate(new double[]{child.getValue()}, operation),
-						child.getTextRepresentation() + "!"
-				);
-			}
-
-
-
-		}
-		catch(MathException ex) {
-			System.err.println("Error operation");
+		if(child.getTypeReturnValue() != TypeReturnValue.OK) {
+			return child;
 		}
 
-		return new ReturnValue();
+		ReturnValue returnValue = new ReturnValue();
+		if(operation == Operation.FACTORIAL) {
+
+			try {
+				Double result = math.run_operate(new double[]{child.getValue()}, operation);
+				returnValue.setValue(result);
+				returnValue.setTextRepresentation(child.getTextRepresentation() + "!");
+				return returnValue;
+			}
+			catch (MathException ex) {
+
+				returnValue.setTypeReturnValue(mapExceptionToReturnError(ex.getType()));
+				return returnValue;
+
+			}
+		}
+
+		return returnValue;
+
 	}
 
 	/**
