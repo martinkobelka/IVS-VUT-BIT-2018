@@ -17,10 +17,24 @@
         <item name="USERS">Users</item>
         <item name="CLOSE">Close</item>
         <item name="ABOUT">About</item>
+
+        <item name="DELETE_BUILT_IN_VAR">Delete built in variable?</item>
+        <item name="DELETE_BUILT_IN_VAR_H">Do you really want to remove built in variable??</item>
+        <item name="DELETE_BUILT_IN_VAR_C">The action is irreversible, then you will need to create or reboot the application yourself</item>
+
+
+        <item name="DELETE_BUILT_IN_FUN">Delete built in functioon?</item>
+        <item name="DELETE_BUILT_IN_FUN_H">Do you really want to remove built in function??</item>
+        <item name="DELETE_BUILT_IN_FUN_C">The action is irreversible, then you will need to create or reboot the application yourself</item>
     </department>
 
     <department name="math">
         <item name="ERROR_COUNT_OPERNADS">Wrong count of operands</item>
+
+        <item name="CYCLE_DEPENDENCE">Cyclic dependence of variables</item>
+        <item name="DIVIDE_BY_NULL">Divide by null</item>
+        <item name="TOO_BIG_FACT">Factorial base too high</item>
+
     </department>
 
     <department name="cli">

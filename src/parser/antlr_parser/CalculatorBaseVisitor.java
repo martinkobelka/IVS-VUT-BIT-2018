@@ -2,6 +2,7 @@
 // Generated from Calculator.g4 by ANTLR 4.7.1
 package parser.antlr_parser;
 import my_math.MathException;
+import my_math.MathExceptionType;
 import my_math.My_math;
 import my_math.Operation;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
@@ -11,6 +12,7 @@ import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 
+import java.lang.reflect.Type;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -127,8 +129,21 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		actualVariables.add(name);
 		Variable variable = new Variable(name, content);
 
+
+		MyParser tempParser = new MyParser(tableOfVariables, tableOfFunctions);
+		tempParser.setAddVariable(addVariable);
+		actualVariables.addAll(parentVariables);
+		tempParser.setParentVariables(actualVariables);
+		tempParser.setExpandVariables(expandVariables);
+		ReturnValue variableValue = tempParser.parse(content);
+
+		ReturnValue returnValue = new ReturnValue(
+				variableValue.getValue(),
+				name
+		);
+
 		// If additable of variable is active
-		if(addVariable) {
+		if(addVariable && variableValue.getTypeReturnValue() == TypeReturnValue.OK) {
 
 			// If variable exists, remove it
 			if(tableOfVariables.isVariableExists(variable)) {
@@ -139,24 +154,16 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			tableOfVariables.addVariable(variable);
 		}
 
-		MyParser tempParser = new MyParser(tableOfVariables, tableOfFunctions);
-		tempParser.setAddVariable(addVariable);
-		actualVariables.addAll(parentVariables);
-		tempParser.setParentVariables(actualVariables);
-		tempParser.setExpandVariables(expandVariables);
-		ReturnValue variableValue = tempParser.parse(content);
-
 		// If there are variables in cycle, cancel it
 		if(variableValue.getTypeReturnValue() == TypeReturnValue.CYCLE) {
 			variable.setContent("0.0");
 		}
 
+		returnValue.setTypeReturnValue(variableValue.getTypeReturnValue());
+
 		sortVariables();
 
-		return new ReturnValue(
-				variableValue.getValue(),
-				name
-		);
+		return returnValue;
 
 	}
 
@@ -362,9 +369,16 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		ReturnValue first = visit(ctx.getChild(0));
 		ReturnValue second = visit(ctx.getChild(2));
 
+		ReturnValue empty = emptyValeuFactory();
+
 		// If there is cycle, return error
-		if (first.getTypeReturnValue() == TypeReturnValue.CYCLE || first.getTypeReturnValue() == TypeReturnValue.CYCLE ) {
-			return emptyValeuFactory();
+		if (first.getTypeReturnValue() != TypeReturnValue.OK) {
+			empty.setTypeReturnValue(first.getTypeReturnValue());
+			return empty;
+		}
+		else if(second.getTypeReturnValue() != TypeReturnValue.OK ) {
+			empty.setTypeReturnValue(second.getTypeReturnValue());
+			return empty;
 		}
 
 		String textOperation = ctx.getChild(1).getText();
@@ -396,13 +410,33 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			);
 
 		}
-		catch(Exception ex) {
-			System.err.println("Illegal operation");
+		catch(MathException ex) {
+
+			empty.setTypeReturnValue(mapExceptionToReturnError(ex.getType()));
+
+			return empty;
+
 		}
 
-		return new ReturnValue();
+	}
+
+	private TypeReturnValue mapExceptionToReturnError(MathExceptionType type) {
+
+		switch(type) {
+			case ERR_ZERO:
+				return TypeReturnValue.DIVIDE_BY_NULL;
+			case ERR_NG_ZERO:
+				return TypeReturnValue.ERR_NG_ZERO;
+			case ERR_FACT_OVERFLOW:
+				return TypeReturnValue.TOO_BIG_FACT;
+			case ERR_NOT_INT:
+				return TypeReturnValue.ERR_NOT_INT;
+			default:
+				return TypeReturnValue.OK;
+		}
 
 	}
+
 	/**
 	 * {@inheritDoc}
 	 *

@@ -29,10 +29,10 @@
                <children>
                   <AnchorPane prefHeight="81.0" prefWidth="806.0" style="-fx-background-color: #556272;">
                      <children>
-                        <TextField fx:id="test_action" focusTraversable="false" layoutX="56.0" layoutY="25.0" onAction="#countWithEnterAction" onMouseClicked="#textFieldClick" prefHeight="75.0" prefWidth="587.0" style="-fx-font-size: 32 pt; -fx-font-weight: bold; -fx-background-color: #556272; -fx-text-fill: white;" text="|" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="0.0" />
-                        <Label alignment="CENTER" layoutX="679.0" layoutY="30.0" onMouseClicked="#countWithEnterAction" prefHeight="75.0" prefWidth="135.0" styleClass="equal_button" stylesheets="@style.css" text="=" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextField fx:id="test_action" focusTraversable="false" layoutX="56.0" layoutY="25.0" onAction="#countWithEnterActionKeyboard" onMouseClicked="#textFieldClick" prefHeight="75.0" prefWidth="587.0" style="-fx-font-size: 32 pt; -fx-font-weight: bold; -fx-background-color: #556272; -fx-text-fill: white;" text="|" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="0.0" />
+                        <Label alignment="CENTER" layoutX="679.0" layoutY="30.0" onMouseClicked="#countWithEnterActionMouse" prefHeight="75.0" prefWidth="135.0" styleClass="equal_button" stylesheets="@style.css" text="=" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <Label alignment="CENTER" layoutX="686.0" layoutY="30.0" onMouseClicked="#backspaceClick" prefHeight="75.0" prefWidth="69.0" styleClass="equal_button" stylesheets="@style.css" text="&lt;X|" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="0.0" />
-                        <Label alignment="CENTER" onMouseClicked="#countWithEnterAction" prefHeight="75.0" prefWidth="44.0" styleClass="equal_button" stylesheets="@style.css" text="&gt;" />
+                        <Label alignment="CENTER" onMouseClicked="#countWithEnterActionMouse" prefHeight="75.0" prefWidth="44.0" styleClass="equal_button" stylesheets="@style.css" text="&gt;" />
                      </children>
                   </AnchorPane>
                   <HBox alignment="CENTER" prefHeight="324.0" prefWidth="806.0" style="-fx-background-color: #81BEFD;">
@@ -139,6 +139,11 @@
          <center>
             <VBox alignment="CENTER" style="-fx-background-color: white;">
                <children>
+                  <Label fx:id="errorReport" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                   <WebView fx:id="visualisation" minWidth="200.0" prefHeight="800.0" prefWidth="-1.0" />
                </children></VBox>
          </center>
@@ -154,7 +159,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ListView fx:id="symbolVariableListView" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="300.0" style="-fx-border-color: white; -fx-font-size: 14pt;" />
+                  <ListView fx:id="symbolVariableListView" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" onKeyPressed="#keyPressVariables" prefWidth="300.0" style="-fx-border-color: white; -fx-font-size: 14pt;" />
                </children>
             </VBox>
          </left>
@@ -170,7 +175,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ListView fx:id="symbolFunctionsListView" maxWidth="1.7976931348623157E308" prefWidth="300.0" style="-fx-border-color: white; -fx-font-size: 18pt;" />
+                  <ListView fx:id="symbolFunctionsListView" maxWidth="1.7976931348623157E308" onKeyPressed="#keyPressedFunctions" prefWidth="300.0" style="-fx-border-color: white; -fx-font-size: 18pt;" />
                </children>
             </VBox>
          </right>

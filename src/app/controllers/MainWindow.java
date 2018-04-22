@@ -32,8 +32,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import parser.antlr_parser.ReturnValue;
+import parser.antlr_parser.Transformator;
 import parser.antlr_parser.TypeReturnValue;
 import parser.symbol_table.Function;
+import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 import setting.PernamentSetting;
 import setting.SettingSingleton;
@@ -43,12 +45,15 @@ import translator.TranslatorSingleton;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.Key;
+import java.util.Optional;
 
 /**
+ * Constroller for main app view
+ *
  * @author Martin Kobelka (xkobel02@stud.fit.vutbr.cz)
  * @version 1.0
  *
- * @brief Constroller for main app view
  */
 public class MainWindow extends ComputingEnviroment {
 
@@ -105,7 +110,7 @@ public class MainWindow extends ComputingEnviroment {
     public WebView visualisation;
 
     @FXML
-    public Label settingLabel, variablesLabel, usersLabel, functionsLabel, helpLabel, aboutLabel;
+    public Label settingLabel, variablesLabel, usersLabel, functionsLabel, helpLabel, aboutLabel, errorReport;
 
     /**
      * List View for variables
@@ -199,8 +204,6 @@ public class MainWindow extends ComputingEnviroment {
             helpLabel.setText(translator.translate("gui", "HELP"));
             usersLabel.setText(translator.translate("gui", "USERS"));
             aboutLabel.setText(translator.translate("gui", "ABOUT"));
-
-
         }
     }
 
@@ -259,6 +262,9 @@ public class MainWindow extends ComputingEnviroment {
             myParser.clearParentVariables();
             ReturnValue returnValue = myParser.parse(test_action.getText());
 
+            // test correct value
+            changeErrorReport(testCorrectvalues(returnValue));
+
             // Clear engline
             visualisation.getEngine().executeScript(
                     "telo.innerHTML = \"\";"
@@ -293,8 +299,49 @@ public class MainWindow extends ComputingEnviroment {
             }
         }
         catch (NullPointerException ex) {
-            System.err.println("Neúplný výraz: ");
+            errorReport.setText("Výraz v chybném formátu");
         }
+
+    }
+
+    private void changeErrorReport(TypeReturnValue typeReturnValue) {
+
+        switch(typeReturnValue) {
+
+            case OK:
+                errorReport.setText("");
+                break;
+
+            case CYCLE:
+                errorReport.setText(translator.translate("math", "CYCLE_DEPENDENCE"));
+                break;
+
+            case TOO_BIG_FACT:
+                errorReport.setText(translator.translate("math", "TOO_BIG_FACT"));
+                break;
+
+            case DIVIDE_BY_NULL:
+                errorReport.setText(translator.translate("math", "DIVIDE_BY_NULL"));
+                break;
+
+        }
+
+    }
+
+    private TypeReturnValue testCorrectvalues(ReturnValue returnValue) {
+
+        ReturnValue returnValue1 = returnValue;
+
+        while(returnValue1 != null) {
+
+            if(returnValue1.getTypeReturnValue() != TypeReturnValue.OK) {
+                return returnValue1.getTypeReturnValue();
+            }
+
+            returnValue1 = returnValue1.getNext();
+        }
+
+        return TypeReturnValue.OK;
 
     }
 
@@ -303,12 +350,12 @@ public class MainWindow extends ComputingEnviroment {
      * @param event
      */
     @FXML
-    public void countWithEnterAction(ActionEvent event)  {
+    public void countWithEnterActionKeyboard(ActionEvent event)  {
         countWithAddVariable();
     }
 
     @FXML
-    public void countWithEnterAction(MouseEvent event)  {
+    public void countWithEnterActionMouse(MouseEvent event)  {
         countWithAddVariable();
     }
 
@@ -425,7 +472,11 @@ public class MainWindow extends ComputingEnviroment {
             dialog.setTitle(translator.translate("gui", "SETTING"));
             dialog.setScene(scene);
 
+            // Crete dialog && wait
             dialog.showAndWait();
+
+            // Recount values
+            count();
 
         }
         catch(IOException ex) {
@@ -530,5 +581,64 @@ public class MainWindow extends ComputingEnviroment {
             // TODO: Produce error
         }
 
+    }
+
+    public void keyPressVariables(KeyEvent keyEvent) {
+
+        if(keyEvent.getCode() == KeyCode.DELETE) {
+
+            Variable variable = symbolVariableListView.getSelectionModel().getSelectedItem();
+
+            if (variable != null) {
+
+                if (!TableOfVariables.isBuiltInVariable(variable)) {
+                    symbolVariableListView.getItems().remove(variable);
+                } else if (showOkDialog(
+                        "DELETE_BUILT_IN_VAR",
+                        "DELETE_BUILT_IN_VAR_H",
+                        "DELETE_BUILT_IN_VAR_C")
+                        ) {
+
+                    symbolVariableListView.getItems().remove(variable);
+                }
+            }
+        }
+    }
+
+    public void keyPressedFunctions(KeyEvent keyEvent) {
+
+        if(keyEvent.getCode() == KeyCode.DELETE) {
+
+            Function function = symbolFunctionsListView.getSelectionModel().getSelectedItem();
+
+            if (function != null) {
+
+                if (!Transformator.isBuiltInFunction(function.getName())) {
+                    symbolFunctionsListView.getItems().remove(function);
+                } else if (showOkDialog(
+                        "DELETE_BUILT_IN_FUN",
+                        "DELETE_BUILT_IN_FUN_H",
+                        "DELETE_BUILT_IN_FUN_C")
+                        ) {
+
+                    symbolFunctionsListView.getItems().remove(function);
+                }
+            }
+        }
+
+    }
+
+    private boolean showOkDialog(String titleConstant, String headerConstant, String contentConstant) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(translator.translate("gui", "DELETE_BUILT_IN_VAR"));
+        alert.setHeaderText(translator.translate("gui", "DELETE_BUILT_IN_VAR_H"));
+        alert.setContentText(translator.translate("gui", "DELETE_BUILT_IN_VAR_C"));
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        }
+
+        return false;
     }
 }

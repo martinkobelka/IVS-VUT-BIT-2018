@@ -24,25 +24,20 @@ package my_math;
  */
 public class MathException extends Exception{
 
-    private String message;
+    private MathExceptionType type;
 
     /**
      * @brief Contructor of MathException
-     * @param message String that exception will contain
+     *
+     * @param type Type of error
      */
-    public MathException(String message) {
+    public MathException(MathExceptionType type) {
 
-        this.message = message;
+        this.type = type;
 
     }
 
-    /**
-     * @brief Method for printing message if exception will be printed
-     * @return Value of message attribute
-     */
-    @Override
-    public String toString() {
-        return this.message;
+    public MathExceptionType getType() {
+        return type;
     }
-
 }

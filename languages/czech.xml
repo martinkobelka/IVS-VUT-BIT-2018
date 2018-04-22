@@ -17,10 +17,23 @@
         <item name="USERS">Uživatelé</item>
         <item name="CLOSE">Zavřít</item>
         <item name="ABOUT">O aplikaci</item>
+
+        <item name="DELETE_BUILT_IN_VAR">Smazat vestavěnnou proměnnou?</item>
+        <item name="DELETE_BUILT_IN_VAR_H">Skutečně chcete smazat vestavěnou proměnnou?</item>
+        <item name="DELETE_BUILT_IN_VAR_C">Akce je nevratná, poté budete muset proměnnou sami vytvořit nebo restartovat aplikaci</item>
+
+        <item name="DELETE_BUILT_IN_FUN">Delete built in function?</item>
+        <item name="DELETE_BUILT_IN_FUN_H">Do you really want to remove built in function??</item>
+        <item name="DELETE_BUILT_IN_FUN_C">The action is irreversible, then you will need to create or reboot the application yourself</item>
     </department>
 
     <department name="math">
         <item name="ERROR_COUNT_OPERANDS">Špatný počet operandů</item>
+
+        <item name="CYCLE_DEPENDENCE">Cyklická závislost proměnných</item>
+        <item name="DIVIDE_BY_NULL">Dělení nulou</item>
+        <item name="TOO_BIG_FACT">Příliš vysoký základ faktoriálu</item>
+
     </department>
 
     <department name="cli">

@@ -3,8 +3,10 @@ package parser.symbol_table;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import my_math.My_math;
+import my_math.Type_of_constant;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TableOfVariables {
@@ -27,11 +29,11 @@ public class TableOfVariables {
     private void addBuiltInConstats() {
 
         this.variables.add(
-            new Variable("e", "2.71828")
+            new Variable("e", String.valueOf(my_math.return_constant(Type_of_constant.EULER_NUMBER)))
         );
 
         this.variables.add(
-                new Variable("pi", "3.1416")
+                new Variable("pi", String.valueOf(my_math.return_constant(Type_of_constant.PI)))
         );
     }
 
@@ -63,4 +65,11 @@ public class TableOfVariables {
     public ObservableList<Variable> getVariables() {
         return variables;
     }
+
+    public static boolean isBuiltInVariable(Variable name) {
+
+        return name.getName().equals("e") || name.getName().equals("pi");
+
+    }
+
 }
