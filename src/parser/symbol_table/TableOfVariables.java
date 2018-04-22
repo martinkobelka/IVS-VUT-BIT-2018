@@ -2,6 +2,7 @@ package parser.symbol_table;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import my_math.My_math;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,12 @@ public class TableOfVariables {
 
     private ObservableList<Variable> variables;
 
+    private My_math my_math;
+
     public TableOfVariables() {
         this.variables = FXCollections.observableArrayList();
+
+        my_math = new My_math();
 
         this.addBuiltInConstats();
     }

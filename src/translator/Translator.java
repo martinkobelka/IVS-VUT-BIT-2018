@@ -19,7 +19,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -203,12 +205,13 @@ public class Translator implements TranslatorInterface {
             }
 
             catch (LanguageException ex) {
+
+                System.err.println("Translator Unsupported: " + item);
                 return item.replace("\\n", "\n");
             }
             return result.replace("\\n", "\n");
         }
 
-        System.err.println("Translator Unsupported: " + result);
         return result.replace("\\n", "\n");
     }
 
@@ -293,8 +296,10 @@ public class Translator implements TranslatorInterface {
 
         try {
 
+            File file = new File(path);
+
             // Create new reader from path
-            xsr = factory.createXMLStreamReader(new FileReader(path));
+            xsr = factory.createXMLStreamReader(new FileInputStream(file), "UTF-8");
 
             // Loop over all tokens in file
             while (xsr.hasNext()) {
