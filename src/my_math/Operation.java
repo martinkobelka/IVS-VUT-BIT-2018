@@ -22,5 +22,6 @@ public enum Operation {
     ADD, SUBTRACT, MULTIPLY, DIVIDE,
     SIN, COS, TAG, COTG,
     FACTORIAL, SQRT,
-    MODULO, POWER
+    MODULO, POWER,
+    LN, LOG
 }

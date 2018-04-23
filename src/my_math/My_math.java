@@ -29,8 +29,8 @@ public class My_math implements My_math_interface{
      * @param operands Array of operands
      * @param operation type of operation
      *
-     * @return
-     * @throws MathException
+     * @return result of chosen operation
+     * @throws MathException when operands are not apropriate
      */
     @Override
     public double run_operate(double[] operands, Operation operation) throws MathException {
@@ -49,6 +49,8 @@ public class My_math implements My_math_interface{
             case SQRT: return sqrt(operands);
             case MODULO: return mod(operands);
             case POWER: return power(operands);
+            case LN: return ln(operands);
+            case LOG: return log10(operands);
 
             default: throw new MathException(MathExceptionType.ERR_TYPE);
         }
@@ -58,7 +60,7 @@ public class My_math implements My_math_interface{
      * Return value of constant
      *
      * @param constant Type of contant
-     * @return
+     * @return constant from mathematical library
      */
     @Override
     public double return_constant(Type_of_constant constant) {
@@ -308,5 +310,37 @@ public class My_math implements My_math_interface{
         if(operands[0] != Math.floor(operands[0]) || operands[1] != Math.floor(operands[1]))
             throw new MathException(MathExceptionType.ERR_NOT_INT);
         return (double)((int)operands[0] % (int)operands[1]);
+    }
+
+    /**
+     * Natural logarithm base E
+     *
+     * @param operands contains one operand for this operation
+     * @return ln(op1)
+     * @throws MathException if less or more than one operand is provided
+     * @throws MathException operand is not a positive number
+     */
+    private double ln(double[] operands)throws MathException{
+        if(operands.length != 1)
+            throw new MathException(MathExceptionType.ERR_OPERANDS);
+        if(operands[0] <= 0)
+            throw new MathException(MathExceptionType.ERR_NG_ZERO);
+        return Math.log(operands[0]);
+    }
+
+    /**
+     * Decadic logarithm base 10
+     *
+     * @param operands contains one operand for this operation
+     * @return log10(op1)
+     * @throws MathException if less or more than one operand is provided
+     * @throws MathException operand is not a positive number
+     */
+    private double log10(double[] operands)throws MathException{
+        if(operands.length != 1)
+            throw new MathException(MathExceptionType.ERR_OPERANDS);
+        if(operands[0] <= 0)
+            throw new MathException(MathExceptionType.ERR_NG_ZERO);
+        return Math.log10(operands[0]);
     }
 }
