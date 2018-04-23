@@ -19,6 +19,8 @@ public class Transformator {
                 return Operation.MULTIPLY;
             case "/":
                 return Operation.DIVIDE;
+            case "^":
+                return Operation.POWER;
             case "%":
                 return Operation.MODULO;
             case "!":

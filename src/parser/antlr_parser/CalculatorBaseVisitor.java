@@ -394,6 +394,9 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			else if(operation == Operation.MODULO) {
 				textRepresentation = first.getTextRepresentation() + " \\\\% " + second.getTextRepresentation();
 			}
+			else if(operation == Operation.POWER) {
+				textRepresentation = first.getTextRepresentation() + textOperation + "{" + second.getTextRepresentation() + "}";
+			}
 			else {
 				textRepresentation = first.getTextRepresentation() + textOperation + second.getTextRepresentation();
 			}

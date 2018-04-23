@@ -2,8 +2,6 @@
 package parser.antlr_parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
-import java.text.ParseException;
-
 /**
  * This interface defines a complete generic visitor for a parse tree produced
  * by {@link CalculatorParser}.

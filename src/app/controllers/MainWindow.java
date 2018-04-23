@@ -260,6 +260,7 @@ public class MainWindow extends ComputingEnviroment {
 
             // Get return value from parser
             myParser.clearParentVariables();
+
             ReturnValue returnValue = myParser.parse(test_action.getText());
 
             // test correct value

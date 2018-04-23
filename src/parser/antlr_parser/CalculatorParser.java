@@ -18,7 +18,7 @@ public class CalculatorParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, NUMBER=11, IDENTIFIER=12;
+		T__9=10, T__10=11, NUMBER=12, IDENTIFIER=13;
 	public static final int
 		RULE_prog = 0, RULE_funcid = 1, RULE_params = 2, RULE_expr = 3;
 	public static final String[] ruleNames = {
@@ -26,11 +26,12 @@ public class CalculatorParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'='", "'('", "')'", "','", "'!'", "'%'", "'*'", "'/'", "'+'", "'-'"
+		null, "'='", "'('", "')'", "','", "'!'", "'%'", "'*'", "'/'", "'^'", "'+'", 
+		"'-'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, null, "NUMBER", 
-		"IDENTIFIER"
+		null, null, null, null, null, null, null, null, null, null, null, null, 
+		"NUMBER", "IDENTIFIER"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -451,7 +452,7 @@ public class CalculatorParser extends Parser {
 
 				setState(35);
 				_la = _input.LA(1);
-				if ( !(_la==T__8 || _la==T__9) ) {
+				if ( !(_la==T__9 || _la==T__10) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -530,7 +531,7 @@ public class CalculatorParser extends Parser {
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(51);
 						_la = _input.LA(1);
-						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__6) | (1L << T__7))) != 0)) ) {
+						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__8))) != 0)) ) {
 						_errHandler.recoverInline(this);
 						}
 						else {
@@ -550,7 +551,7 @@ public class CalculatorParser extends Parser {
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(54);
 						_la = _input.LA(1);
-						if ( !(_la==T__8 || _la==T__9) ) {
+						if ( !(_la==T__9 || _la==T__10) ) {
 						_errHandler.recoverInline(this);
 						}
 						else {
@@ -635,20 +636,20 @@ public class CalculatorParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\16E\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\17E\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2\23\n\2\3\3\3\3"+
 		"\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4 \n\4\f\4\16\4#\13\4\3\5\3\5\3"+
 		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\63\n\5\3\5\3\5\3\5"+
 		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5@\n\5\f\5\16\5C\13\5\3\5\2\4\6\b\6"+
-		"\2\4\6\b\2\4\3\2\13\f\3\2\b\n\2K\2\22\3\2\2\2\4\24\3\2\2\2\6\31\3\2\2"+
-		"\2\b\62\3\2\2\2\n\23\5\b\5\2\13\f\7\16\2\2\f\r\7\3\2\2\r\23\5\b\5\2\16"+
+		"\2\4\6\b\2\4\3\2\f\r\3\2\b\13\2K\2\22\3\2\2\2\4\24\3\2\2\2\6\31\3\2\2"+
+		"\2\b\62\3\2\2\2\n\23\5\b\5\2\13\f\7\17\2\2\f\r\7\3\2\2\r\23\5\b\5\2\16"+
 		"\17\5\4\3\2\17\20\7\3\2\2\20\21\5\b\5\2\21\23\3\2\2\2\22\n\3\2\2\2\22"+
-		"\13\3\2\2\2\22\16\3\2\2\2\23\3\3\2\2\2\24\25\7\16\2\2\25\26\7\4\2\2\26"+
-		"\27\5\6\4\2\27\30\7\5\2\2\30\5\3\2\2\2\31\32\b\4\1\2\32\33\7\16\2\2\33"+
+		"\13\3\2\2\2\22\16\3\2\2\2\23\3\3\2\2\2\24\25\7\17\2\2\25\26\7\4\2\2\26"+
+		"\27\5\6\4\2\27\30\7\5\2\2\30\5\3\2\2\2\31\32\b\4\1\2\32\33\7\17\2\2\33"+
 		"!\3\2\2\2\34\35\f\4\2\2\35\36\7\6\2\2\36 \5\6\4\5\37\34\3\2\2\2 #\3\2"+
 		"\2\2!\37\3\2\2\2!\"\3\2\2\2\"\7\3\2\2\2#!\3\2\2\2$%\b\5\1\2%&\t\2\2\2"+
-		"&\63\5\b\5\b\'(\7\16\2\2()\7\4\2\2)*\5\b\5\2*+\7\5\2\2+\63\3\2\2\2,-\7"+
-		"\4\2\2-.\5\b\5\2./\7\5\2\2/\63\3\2\2\2\60\63\7\r\2\2\61\63\7\16\2\2\62"+
+		"&\63\5\b\5\b\'(\7\17\2\2()\7\4\2\2)*\5\b\5\2*+\7\5\2\2+\63\3\2\2\2,-\7"+
+		"\4\2\2-.\5\b\5\2./\7\5\2\2/\63\3\2\2\2\60\63\7\16\2\2\61\63\7\17\2\2\62"+
 		"$\3\2\2\2\62\'\3\2\2\2\62,\3\2\2\2\62\60\3\2\2\2\62\61\3\2\2\2\63A\3\2"+
 		"\2\2\64\65\f\n\2\2\65\66\t\3\2\2\66@\5\b\5\13\678\f\t\2\289\t\2\2\29@"+
 		"\5\b\5\n:;\f\7\2\2;<\7\6\2\2<@\5\b\5\b=>\f\13\2\2>@\7\7\2\2?\64\3\2\2"+

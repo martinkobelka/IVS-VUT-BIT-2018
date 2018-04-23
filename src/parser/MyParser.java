@@ -15,14 +15,11 @@
  */
 package parser;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.IntervalSet;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
-import parser.antlr_parser.CalculatorBaseVisitor;
-import parser.antlr_parser.CalculatorLexer;
-import parser.antlr_parser.CalculatorParser;
-import parser.antlr_parser.ReturnValue;
+import parser.antlr_parser.*;
 import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
@@ -149,7 +146,7 @@ public class MyParser{
      *
      * @return Value with
      */
-    public ReturnValue parse(String input){
+    public ReturnValue parse(String input) throws ParseCancellationException{
 
         // Get char stream from string
         CharStream stream = new ANTLRInputStream(input);
@@ -160,6 +157,11 @@ public class MyParser{
 
         // Use syntactic analysis
         CalculatorParser parser = new CalculatorParser(token_stream);
+
+        parser.setErrorHandler(new DefaultErrorStrategy() {
+
+        });
+
         ParseTree tree = parser.prog();
 
         // Visit it with visitor
