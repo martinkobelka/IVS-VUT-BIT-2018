@@ -112,7 +112,9 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		this.addVariable = true;
 		this.expandVariables = true;
 		parentVariables = null;
+		parentVariables = null;
 		actualVariables = new HashSet<>();
+		actualFunctions = new HashSet<>();
 		parseFunction = false;
 		expandFunctions = false;
 

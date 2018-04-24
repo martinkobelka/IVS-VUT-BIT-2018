@@ -143,7 +143,7 @@ public class MyParser{
         parentVariables = new HashSet<>();
     }
 
-    public void clearParentFunction() {parentFunctions = new HashSet<>(); }
+    public void clearParentFunctions() {parentFunctions = new HashSet<>(); }
 
     public boolean isExpandFunctions() {
         return expandFunctions;

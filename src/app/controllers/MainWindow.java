@@ -46,8 +46,6 @@ import translator.TranslatorSingleton;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.Key;
-import java.text.ParseException;
 import java.util.Optional;
 
 /**
@@ -262,6 +260,7 @@ public class MainWindow extends ComputingEnviroment {
 
             // Get return value from parser
             myParser.clearParentVariables();
+            myParser.clearParentFunctions();
 
             ReturnValue returnValue = myParser.parse(test_action.getText());
 
