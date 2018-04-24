@@ -1,1 +1,22 @@
-tento soubor bude obsahovat rozdil mezi planem projektu a skutecnosti
+Rozdíly mezi plánem a skutečností
+---------------------------------
+
+Původní plán byl vytvořit velmi rozsáhlou věděckou kalkulačku
+s vlastním výpočetním jazykem, vykreslováním grafů funkcí, správou
+uživatelských účtů a sdílením výsledků po síti.
+
+Velmi brzy se ale ukázalo, že by taková práce byla i velmi časobě náročná i při
+zvolení vysokoŕovňového jazyka Java, a proto jsme museli požadavky značně mnimalizovat
+
+Výsledná veze neobsahuje
+------------------------
+
+1) Vykreslování grafů funkcí
+2) převody síselných soustav
+3) interpret výpočetního jazyka
+4) chybí chytré našeptávání
+
+Výsledná verze oproti plánu obsahuje
+
+1) Vektorová práce s argumenty funkce
+2) detekce cyklických závislostí mezi proměnnými a funkcemi

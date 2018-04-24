@@ -1,4 +1,4 @@
-xlogin01 100 (základ GUI a základní mat. operace)
-xlogin02 100 (pokročilé mat. operace)
-xlogin03 90 (profiling, instalátor)
-xlogin04 110 (testy, dokumentace)
+xkobel02 157 (GUI, makefile, dokumentace, výpočetní jádro, správa repozitáře, vedení týmu, organizace schůzek)
+xvavro05 85 (profiling, testovací třídy, testování, konzultace ohledně výkonu)
+xkarpi06 82 (instalátor, matematická knihovna, dokumentace)
+xhavli47 76 (logo, příručka, testování, grafické konzultace)

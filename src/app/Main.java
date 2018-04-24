@@ -75,7 +75,10 @@ public class Main{
 
         try {
             // Find  this class, && return its instance
-            Class<?> c = Class.forName(PACKAGE_RUNABLE_MODES + "." + mapModeToClass(getModeFromCLI(args)));
+
+            String runableMode = PACKAGE_RUNABLE_MODES + "." + mapModeToClass(getModeFromCLI(args));
+
+            Class<?> c = Class.forName(runableMode);
             Constructor<?> cons = c.getConstructor();
             return (RunableMode) cons.newInstance();
         }

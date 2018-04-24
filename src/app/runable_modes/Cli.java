@@ -47,6 +47,10 @@ public class Cli extends ComputingEnviroment implements RunableMode {
         this.inputStream = inputStream;
     }
 
+    public Cli() {
+        this(System.in);
+    }
+
 
     /**
      * Run command line mode
