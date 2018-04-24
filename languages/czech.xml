@@ -35,6 +35,7 @@
         <item name="TOO_BIG_FACT">Příliš vysoký základ faktoriálu</item>
         <item name="NG_ZERO">Operace odmítá záporná číslu</item>
         <item name="FUNCTION_NOT_DECLARED">Funkce nebyla deklarována</item>
+        <item name="NOT_INT">Některé operace požadují jako argument celé číslo</item>
 
     </department>
 

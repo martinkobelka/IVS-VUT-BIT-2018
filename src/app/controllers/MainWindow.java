@@ -336,6 +336,11 @@ public class MainWindow extends ComputingEnviroment {
 
             case FUNCTION_NOT_DECLARED:
                 errorReport.setText(translator.translate("math", "FUNCITON_NOT_DECLARED"));
+                break;
+
+            case ERR_NOT_INT:
+                errorReport.setText(translator.translate("math", "NOT_INT"));
+                break;
 
         }
 

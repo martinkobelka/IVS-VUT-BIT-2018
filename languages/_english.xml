@@ -37,6 +37,8 @@
         <item name="NG_ZERO">Operation consume just positive numbers</item>
         <item name="FUNCTION_NOT_DECLARED">Function have not declared yet</item>
 
+        <item name="NOT_INT">Some operations need just integer</item>
+
     </department>
 
     <department name="cli">
