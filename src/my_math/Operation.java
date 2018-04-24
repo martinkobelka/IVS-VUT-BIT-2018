@@ -23,5 +23,5 @@ public enum Operation {
     SIN, COS, TAG, COTG,
     FACTORIAL, SQRT,
     MODULO, POWER,
-    LN, LOG
+    LN, LOG, NSQRT
 }

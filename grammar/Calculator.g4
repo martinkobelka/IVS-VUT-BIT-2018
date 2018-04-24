@@ -40,6 +40,6 @@ fragment PLusMinus
     : ('+' | '-')
     ;
 
-NUMBER: (Digit+ ( '.' Digit+ ( Exponent PLusMinus? Digit+ )? )?) ;
+NUMBER: (Digit+ ( '.' Digit+ )? ( Exponent PLusMinus? Digit+ )?) ;
 
 IDENTIFIER: (IdentifierStart (IdentifierStart | Digit)*);

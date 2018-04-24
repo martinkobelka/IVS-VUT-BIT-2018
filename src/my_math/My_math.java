@@ -51,6 +51,7 @@ public class My_math implements My_math_interface{
             case POWER: return power(operands);
             case LN: return ln(operands);
             case LOG: return log10(operands);
+            case NSQRT: return sqrt(operands);
 
             default: throw new MathException(MathExceptionType.ERR_TYPE);
         }

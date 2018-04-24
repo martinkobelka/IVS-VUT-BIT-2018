@@ -17,8 +17,13 @@ public class TableOfFunctions {
 
     private void addBuiltInFunctions() {
 
+        Function f = new Function("f(x)", "x+1");
+        f.setName("f");
+        f.setCountOfArguments(1);
+        f.setArguments(new String[] {"x"});
+
         functions.add(
-                new Function("f(x)", "x+1")
+                f
         );
 
     }

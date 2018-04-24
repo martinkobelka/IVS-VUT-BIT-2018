@@ -31,6 +31,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import netscape.javascript.JSException;
 import parser.antlr_parser.ReturnValue;
 import parser.antlr_parser.Transformator;
 import parser.antlr_parser.TypeReturnValue;
@@ -46,6 +47,7 @@ import translator.TranslatorSingleton;
 import java.io.IOException;
 import java.net.URL;
 import java.security.Key;
+import java.text.ParseException;
 import java.util.Optional;
 
 /**
@@ -276,25 +278,29 @@ public class MainWindow extends ComputingEnviroment {
 
                 sequence++;
 
-                // Create element for rendering (elements are indexes with next sequence
-                visualisation.getEngine().executeScript(
-                        "var nadpis = document.createElement(\"H2\");" +
-                                "nadpis.id = \"vyk" + String.valueOf(sequence) + "\";" +
-                                "telo.appendChild(nadpis);" +
-                                "var vykresleni = document.getElementById(\"vyk" + String.valueOf(sequence) + "\");"
-                );
+                try {
+                    // Create element for rendering (elements are indexes with next sequence
+                    visualisation.getEngine().executeScript(
+                            "var nadpis = document.createElement(\"H2\");" +
+                                    "nadpis.id = \"vyk" + String.valueOf(sequence) + "\";" +
+                                    "telo.appendChild(nadpis);" +
+                                    "var vykresleni = document.getElementById(\"vyk" + String.valueOf(sequence) + "\");"
+                    );
 
-                String executeScript = "katex.render(\"" + returnValue.getTextRepresentation();
+                    String executeScript = "katex.render(\"" + returnValue.getTextRepresentation();
 
-                if (returnValue.getTypeReturnValue() != TypeReturnValue.FUNCITON_DECLARATION) {
-                    executeScript += "=" + String.valueOf(returnValue.getValue()) + "\", vykresleni);";
+                    if (returnValue.getTypeReturnValue() != TypeReturnValue.FUNCITON_DECLARATION) {
+                        executeScript += "=" + String.valueOf(returnValue.getValue()) + "\", vykresleni);";
+                    } else {
+                        executeScript += "\", vykresleni);";
+                    }
+
+                    // Render it into element
+                    visualisation.getEngine().executeScript(executeScript);
                 }
-                else {
-                    executeScript += "\", vykresleni);";;
+                catch(JSException ex) {
+                    System.err.println("Výraz se nepodařilo vykreslit");
                 }
-
-                // Render it into element
-                visualisation.getEngine().executeScript(executeScript);
 
                 returnValue = returnValue.getNext();
             }

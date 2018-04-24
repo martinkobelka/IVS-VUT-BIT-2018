@@ -12,7 +12,6 @@ import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 
-import java.lang.reflect.Type;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +34,11 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	 * Table of variables for this parser
 	 */
 	private TableOfVariables tableOfVariables;
+
+	/**
+	 * Function arguments
+	 */
+	private TableOfVariables functionArgumentsVariables;
 
 	/**
 	 * Table of functions for this parser
@@ -62,9 +66,35 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
     private Set<String> actualVariables;
 
 	/**
+	 * Actual functions
+	 */
+	private Set<String> actualFunctions;
+
+	/**
+	 * Parent functions
+	 */
+	private Set<String> parentFunctions;
+
+	/**
 	 * Flag which tell us if variables can be expand
 	 */
 	private boolean expandVariables;
+
+
+	/**
+	 * Flag which tell us if functions can be expand
+	 */
+	private boolean expandFunctions;
+
+	/**
+	 * Flag which tell us if we are in function
+	 */
+	private boolean parseFunction;
+
+	/**
+	 * Flag which tell us that function call function
+	 */
+	private boolean functionCallFunction;
 
 	/**
 	 * Create new Visitor for calculator
@@ -80,8 +110,15 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		this.expandVariables = true;
 		parentVariables = null;
 		actualVariables = new HashSet<>();
+		parseFunction = false;
+		expandFunctions = false;
 
 	}
+
+	public void setFunctionCallFunction(boolean functionCallFunction) {
+		this.functionCallFunction = functionCallFunction;
+	}
+
 
 	/**
 	 * Setter for parent variables
@@ -123,7 +160,6 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		actualVariables.add(name);
 		Variable variable = new Variable(name, content);
 
-
 		MyParser tempParser = new MyParser(tableOfVariables, tableOfFunctions);
 		tempParser.setAddVariable(addVariable);
 		actualVariables.addAll(parentVariables);
@@ -161,6 +197,14 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 
 	}
 
+	public boolean isExpandFunctions() {
+		return expandFunctions;
+	}
+
+	public void setExpandFunctions(boolean expandFunctions) {
+		this.expandFunctions = expandFunctions;
+	}
+
 	private void sortVariables() {
 
 		tableOfVariables.getVariables().sort(new Comparator<Variable>() {
@@ -184,9 +228,16 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	public ReturnValue visitDeclareFunction(CalculatorParser.DeclareFunctionContext ctx) {
 
 		// Create function from first parameter
-		actualFunction = new Function(ctx.getChild(0).getText(), ctx.getChild(2).getText());
 
-		visit(ctx.getChild(0));
+		String header = ctx.getChild(0).getText();
+		int positionBracket = getPositionOfBracket(header);
+		actualFunction = new Function(header, ctx.getChild(2).getText());
+		actualFunction.setName(header.substring(0, positionBracket));
+
+		String[] arguments = header.substring(positionBracket + 1, header.length() - 1).split(",");
+
+		actualFunction.setArguments(arguments);
+		actualFunction.setCountOfArguments(arguments.length);
 
 		// If there is flag of function
 		if(addVariable) {
@@ -200,6 +251,20 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			ctx.getText(),
 			TypeReturnValue.FUNCITON_DECLARATION
 		);
+	}
+
+	private int getPositionOfBracket(String string) {
+
+		for(int i = 0; i < string.length(); i++) {
+
+			if(string.charAt(i) == '(') {
+				return i;
+			}
+
+		}
+
+		return -1;
+
 	}
 
 	private void addOrActualizeFunction(Function function){
@@ -265,8 +330,32 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 
 		String content = ctx.getText();
 
+		if(parseFunction) {
+
+			Variable variable = new Variable(content, "");
+
+			if(functionArgumentsVariables.getVariables().contains(variable)) {
+
+				String valueString = functionArgumentsVariables.returnByContent(content).getContent();
+				double value = Double.valueOf(valueString);
+
+				if(expandVariables || functionCallFunction) {
+					return new ReturnValue(
+							value, valueString
+					);
+				}
+				else {
+					return new ReturnValue(
+							value, content
+					);
+				}
+
+			}
+
+		}
+
 		if(parentVariables.contains(content)) {
-			return emptyValeuFactory();
+			return cycleValueFactory();
 		}
 
 		actualVariables.add(content);
@@ -363,7 +452,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		ReturnValue first = visit(ctx.getChild(0));
 		ReturnValue second = visit(ctx.getChild(2));
 
-		ReturnValue empty = emptyValeuFactory();
+		ReturnValue empty = cycleValueFactory();
 
 		// If there is cycle, return error
 		if (first.getTypeReturnValue() != TypeReturnValue.OK) {
@@ -395,7 +484,13 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 				textRepresentation = first.getTextRepresentation() + " \\\\% " + second.getTextRepresentation();
 			}
 			else if(operation == Operation.POWER) {
-				textRepresentation = first.getTextRepresentation() + textOperation + "{" + second.getTextRepresentation() + "}";
+				if(second.getTextRepresentation() == "") {
+					textRepresentation = first.getTextRepresentation() + textOperation + "{" + "?" + "}";
+				}
+				else {
+					textRepresentation = first.getTextRepresentation() + textOperation + "{" + second.getTextRepresentation() + "}";
+				}
+
 			}
 			else {
 				textRepresentation = first.getTextRepresentation() + textOperation + second.getTextRepresentation();
@@ -465,50 +560,124 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		String functionName = ctx.getChild(0).getText();
 
 		// If it is builtInFunction
-		if(Transformator.isBuiltInFunction(functionName)) {
 
-			ReturnValue arguments = visit(ctx.getChild(2));
+		ReturnValue arguments = visit(ctx.getChild(2));
 
-			try {
+		Operation operation = Transformator.mapOperation(functionName);
 
-				Operation operation = Transformator.mapOperation(functionName);
+		Boolean isBuiltInFunction = Transformator.isBuiltInFunction(functionName);
 
-				ReturnValue returnValue = new ReturnValue(
-						math.run_operate(new double[]{
-								arguments.getValue()}, operation),
-						functionName + "(" + arguments.getTextRepresentation() + ")"
-				);
+		Function actualFunction = null;
 
-				ReturnValue next = arguments.getNext();
+		if(!isBuiltInFunction) {
+			actualFunction = tableOfFunctions.returnByName(functionName);
+		}
 
-				while(next != null) {
+		if(!isBuiltInFunction && actualFunction == null) {
 
-					returnValue.setNext(
-							new ReturnValue(
-								math.run_operate(new double[]{next.getValue()}, operation),
-									functionName + "(" + next.getTextRepresentation() + ")"
-							)
-					);
-
-					next = next.getNext();
-				}
-
-				return returnValue;
-			}
-			catch (MathException ex) {
-				System.err.println("Bad operation");
-			}
+			ReturnValue returnValue = new ReturnValue();
+			returnValue.setTypeReturnValue(TypeReturnValue.FUNCTION_NOT_DECLARED);
+			return returnValue;
 
 		}
 
-		// If it is not built in function
-		else {
-			ReturnValue returnValue = new ReturnValue(
-				0.0,
-				ctx.getText()
-			);
+		try {
+
+			ReturnValue returnValue = null;
+			ReturnValue actual = null;
+
+			ReturnValue argument = arguments;
+
+			do {
+
+				double[] operands;
+
+				// Get count of operands
+				if(isBuiltInFunction) {
+					operands = new double[Transformator.getCountOfOperands(operation)];
+				}
+				else {
+					operands = new double[actualFunction.getCountOfArguments()];
+				}
+
+				String funcTextRepr = functionName + "(";
+
+				for(int i = 0; i < operands.length; i++) {
+
+					if(i != 0) {
+						funcTextRepr += ", ";
+					}
+
+					if(argument != null) {
+
+						operands[i] = argument.getValue();
+						funcTextRepr += arguments.getTextRepresentation();
+
+					}
+					else {
+
+						operands[i] = 0.0;
+						funcTextRepr += "0.0";
+
+					}
+
+					if(arguments != null) {
+						argument = argument.getNext();
+					}
+					arguments = argument;
+
+				}
+
+				funcTextRepr += ")";
+
+				ReturnValue functionResult;
+				if(isBuiltInFunction) {
+					functionResult = new ReturnValue(
+							math.run_operate(operands, operation),
+							funcTextRepr
+					);
+				}
+				else {
+					MyParser functionParser = new MyParser(tableOfVariables, tableOfFunctions);
+					functionParser.setExpandVariables(expandVariables);
+					functionParser.setExpandFunctions(expandFunctions);
+					functionParser.setVisitCallFunction(true);
+					functionParser.setFunctionArgumentsVariables(actualFunction.getArgumentsAsTable(operands));
+					actualVariables.addAll(parentVariables);
+					functionParser.setParentVariables(actualVariables);
+					functionResult = functionParser.parse(actualFunction.getContent());
+
+					if(!expandFunctions) {
+						functionResult.setTextRepresentation(funcTextRepr);
+					}
+					else {
+						ReturnValue next = functionResult;
+						while(next != null) {
+							next.setTextRepresentation("(" + next.getTextRepresentation() + ")");
+							next = next.getNext();
+						}
+					}
+				}
+
+				if(returnValue == null) {
+					returnValue = functionResult;
+					actual = returnValue;
+				}
+				else {
+
+					actual.next = functionResult;
+					actual = actual.next;
+
+				}
+
+			}
+			while(arguments != null);
 
 			return returnValue;
+
+		}
+		catch (MathException ex) {
+			System.err.println("Bad operation");
 		}
 
 		return new ReturnValue();
@@ -619,7 +788,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	 * Return empty value with cycle error
 	 * @return
 	 */
-	private ReturnValue emptyValeuFactory() {
+	private ReturnValue cycleValueFactory() {
 		ReturnValue returnValue = new ReturnValue(
 				0.0,
 				"0.0"
@@ -628,5 +797,14 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		returnValue.setTypeReturnValue(TypeReturnValue.CYCLE);
 
 		return returnValue;
+	}
+
+	public TableOfVariables getFunctionArgumentsVariables() {
+		return functionArgumentsVariables;
+	}
+
+	public void setFunctionArgumentsVariables(TableOfVariables functionArgumentsVariables) {
+		this.functionArgumentsVariables = functionArgumentsVariables;
+		parseFunction = true;
 	}
 }

@@ -41,12 +41,12 @@ public class ReturnValue {
     /**
      * Next value, if there is more values
      */
-    private ReturnValue next;
+    public ReturnValue next;
 
     /**
      * Last value in list of values
      */
-    private ReturnValue last;
+    public ReturnValue last;
     /**
      * Type of return Value
      */

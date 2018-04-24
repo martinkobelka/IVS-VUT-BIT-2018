@@ -279,7 +279,7 @@
 
   <target name="doc">
     <property name="source.doc.dir" value="${basedir}/src" />
-    <property name="desc.doc.dir" value="${basedir}/doc" />
+    <property name="desc.doc.dir" value="${basedir}/doxygen" />
     <javadoc sourcepath="${source.doc.dir}" destdir="${desc.doc.dir}"/>
   </target>
 

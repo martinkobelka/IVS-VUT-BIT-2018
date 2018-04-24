@@ -77,7 +77,7 @@ public class Proffiling implements RunableMode {
     public Proffiling() {
 
         // Call parent constructor with null input stream
-        this(null);
+        this(System.in);
 
     }
 

@@ -45,6 +45,11 @@ public class MyParser{
     TableOfVariables tableOfVariables;
 
     /**
+     * Function arguments
+     */
+    TableOfVariables functionArgumentsVariables;
+
+    /**
      * Local table of functions
      */
     TableOfFunctions tableOfFunctions;
@@ -66,6 +71,8 @@ public class MyParser{
      * Set of names of parent variables
      */
     private Set<String> parentVariables;
+
+    private boolean visitCallFunction = false;
 
     /**
      * Create new Parser
@@ -139,6 +146,14 @@ public class MyParser{
         this.expandFunctions = expandFunctions;
     }
 
+    public TableOfVariables getFunctionArgumentsVariables() {
+        return functionArgumentsVariables;
+    }
+
+    public void setFunctionArgumentsVariables(TableOfVariables functionArgumentsVariables) {
+        this.functionArgumentsVariables = functionArgumentsVariables;
+    }
+
     /**
      * Parse && count input and return value
      *
@@ -147,6 +162,8 @@ public class MyParser{
      * @return Value with
      */
     public ReturnValue parse(String input) throws ParseCancellationException{
+
+        input = input.replaceAll("(\t| )*", "");
 
         // Get char stream from string
         CharStream stream = new ANTLRInputStream(input);
@@ -158,20 +175,27 @@ public class MyParser{
         // Use syntactic analysis
         CalculatorParser parser = new CalculatorParser(token_stream);
 
-        parser.setErrorHandler(new DefaultErrorStrategy() {
-
-        });
-
         ParseTree tree = parser.prog();
 
         // Visit it with visitor
         CalculatorBaseVisitor baseVisitor = new CalculatorBaseVisitor(tableOfVariables, tableOfFunctions);
         baseVisitor.setAddVariable(addVariable);
         baseVisitor.setExpandVariables(expandVariables);
+        baseVisitor.setExpandFunctions(expandFunctions);
         baseVisitor.setParentVariables(parentVariables);
+        baseVisitor.setFunctionCallFunction(visitCallFunction);
+
+        if(functionArgumentsVariables != null) {
+            baseVisitor.setFunctionArgumentsVariables(functionArgumentsVariables);
+        }
 
         // Return value from visitor
         return baseVisitor.visit(tree);
 
+    }
+
+
+    public void setVisitCallFunction(boolean visitCallFunction) {
+        this.visitCallFunction = visitCallFunction;
     }
 }

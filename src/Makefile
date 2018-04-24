@@ -1,4 +1,4 @@
-PACK_NAME=xkolar71_xnguye16_xomach00_xnavra61
+PACK_NAME=xkobel02_xhavli47_xvavro05_xhavli47
 PACK=pack
 TMP_DIR := $(shell mktemp -d)
 
@@ -16,7 +16,7 @@ install:
 	sudo apt-get install junit
 
 clean:
-	cd ../doc && rm -rf *
+	cd ../doxygen && rm -rf *
 	cd ../out && rm -rf *
 
 compile:
@@ -25,7 +25,7 @@ compile:
 doc: doxygen
 
 doxygen:
-	cd ../doc && rm -rf *
+	cd ../doxygen && rm -rf *
 	cd ../ && ant doc
 
 # Go to top && run ant
@@ -54,5 +54,5 @@ doc:
 	doxygen Doxyfile
 
 help:
-	echo "Před spuštěním programu je třeba nainstalovat javu a aplikaci přeložit. To bude provedeno automaticky díky závislostem"
+	echo "Před spuštěním a překladem programu je třeba nainstalovat javu, ant a aplikaci přeložit. Instalaci můžete provést za pomocí cíle install, nebo manuálně."
 

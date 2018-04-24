@@ -1,7 +1,5 @@
 package parser.symbol_table;
 
-import java.util.List;
-
 public class Function {
 
     private int countOfArguments;
@@ -50,6 +48,24 @@ public class Function {
 
     public void setArguments(String[] arguments) {
         this.arguments = arguments;
+    }
+
+    public TableOfVariables getArgumentsAsTable(double[] values) {
+
+        TableOfVariables tableOfVariables = new TableOfVariables();
+
+        int counter = 0;
+        for(String argument: arguments) {
+
+            tableOfVariables.addVariable(new Variable(
+                    arguments[counter],
+                    String.valueOf(values[counter])
+            ));
+
+            counter++;
+        }
+
+        return tableOfVariables;
     }
 
     public String getContent() {
