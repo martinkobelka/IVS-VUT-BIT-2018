@@ -217,7 +217,16 @@ public class MainWindow extends ComputingEnviroment {
     public void addCharacterAction(ActionEvent event) {
 
         // Get character from button
-        addCharacter(((Button) event.getSource()).getText());
+        String text = ((Button) event.getSource()).getText();
+
+        if(text.equals("π")) {
+
+            addCharacter("pi");
+        }
+        else {
+            addCharacter(text);
+        }
+
 
         // Add character into text view
         myParser.setAddVariable(false);
