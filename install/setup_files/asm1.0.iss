@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Advanced science calculator"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.0"
 #define MyAppPublisher "CodeIT@FIT"
-#define MyAppExeName "IVS-VUT-BIT-2018.jar"
+#define MyAppExeName "asc.exe"
 #define MyAppIcon "icon.ico"
 
 [Setup]
@@ -18,12 +18,11 @@ AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\licence.txt
-InfoBeforeFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\before.txt
-InfoAfterFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\after.txt
-OutputDir=C:\Users\KarpíšekJakub(204522\Desktop\asc2.0
-OutputBaseFilename=advanced-scientific-calculator-1.1-setup
-SetupIconFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\icon.ico
+LicenseFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\licence.txt
+InfoAfterFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\after.txt
+OutputDir=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install
+OutputBaseFilename=advanced-science-calculator-{#MyAppVersion}-setup
+SetupIconFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\{#MyAppIcon}
 Compression=lzma
 SolidCompression=yes
 
@@ -35,13 +34,14 @@ Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\IVS-VUT-BIT-2018.jar"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\{#MyAppIcon}"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\languages\*"; DestDir: "{app}\languages"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\{#MyAppIcon}"
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\icons\{#MyAppIcon}"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: shellexec postinstall skipifsilent

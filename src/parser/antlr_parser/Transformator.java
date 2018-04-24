@@ -35,6 +35,10 @@ public class Transformator {
                 return Operation.COTG;
             case "sqrt":
                 return Operation.SQRT;
+            case "ln":
+                return Operation.LN;
+            case "log":
+                return Operation.LOG;
 
         }
 
@@ -44,7 +48,7 @@ public class Transformator {
 
     public static boolean isBuiltInFunction(String function) {
 
-        String builtInFunctions[] = {"sin", "cos", "tag", "cotg", "sqrt"};
+        String builtInFunctions[] = {"sin", "cos", "tag", "cotg", "sqrt", "ln", "log"};
 
         return Arrays.asList(builtInFunctions).contains(function);
 
