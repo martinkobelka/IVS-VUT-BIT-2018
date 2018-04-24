@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<translate language="czech">
+
+    <department name="gui">
+        <item name="TITLE">Pokročilá vědecká kalkulačka</item>
+        <item name="NO_JAVA">Ve vašem počítači nebyla nalezena Java, prosím nainstalujte si ji ve verzi alespoň 8</item>
+        <item name="SETTING">Nastavení</item>
+        <item name="USERS">Uživatelé</item>
+        <item name="VARIABLES">Proměnné</item>
+        <item name="FUNCTIONS">Funkce</item>
+        <item name="LANGUAGE">Jazyk</item>
+        <item name="EXPAND_VARIABLES">Expandovat proměnné</item>
+        <item name="EXPAND_FUNCTIONS">Expandovat funkce</item>
+        <item name="SAVE">Budiž</item>
+        <item name="HELP">Nápověda</item>
+        <item name="USERS">Uživatelé</item>
+        <item name="CLOSE">Zavřít</item>
+        <item name="ABOUT">O aplikaci</item>
+
+        <item name="DELETE_BUILT_IN_VAR">Smazat vestavěnnou proměnnou?</item>
+        <item name="DELETE_BUILT_IN_VAR_H">Skutečně chcete smazat vestavěnou proměnnou?</item>
+        <item name="DELETE_BUILT_IN_VAR_C">Akce je nevratná, poté budete muset proměnnou sami vytvořit nebo restartovat aplikaci</item>
+
+        <item name="DELETE_BUILT_IN_FUN">Delete built in function?</item>
+        <item name="DELETE_BUILT_IN_FUN_H">Do you really want to remove built in function??</item>
+        <item name="DELETE_BUILT_IN_FUN_C">The action is irreversible, then you will need to create or reboot the application yourself</item>
+    </department>
+
+    <department name="math">
+        <item name="ERROR_COUNT_OPERANDS">Špatný počet operandů</item>
+
+        <item name="CYCLE_DEPENDENCE">Cyklická závislost proměnných/funkcí</item>
+        <item name="DIVIDE_BY_NULL">Dělení nulou</item>
+        <item name="TOO_BIG_FACT">Příliš vysoký základ faktoriálu</item>
+        <item name="NG_ZERO">Operace odmítá záporná číslu</item>
+        <item name="FUNCTION_NOT_DECLARED">Funkce nebyla deklarována</item>
+        <item name="NOT_INT">Některé operace požadují jako argument celé číslo</item>
+
+    </department>
+
+    <department name="cli">
+        <item name="ERROR_ARGUMENTS">Chybné argumenty příkazové řádky</item>
+        <item name="INTERNAL_ERROR">Nastala interní chyba aplikace, na nápravě se pracuje :(</item>
+        <item name="HELP">Nápověda ke spuštění aplikace\nBez argumentů : grafická verze\n-h || --help : nápověda\n-p || --proffiling : proffiling\n-c || --cli : Verze v příkazové řádce</item>
+    </department>
+
+</translate>

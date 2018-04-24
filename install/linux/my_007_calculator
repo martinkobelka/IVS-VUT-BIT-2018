@@ -1,0 +1,2 @@
+#!/bin/bash
+cd /usr/lib/my_007_calculator/assets/ && java -jar ./IVS-VUT-BIT-2018.jar

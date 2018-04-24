@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<translate language="czech">
+
+    <department name="gui">
+        <item name="TITLE">Advanced science calculator</item>
+        <item name="NO_JAVA">There is no Java in your computer. Please, install it in version at least 8.</item>
+        <item name="SETTING">Setting</item>
+        <item name="USERS">Users</item>
+        <item name="VARIABLES">Variables</item>
+        <item name="FUNCTIONS">Functions</item>
+        <item name="LANGUAGE">Language</item>
+        <item name="EXPAND_VARIABLES">Expand variables</item>
+        <item name="EXPAND_FUNCTIONS">Expand functions</item>
+        <item name="SAVE">Good</item>
+        <item name="HELP">Help</item>
+        <item name="USERS">Users</item>
+        <item name="CLOSE">Close</item>
+        <item name="ABOUT">About</item>
+
+        <item name="DELETE_BUILT_IN_VAR">Delete built in variable?</item>
+        <item name="DELETE_BUILT_IN_VAR_H">Do you really want to remove built in variable??</item>
+        <item name="DELETE_BUILT_IN_VAR_C">The action is irreversible, then you will need to create or reboot the application yourself</item>
+
+
+        <item name="DELETE_BUILT_IN_FUN">Delete built in functioon?</item>
+        <item name="DELETE_BUILT_IN_FUN_H">Do you really want to remove built in function??</item>
+        <item name="DELETE_BUILT_IN_FUN_C">The action is irreversible, then you will need to create or reboot the application yourself</item>
+    </department>
+
+    <department name="math">
+        <item name="ERROR_COUNT_OPERNADS">Wrong count of operands</item>
+
+        <item name="CYCLE_DEPENDENCE">Cyclic dependence of variables/functions</item>
+        <item name="DIVIDE_BY_NULL">Divide by null</item>
+        <item name="TOO_BIG_FACT">Factorial base too high</item>
+        <item name="NG_ZERO">Operation consume just positive numbers</item>
+        <item name="FUNCTION_NOT_DECLARED">Function have not declared yet</item>
+
+        <item name="NOT_INT">Some operations need just integer</item>
+
+    </department>
+
+    <department name="cli">
+        <item name="ERROR_ARGUMENTS">Error command line arguments</item>
+        <item name="INTERNAL_ERROR">Internal error in application. We are working on it :(</item>
+        <item name="HELP">Help for application\nWithout arguments : Graphics version\n-h || --help : help\n-p || --proffiling : proffiling\n-c || --cli : Command line version</item>
+    </department>
+
+</translate>

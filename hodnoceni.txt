@@ -1,4 +1,4 @@
-xkobel02 157 (GUI, makefile, dokumentace, výpočetní jádro, správa repozitáře, vedení týmu, organizace schůzek)
-xvavro05 85 (profiling, testovací třídy, testování, konzultace ohledně výkonu)
-xkarpi06 82 (instalátor, matematická knihovna, dokumentace)
-xhavli47 76 (logo, příručka, testování, grafické konzultace)
+xkobel02 140 (GUI, makefile, dokumentace, výpočetní jádro, správa repozitáře, vedení týmu, organizace schůzek)
+xvavro05 90 (profiling, testovací třídy, testování, konzultace ohledně výkonu)
+xkarpi06 90 (instalátor, matematická knihovna, dokumentace)
+xhavli47 80 (logo, příručka, testování, grafické konzultace)

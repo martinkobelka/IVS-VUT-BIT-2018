@@ -1,2 +1,0 @@
-#!/bin/bash
-java -classpath /usr/lib/my_007_calculator/IVS-VUT-BIT-2018.jar:/usr/lib/my_007_calculator/lib/antlr-4.7.1-complete.jar app.Main

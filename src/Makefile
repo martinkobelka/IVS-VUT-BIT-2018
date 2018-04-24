@@ -18,6 +18,7 @@ install:
 clean:
 	cd ../doxygen && rm -rf *
 	cd ../out && rm -rf *
+	cd ../ && rm -rf pack
 
 compile:
 	cd .. && ant all
@@ -39,9 +40,9 @@ pack: clean doxygen
 	cd ../ && mkdir -p $(PACK)
 	mkdir -p $(TMP_DIR)/my_pack
 	cd $(TMP_DIR)/my_pack && mkdir -p doc install repo
-	cd ../ && cp -R * $(TMP_DIR)/my_pack/repo
-	mv $(TMP_DIR)/my_pack/repo/doc/* $(TMP_DIR)/my_pack/doc
-	cp $(TMP_DIR)/my_pack/repo/install/* $(TMP_DIR)/my_pack/install
+	cd ../ && cp -r . $(TMP_DIR)/my_pack/repo
+	mv $(TMP_DIR)/my_pack/repo/doxygen/* $(TMP_DIR)/my_pack/doc
+	cp -r $(TMP_DIR)/my_pack/repo/install/* $(TMP_DIR)/my_pack/install
 	cd $(TMP_DIR)/my_pack && zip -r $(PACK_NAME).zip .
 	cp $(TMP_DIR)/my_pack/$(PACK_NAME).zip ../pack/$(PACK_NAME).zip
 	rm -rf $(TMP_DIR)/my_pack
