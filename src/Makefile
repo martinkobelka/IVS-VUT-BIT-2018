@@ -2,9 +2,9 @@ PACK_NAME=xkolar71_xnguye16_xomach00_xnavra61
 PACK=pack
 TMP_DIR := $(shell mktemp -d)
 
-.PHONY: install-all
+.PHONY: install
 
-install-all:
+install:
 	sudo apt-get install ant
 	sudo apt-get install default-jre
 	sudo apt-get install default-jdk
@@ -29,7 +29,7 @@ doxygen:
 	cd ../ && ant doc
 
 # Go to top && run ant
-all: install-ant clean compile
+all: clean compile
 
 
 # Pack project
@@ -48,8 +48,8 @@ pack: clean doxygen
 
 run: all
 	cd ../out/artifacts/JavaFXApp && java -classpath antlr-4.7.1-complete.jar:Calculator.jar app.Main
-test: install-ant-junit
-	ant unit-tests
+test: all
+	cd ../out/artifacts/JavaFXApp && java -classpath antlr-4.7.1-complete.jar:Calculator.jar:junit-4.12.jar:hamcrest-core-1.3.jar tests.Main 2>/dev/null
 doc:
 	doxygen Doxyfile
 

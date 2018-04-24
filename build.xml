@@ -231,6 +231,8 @@
     <property name="languages.dir.desc" value="${module.ivs-vut-bit-2018.basedir}/out/artifacts/JavaFXApp"/>
 
     <copy file="${module.ivs-vut-bit-2018.basedir}/lib/antlr-4.7.1-complete.jar" tofile="${module.ivs-vut-bit-2018.basedir}/out/artifacts/JavaFXApp/antlr-4.7.1-complete.jar"/>
+    <copy file="${module.ivs-vut-bit-2018.basedir}/lib/hamcrest-core-1.3.jar" tofile="${module.ivs-vut-bit-2018.basedir}/out/artifacts/JavaFXApp/hamcrest-core-1.3.jar"/>
+    <copy file="${module.ivs-vut-bit-2018.basedir}/lib/junit-4.12.jar" tofile="${module.ivs-vut-bit-2018.basedir}/out/artifacts/JavaFXApp/junit-4.12.jar"/>
 
     <mkdir dir="${artifact.output.javafxapp}"/>
     <copy todir="${artifact.temp.output.JavaFXApp}">
