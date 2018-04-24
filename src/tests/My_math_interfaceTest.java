@@ -559,15 +559,6 @@ public class My_math_interfaceTest {
     /*------------------------Enum-Operations-------------------------*/
 
     /**
-     * Testing if all operations were tested
-     */
-    @Test
-    public void zz_last_test_number_of_tested_operations() {
-        assertEquals(operation_count, Operation.values().length);
-    }
-
-
-    /**
      * Testing if all constants were tested
      */
     @Test
