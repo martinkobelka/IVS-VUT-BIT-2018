@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.28)  24 APR 2018 23:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.28)  24 APR 2018 23:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -681,12 +681,12 @@ assets/icon.png>]) (./dokumentace.toc)
 
 
 ! Undefined control sequence.
-l.57 ...æe je script spu≈°tƒõn s parametrem \textt
+l.58 ...æe je script spu≈°tƒõn s parametrem \textt
                                                   {-d}, tak se script pokus√...
 
 ? 
 
-Overfull \hbox (9.04448pt too wide) in paragraph at lines 55--61
+Overfull \hbox (9.04448pt too wide) in paragraph at lines 55--62
 []\T1/cmr/m/n/10.95 Linux je pouze sekund·rnÌ plat-for-mou, a proto ob-sahuje p
 ouze jednoduch˝ in-st-la£nÌ script \T1/cmtt/m/n/10.95 install.sh
  []
@@ -695,30 +695,30 @@ ouze jednoduch˝ in-st-la£nÌ script \T1/cmtt/m/n/10.95 install.sh
 File: ./assets/rozhr.png Graphic file (type png)
 
 <use ./assets/rozhr.png>
-Package pdftex.def Info: ./assets/rozhr.png used on input line 86.
+Package pdftex.def Info: ./assets/rozhr.png used on input line 87.
 (pdftex.def)             Requested size: 426.09082pt x 296.9838pt.
  [2 <./assets/rozhr.png>]
 <./assets/screenshot.png, id=31, 1106.1325pt x 777.90625pt>
 File: ./assets/screenshot.png Graphic file (type png)
 
 <use ./assets/screenshot.png>
-Package pdftex.def Info: ./assets/screenshot.png used on input line 102.
+Package pdftex.def Info: ./assets/screenshot.png used on input line 103.
 (pdftex.def)             Requested size: 331.84232pt x 233.37367pt.
 
 <./assets/null.png, id=32, 1106.1325pt x 777.90625pt>
 File: ./assets/null.png Graphic file (type png)
  <use ./assets/null.png>
-Package pdftex.def Info: ./assets/null.png used on input line 111.
+Package pdftex.def Info: ./assets/null.png used on input line 112.
 (pdftex.def)             Requested size: 331.84232pt x 233.37367pt.
 
 [3 <./assets/screenshot.png> <./assets/null.png>]
 ! Too many }'s.
-l.121 ...{enter}, nebo kliknut√≠m na tlaƒç√≠tko 4}
+l.122 ...{enter}, nebo kliknut√≠m na tlaƒç√≠tko 4}
                                                   . Toto si nepl√©st s tlaƒç...
 
 ? 
 
-Overfull \hbox (3.92418pt too wide) in paragraph at lines 124--126
+Overfull \hbox (3.92418pt too wide) in paragraph at lines 125--127
 []\T1/cmr/m/n/10.95 Prom•nnou je mo∫nÈ smazat kliknutÌ a stisknutÌm kl·vesy \T1
 /cmtt/m/n/10.95 delete\T1/cmr/m/n/10.95 . P∞ed smaz·nÌm ves-tav•nÈ prom•nnÈ
  []
@@ -726,60 +726,60 @@ Overfull \hbox (3.92418pt too wide) in paragraph at lines 124--126
 <./assets/var.png, id=38, 1106.1325pt x 777.90625pt>
 File: ./assets/var.png Graphic file (type png)
  <use ./assets/var.png>
-Package pdftex.def Info: ./assets/var.png used on input line 133.
+Package pdftex.def Info: ./assets/var.png used on input line 134.
 (pdftex.def)             Requested size: 331.84232pt x 233.37367pt.
 
 <./assets/cycle.png, id=39, 1106.1325pt x 777.90625pt>
 File: ./assets/cycle.png Graphic file (type png)
 
 <use ./assets/cycle.png>
-Package pdftex.def Info: ./assets/cycle.png used on input line 141.
+Package pdftex.def Info: ./assets/cycle.png used on input line 142.
 (pdftex.def)             Requested size: 331.84232pt x 233.37367pt.
  [4 <./assets/var.png> <./assets/cycle.png>]
 <./assets/func.png, id=45, 1106.1325pt x 777.90625pt>
 File: ./assets/func.png Graphic file (type png)
  <use ./assets/func.png>
-Package pdftex.def Info: ./assets/func.png used on input line 164.
+Package pdftex.def Info: ./assets/func.png used on input line 165.
 (pdftex.def)             Requested size: 331.84232pt x 233.37367pt.
 
 <./assets/vector.png, id=46, 1106.1325pt x 777.90625pt>
 File: ./assets/vector.png Graphic file (type png)
 
 <use ./assets/vector.png>
-Package pdftex.def Info: ./assets/vector.png used on input line 174.
+Package pdftex.def Info: ./assets/vector.png used on input line 175.
 (pdftex.def)             Requested size: 331.84232pt x 233.37367pt.
  [5 <./assets/func.png> <./assets/vector.png>]
 <./assets/st_vect.png, id=52, 1106.1325pt x 777.90625pt>
 File: ./assets/st_vect.png Graphic file (type png)
 
 <use ./assets/st_vect.png>
-Package pdftex.def Info: ./assets/st_vect.png used on input line 182.
+Package pdftex.def Info: ./assets/st_vect.png used on input line 183.
 (pdftex.def)             Requested size: 331.84232pt x 233.37367pt.
  <./assets/set.png, id=53, 550.055pt x 486.81876pt>
 File: ./assets/set.png Graphic file (type png)
 
 <use ./assets/set.png>
-Package pdftex.def Info: ./assets/set.png used on input line 198.
+Package pdftex.def Info: ./assets/set.png used on input line 199.
 (pdftex.def)             Requested size: 275.02682pt x 243.40878pt.
  [6 <./assets/st_vect.png> <./assets/set.png>]
 <./assets/expof.png, id=60, 1106.1325pt x 777.90625pt>
 File: ./assets/expof.png Graphic file (type png)
 
 <use ./assets/expof.png>
-Package pdftex.def Info: ./assets/expof.png used on input line 216.
+Package pdftex.def Info: ./assets/expof.png used on input line 217.
 (pdftex.def)             Requested size: 276.53244pt x 194.47607pt.
 
 <./assets/expon.png, id=61, 1106.1325pt x 777.90625pt>
 File: ./assets/expon.png Graphic file (type png)
 
 <use ./assets/expon.png>
-Package pdftex.def Info: ./assets/expon.png used on input line 223.
+Package pdftex.def Info: ./assets/expon.png used on input line 224.
 (pdftex.def)             Requested size: 276.53244pt x 194.47607pt.
  [7 <./assets/expof.png> <./assets/expon.png>]
 <./assets/cli.png, id=67, 581.17125pt x 385.44pt>
 File: ./assets/cli.png Graphic file (type png)
  <use ./assets/cli.png>
-Package pdftex.def Info: ./assets/cli.png used on input line 238.
+Package pdftex.def Info: ./assets/cli.png used on input line 239.
 (pdftex.def)             Requested size: 464.93764pt x 308.35242pt.
 
 [8 <./assets/cli.png>] (./dokumentace.aux)
@@ -791,7 +791,7 @@ LaTeX Font Warning: Size substitutions with differences
 Here is how much of TeX's memory you used:
  5717 strings out of 494953
  76911 string characters out of 6180977
- 146567 words of memory out of 5000000
+ 147567 words of memory out of 5000000
  8893 multiletter control sequences out of 15000+600000
  12795 words of font info for 32 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -804,9 +804,9 @@ our/jknappen/ec/ecrm1095.600pk> </home/martin/.texmf-var/fonts/pk/ljfour/jknapp
 en/ec/ecbx1440.600pk> </home/martin/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm
 1440.600pk> </home/martin/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk
 >
-Output written on dokumentace.pdf (9 pages, 718844 bytes).
+Output written on dokumentace.pdf (9 pages, 719174 bytes).
 PDF statistics:
- 441 PDF objects out of 1000 (max. 8388607)
+ 442 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  71 words of extra memory for PDF output out of 10000 (max. 10000000)

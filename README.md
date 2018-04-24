@@ -1,5 +1,18 @@
-# IVS-VUT-BIT-2018
+Prostredi
+---------
 
-![Build Status](https://travis-ci.com/martinkobelka/IVS-VUT-BIT-2018.svg?token=dHk9Rwh2CD43xY5HbRpW&branch=develop)
+Windows 64bit
 
-Repoository for school project to subject IVS (Practical Aspects of Software Design)
+Autori
+------
+
+Nazev tymu
+- xkobel02 Martin Kobelka 
+- xvavro05 Ján Vavro
+- xkarpi06 Jakub Karpíšek 
+- xhavli47 Jan Havlín 
+
+Licence
+-------
+
+Licensed under the Apache License, Version 2.0

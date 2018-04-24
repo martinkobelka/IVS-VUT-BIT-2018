@@ -12,5 +12,5 @@
 \contentsline {subsubsection}{\numberline {5.1.1}P\IeC {\v r}i vypnut\IeC {\'e} expanzi}{7}
 \contentsline {subsubsection}{\numberline {5.1.2}P\IeC {\v r}i zapnut\IeC {\'e} expanzi}{7}
 \contentsline {section}{\numberline {6}Pr\IeC {\'a}ce v p\IeC {\v r}\IeC {\'\i }kazov\IeC {\'e} \IeC {\v r}\IeC {\'a}dce}{8}
-\contentsline {subsection}{\numberline {6.1}profiling}{8}
-\contentsline {subsection}{\numberline {6.2}pomoc}{8}
+\contentsline {subsection}{\numberline {6.1}Profiling}{8}
+\contentsline {subsection}{\numberline {6.2}Pomoc}{8}

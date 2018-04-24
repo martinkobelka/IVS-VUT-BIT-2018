@@ -1,4 +1,4 @@
-PACK_NAME=xkobel02_xhavli47_xvavro05_xhavli47
+PACK_NAME=xkobel02_xhavli47_xkarpi06_xvavro05
 PACK=pack
 TMP_DIR := $(shell mktemp -d)
 
