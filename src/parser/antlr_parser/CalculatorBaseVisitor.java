@@ -671,7 +671,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 					if(testResult(functionResult) != TypeReturnValue.OK) {
 
 						ReturnValue returnValue1 = new ReturnValue();
-						returnValue.setTypeReturnValue(testResult(functionResult));
+						returnValue1.setTypeReturnValue(testResult(functionResult));
 						return returnValue1;
 
 					}

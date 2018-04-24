@@ -31,10 +31,11 @@
     <department name="math">
         <item name="ERROR_COUNT_OPERNADS">Wrong count of operands</item>
 
-        <item name="CYCLE_DEPENDENCE">Cyclic dependence of variables</item>
+        <item name="CYCLE_DEPENDENCE">Cyclic dependence of variables/functions</item>
         <item name="DIVIDE_BY_NULL">Divide by null</item>
         <item name="TOO_BIG_FACT">Factorial base too high</item>
         <item name="NG_ZERO">Operation consume just positive numbers</item>
+        <item name="FUNCTION_NOT_DECLARED">Function have not declared yet</item>
 
     </department>
 

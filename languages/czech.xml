@@ -30,10 +30,11 @@
     <department name="math">
         <item name="ERROR_COUNT_OPERANDS">Špatný počet operandů</item>
 
-        <item name="CYCLE_DEPENDENCE">Cyklická závislost proměnných</item>
+        <item name="CYCLE_DEPENDENCE">Cyklická závislost proměnných/funkcí</item>
         <item name="DIVIDE_BY_NULL">Dělení nulou</item>
         <item name="TOO_BIG_FACT">Příliš vysoký základ faktoriálu</item>
         <item name="NG_ZERO">Operace odmítá záporná číslu</item>
+        <item name="FUNCTION_NOT_DECLARED">Funkce nebyla deklarována</item>
 
     </department>
 
