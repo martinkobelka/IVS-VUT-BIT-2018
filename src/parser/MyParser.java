@@ -72,6 +72,8 @@ public class MyParser{
      */
     private Set<String> parentVariables;
 
+    private Set<String> parentFunctions;
+
     private boolean visitCallFunction = false;
 
     /**
@@ -86,6 +88,7 @@ public class MyParser{
         this.tableOfFunctions = tableOfFunctions;
         this.addVariable = true;
         this.parentVariables = new HashSet<>();
+        this.parentFunctions = new HashSet<>();
     }
 
     /**
@@ -131,12 +134,16 @@ public class MyParser{
         this.parentVariables = parentVariables;
     }
 
+    public void setParentFunctions(Set<String> parentFunctions) {this.parentFunctions = parentFunctions; }
+
     /**
      * Clear parent variables (variables for checking cycling dependence)
      */
     public void clearParentVariables() {
         parentVariables = new HashSet<>();
     }
+
+    public void clearParentFunction() {parentFunctions = new HashSet<>(); }
 
     public boolean isExpandFunctions() {
         return expandFunctions;
@@ -183,6 +190,7 @@ public class MyParser{
         baseVisitor.setExpandVariables(expandVariables);
         baseVisitor.setExpandFunctions(expandFunctions);
         baseVisitor.setParentVariables(parentVariables);
+        baseVisitor.setparentFunctions(parentFunctions);
         baseVisitor.setFunctionCallFunction(visitCallFunction);
 
         if(functionArgumentsVariables != null) {

@@ -16,6 +16,10 @@
 package app.runable_modes;
 
 import app.RunableMode;
+import my_math.MathException;
+import my_math.My_math;
+import my_math.Operation;
+import translator.HaveTranslator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +34,7 @@ import java.util.List;
  *
  * @brief Library for proffiling
  */
-public class Proffiling implements RunableMode {
+public class Proffiling extends HaveTranslator implements RunableMode{
 
     /**
      * Pattern of splitter for two
@@ -57,6 +61,11 @@ public class Proffiling implements RunableMode {
     private List<Double> Items;
 
     /**
+     * My math
+     */
+    My_math my_math;
+
+    /**
      * Create new proffiling from input stream
      *
      * @param inputStream
@@ -65,6 +74,7 @@ public class Proffiling implements RunableMode {
 
         Items = new LinkedList<>();
         this.inputStream = inputStream;
+        this.my_math = new My_math();
 
         // Create pattern for one line
         patternLine = "^(("+PATTERN_DOUBLE+"+)(("+PATTERN_SPLITTER+"("+PATTERN_DOUBLE+")+)+)?)?$";
@@ -108,8 +118,6 @@ public class Proffiling implements RunableMode {
 
         List<Double> items = Items;
 
-        // TODO: Add my own math library
-
         if(items.size() == 0) {
             return 0.0;
         }
@@ -118,11 +126,21 @@ public class Proffiling implements RunableMode {
 
         double average = getAverageValue(items);
 
-        for(double item : items) {
-            suma += Math.pow((item - average), 2);
+        try {
+            for(double item : items) {
+
+                suma += my_math.run_operate(new double[]{item - average, 2}, Operation.POWER);
+
+            }
+
+            return my_math.run_operate(new double[] {(((double)1 / items.size()) * suma)}, Operation.SQRT);
+
+        }
+        catch(MathException ex) {
+            System.err.println(translator.translate("cli", "ERROR_MATH"));
         }
 
-        return Math.sqrt(((double)1 / items.size()) * suma);
+        return 0.0;
 
     }
 
@@ -168,7 +186,7 @@ public class Proffiling implements RunableMode {
                     Items.addAll(getItemsFromLine(line));
                 }
                 else {
-                    System.err.println("Řádek ve špatném formátu");
+                    System.err.println(translator.translate("proffiling", "ERROR_COMMAND_LINE"));
                 }
             }
         }
@@ -223,4 +241,11 @@ public class Proffiling implements RunableMode {
     }
 
 
+    /**
+     * Translate all translatable strings in object
+     */
+    @Override
+    public void translate() {
+
+    }
 }

@@ -12,9 +12,12 @@ import parser.symbol_table.TableOfFunctions;
 import parser.symbol_table.TableOfVariables;
 import parser.symbol_table.Variable;
 
+import java.lang.reflect.Type;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+
+import static parser.antlr_parser.TypeReturnValue.OK;
 
 /**
  * This class provides an empty implementation of {@link CalculatorVisitor},
@@ -163,7 +166,9 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		MyParser tempParser = new MyParser(tableOfVariables, tableOfFunctions);
 		tempParser.setAddVariable(addVariable);
 		actualVariables.addAll(parentVariables);
+		actualFunctions.addAll(parentFunctions);
 		tempParser.setParentVariables(actualVariables);
+		tempParser.setParentFunctions(actualFunctions);
 		tempParser.setExpandVariables(expandVariables);
 		ReturnValue variableValue = tempParser.parse(content);
 
@@ -173,7 +178,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		);
 
 		// If additable of variable is active
-		if(addVariable && variableValue.getTypeReturnValue() == TypeReturnValue.OK) {
+		if(addVariable && variableValue.getTypeReturnValue() == OK) {
 
 			// If variable exists, remove it
 			if(tableOfVariables.isVariableExists(variable)) {
@@ -392,6 +397,8 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		localParser.setParentVariables(actualVariables);
 
 		actualVariables.addAll(parentVariables);
+		actualFunctions.addAll(parentFunctions);
+		localParser.setParentFunctions(actualFunctions);
 		localParser.setParentVariables(actualVariables);
 		localParser.setExpandVariables(expandVariables);
 		ReturnValue returnValue = localParser.parse(tempVariable.getContent());
@@ -417,7 +424,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 
 		ReturnValue child = visit(ctx.getChild(1));
 
-		if (child.getTypeReturnValue() != TypeReturnValue.OK) {
+		if (child.getTypeReturnValue() != OK) {
 			return child;
 		}
 
@@ -450,16 +457,17 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	@Override public ReturnValue visitBinaryOperation(CalculatorParser.BinaryOperationContext ctx){
 
 		ReturnValue first = visit(ctx.getChild(0));
+
 		ReturnValue second = visit(ctx.getChild(2));
 
 		ReturnValue empty = cycleValueFactory();
 
 		// If there is cycle, return error
-		if (first.getTypeReturnValue() != TypeReturnValue.OK) {
+		if (first.getTypeReturnValue() != OK) {
 			empty.setTypeReturnValue(first.getTypeReturnValue());
 			return empty;
 		}
-		else if(second.getTypeReturnValue() != TypeReturnValue.OK ) {
+		else if(second.getTypeReturnValue() != OK ) {
 			empty.setTypeReturnValue(second.getTypeReturnValue());
 			return empty;
 		}
@@ -484,13 +492,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 				textRepresentation = first.getTextRepresentation() + " \\\\% " + second.getTextRepresentation();
 			}
 			else if(operation == Operation.POWER) {
-				if(second.getTextRepresentation() == "") {
-					textRepresentation = first.getTextRepresentation() + textOperation + "{" + "?" + "}";
-				}
-				else {
-					textRepresentation = first.getTextRepresentation() + textOperation + "{" + second.getTextRepresentation() + "}";
-				}
-
+				textRepresentation = "{(" + first.getTextRepresentation() + ")}" + textOperation + "{" + second.getTextRepresentation() + "}";
 			}
 			else {
 				textRepresentation = first.getTextRepresentation() + textOperation + second.getTextRepresentation();
@@ -524,7 +526,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			case ERR_NOT_INT:
 				return TypeReturnValue.ERR_NOT_INT;
 			default:
-				return TypeReturnValue.OK;
+				return OK;
 		}
 
 	}
@@ -559,9 +561,24 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		// Get function name
 		String functionName = ctx.getChild(0).getText();
 
+		if(parentFunctions.contains(functionName)) {
+			return cycleValueFactory();
+		}
+
+		actualFunctions.add(functionName);
+
 		// If it is builtInFunction
 
 		ReturnValue arguments = visit(ctx.getChild(2));
+
+		if(testResult(arguments) != TypeReturnValue.OK) {
+
+			ReturnValue returnValue1 = new ReturnValue();
+			returnValue1.setTypeReturnValue(testResult(arguments));
+			return returnValue1;
+
+		}
+
 
 		Operation operation = Transformator.mapOperation(functionName);
 
@@ -644,8 +661,18 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 					functionParser.setVisitCallFunction(true);
 					functionParser.setFunctionArgumentsVariables(actualFunction.getArgumentsAsTable(operands));
 					actualVariables.addAll(parentVariables);
+					actualFunctions.addAll(parentFunctions);
+					functionParser.setParentFunctions(actualFunctions);
 					functionParser.setParentVariables(actualVariables);
 					functionResult = functionParser.parse(actualFunction.getContent());
+
+					if(testResult(functionResult) != TypeReturnValue.OK) {
+
+						ReturnValue returnValue1 = new ReturnValue();
+						returnValue.setTypeReturnValue(testResult(functionResult));
+						return returnValue1;
+
+					}
 
 					if(!expandFunctions) {
 						functionResult.setTextRepresentation(funcTextRepr);
@@ -683,6 +710,27 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		return new ReturnValue();
 
 	}
+
+	private TypeReturnValue testResult(ReturnValue arguments) {
+
+		ReturnValue actual = arguments;
+
+		while(actual != null) {
+
+			if(actual.getTypeReturnValue() != TypeReturnValue.OK) {
+
+				return actual.getTypeReturnValue();
+
+			}
+
+			actual = actual.getNext();
+
+		}
+
+		return TypeReturnValue.OK;
+
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -694,7 +742,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 			Operation operation = Transformator.mapOperation(ctx.getChild(0).getText());
 			ReturnValue child = visit(ctx.getChild(1));
 
-			if(child.getTypeReturnValue() != TypeReturnValue.OK) {
+			if(child.getTypeReturnValue() != OK) {
 				return child;
 			}
 
@@ -727,7 +775,7 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 		Operation operation = Transformator.mapOperation(ctx.getChild(1).getText());
 		ReturnValue child = visit(ctx.getChild(0));
 
-		if(child.getTypeReturnValue() != TypeReturnValue.OK) {
+		if(child.getTypeReturnValue() != OK) {
 			return child;
 		}
 
@@ -806,5 +854,9 @@ public class CalculatorBaseVisitor extends AbstractParseTreeVisitor<ReturnValue>
 	public void setFunctionArgumentsVariables(TableOfVariables functionArgumentsVariables) {
 		this.functionArgumentsVariables = functionArgumentsVariables;
 		parseFunction = true;
+	}
+
+	public void setparentFunctions(Set<String> parentFunctions) {
+		this.parentFunctions = parentFunctions;
 	}
 }
