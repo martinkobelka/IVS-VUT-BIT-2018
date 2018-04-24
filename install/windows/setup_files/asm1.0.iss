@@ -18,11 +18,11 @@ AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\licence.txt
-InfoAfterFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\after.txt
-OutputDir=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install
+LicenseFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\windows\setup_files\licence.txt
+InfoAfterFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\windows\setup_files\after.txt
+OutputDir=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\windows
 OutputBaseFilename=advanced-science-calculator-{#MyAppVersion}-setup
-SetupIconFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\{#MyAppIcon}
+SetupIconFile=C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\windows\setup_files\{#MyAppIcon}
 Compression=lzma
 SolidCompression=yes
 
@@ -34,8 +34,8 @@ Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\setup_files\{#MyAppIcon}"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\windows\setup_files\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\install\windows\setup_files\{#MyAppIcon}"; DestDir: "{app}\icons"; Flags: ignoreversion
 Source: "C:\Export PC 02-2018\Workspace\IVS-VUT-BIT-2018\languages\*"; DestDir: "{app}\languages"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
