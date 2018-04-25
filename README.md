@@ -3,6 +3,11 @@ Prostredi
 
 Windows 64bit
 
+Rozhraní aplikace
+-----------------
+![Screenshot](./screenshot.png)
+
+
 Autori
 ------
 
