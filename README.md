@@ -1,7 +1,12 @@
+Pokročilá kalkulačka s využitím syntaktické analýzy
+---------------------------------------------------
+![Screenshot](./icon.png)
+
 Prostredi
 ---------
 
 Windows 64bit
+Linux 64bit
 
 Rozhraní aplikace
 -----------------
@@ -10,8 +15,7 @@ Rozhraní aplikace
 
 Autori
 ------
-
-Nazev tymu
+codeIT@FIT
 - xkobel02 Martin Kobelka 
 - xvavro05 Ján Vavro
 - xkarpi06 Jakub Karpíšek 
